@@ -1,5 +1,5 @@
 # eCommerce Application
-This eCommerce application was created for the purpose of teaching RS School. The purpose of our educational project is to learn how to interact in a team, set tasks, create an e-Commerce application, learn how to work with remote data and API. Our team consists of three people and two mentors.
+This eCommerce application was created as a study-project at RS School front-end development course. The purpose of our educational project is to learn how to interact in a team, set tasks, create an e-Commerce application, learn how to work with remote data and API. Our team consists of three people and two mentors.
 
 Our eCommerce application is online shopping portal. We and our users live off the mantra that, "Plants Make You Happy."
 
