@@ -1,22 +1,29 @@
-import { useState } from 'react';
-// import './App.css';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
+import { themeOptions } from './assets/theme1';
+
+import Header from './components/header/header';
+import Main from './pages/main/main';
+import Footer from './components/footer/footer';
+
+const plantsTheme = createTheme(themeOptions);
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button role="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <ThemeProvider theme={plantsTheme}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          background: plantsTheme.palette.background.paper,
+          backgroundSize: 'cover',
+        }}
+      >
+        <Header />
+        <Main />
+        <Footer />
+      </Box>
+    </ThemeProvider>
   );
 }
 
