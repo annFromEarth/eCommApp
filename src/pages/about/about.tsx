@@ -1,10 +1,11 @@
-import { Container, Typography, Box, createTheme } from '@mui/material';
-
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import { Container, Typography, Box, createTheme, ThemeProvider } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 
 const plantsTheme = createTheme(themeOptions);
 
-export default function About() {
+function ContentAbout() {
   return (
     <Container component="main" sx={{ display: 'flex', flex: '2' }}>
       <Box
@@ -27,5 +28,27 @@ export default function About() {
         </Typography>
       </Box>
     </Container>
+  );
+}
+
+export default function About() {
+  return (
+    <>
+      <ThemeProvider theme={plantsTheme}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+            background: plantsTheme.palette.background.paper,
+            backgroundSize: 'cover',
+          }}
+        >
+          <Header />
+          <ContentAbout />
+          <Footer />
+        </Box>
+      </ThemeProvider>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { themeOptions } from '../../assets/theme1';
 
 const plantsTheme = createTheme(themeOptions);
 
-export function NotFoundPage() {
+export function WorkshopsPage() {
   return (
     <>
       <ThemeProvider theme={plantsTheme}>
@@ -19,7 +19,7 @@ export function NotFoundPage() {
           }}
         >
           <Header />
-          <ContentNotFoundPage />
+          <ContentWorkshopsPage />
           <Footer />
         </Box>
       </ThemeProvider>
@@ -27,6 +27,6 @@ export function NotFoundPage() {
   );
 }
 
-function ContentNotFoundPage() {
-  return <div>I am error 404</div>;
+function ContentWorkshopsPage() {
+  return <div>I am workshops</div>;
 }
