@@ -60,7 +60,7 @@ export default function Header() {
                 gap: '10px',
               }}
             >
-              <Link to="/register">Register</Link>
+              <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
               <Link to="/basket">Basket</Link>
             </Typography>
