@@ -5,18 +5,10 @@ export default function MainImage() {
     <Box
       sx={{
         position: 'relative',
-        width: '100vw',
+        width: '100%',
+        background: 'url(plants-main.jpg) ',
+        backgroundSize: 'cover',
       }}
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          width: document.body.clientWidth / 1.4,
-          height: '100%',
-          background: 'url(plants-main.jpg) ',
-          backgroundSize: 'cover',
-        }}
-      ></Box>
-    </Box>
+    ></Box>
   );
 }

@@ -14,31 +14,45 @@ export default function Main() {
         display: 'flex',
         flex: '2',
         paddingRight: '0px',
+        paddingLeft: '0px',
+        position: 'relative',
+        minHeight: '90vh',
       }}
     >
       <Box
         sx={{
+          position: 'absolute',
+          width: '100vw',
+          height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          p: '60px',
-          color: plantsTheme.palette.text.primary,
-          background: alpha(plantsTheme.palette.background.paper, 0.3),
-          minHeight: '90vh',
+          left: '50%',
+          transform: 'translate(-50%, 0)',
         }}
       >
-        <Typography variant="h2" component="h1" gutterBottom>
-          Welcome plant lovers!
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          {'Hot deals to celebrate ☀the summer☀'}
-        </Typography>
-        <Typography sx={{ pt: '40px' }}>
-          <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn
-        </Typography>
-      </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: plantsTheme.palette.text.primary,
+            background: alpha(plantsTheme.palette.background.paper, 0.3),
+          }}
+        >
+          <Typography variant="h2" component="h1" gutterBottom>
+            Welcome plant lovers!
+          </Typography>
+          <Typography variant="h5" component="h2" gutterBottom>
+            {'Hot deals to celebrate ☀the summer☀'}
+          </Typography>
+          <Typography sx={{ pt: '40px' }}>
+            <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn
+          </Typography>
+        </Box>
 
-      <MainImage />
+        <MainImage />
+      </Box>
     </Container>
   );
 }
