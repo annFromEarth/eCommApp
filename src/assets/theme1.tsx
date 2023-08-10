@@ -10,7 +10,7 @@ export const themeOptions: ThemeOptions = {
       main: '#ccff90',
     },
     text: {
-      primary: 'rgba(78,8,8,0.87)',
+      primary: 'rgba(78,8,8,0.7)',
       secondary: 'rgba(70,5,5,0.6)',
     },
     info: {
