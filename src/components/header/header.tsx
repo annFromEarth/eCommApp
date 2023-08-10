@@ -1,7 +1,9 @@
-import { Box, AppBar, Toolbar, Typography, Button, createTheme, Container } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, createTheme, Container } from '@mui/material';
 
 import { themeOptions } from '../../assets/theme1';
 import HeaderNav from './header-nav';
+
+import { Link } from 'react-router-dom';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -51,9 +53,17 @@ export default function Header() {
           </Box>
 
           <Box>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Register</Button>
-            <Button color="inherit">Basket</Button>
+            <Typography
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '10px',
+              }}
+            >
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+              <Link to="/basket">Basket</Link>
+            </Typography>
           </Box>
         </Toolbar>
 

@@ -1,29 +1,19 @@
-import { Box, ThemeProvider, createTheme } from '@mui/material';
-import { themeOptions } from './assets/theme1';
-
-import Header from './components/header/header';
-import Main from './pages/main/main';
-import Footer from './components/footer/footer';
-
-const plantsTheme = createTheme(themeOptions);
+import { Route, Routes } from 'react-router-dom';
+import MainPage from './pages/main/main_page-create';
+import { LoginPage } from './pages/login/login_page';
+import { RegistrationPage } from './pages/registration/registration_page';
+import { NotFoundPage } from './pages/not-found/not-found';
+import { BasketPage } from './pages/basket/basket_page';
 
 function App() {
   return (
-    <ThemeProvider theme={plantsTheme}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-          background: plantsTheme.palette.background.paper,
-          backgroundSize: 'cover',
-        }}
-      >
-        <Header />
-        <Main />
-        <Footer />
-      </Box>
-    </ThemeProvider>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegistrationPage />} />
+      <Route path="/basket" element={<BasketPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
