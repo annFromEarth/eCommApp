@@ -13,11 +13,11 @@ export default function HeaderNav() {
         variant="h6"
         noWrap
         component="a"
-        href="/"
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
-          gap: '150px',
+          width: '800px',
+          justifyContent: 'space-between',
           fontFamily: 'monospace',
           fontWeight: 700,
           letterSpacing: '.3rem',
