@@ -19,9 +19,7 @@ function MainPage() {
           backgroundSize: 'cover',
         }}
       >
-        <Header />
         <Main />
-        <Footer />
       </Box>
     </ThemeProvider>
   );
