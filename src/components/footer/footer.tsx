@@ -3,8 +3,9 @@ import { createTheme, ThemeProvider, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+import LinkMI from '@mui/material/Link';
 import { themeOptions } from '../../assets/theme1';
+import { Link } from 'react-router-dom';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -13,9 +14,9 @@ function Copyright() {
     <ThemeProvider theme={plantsTheme}>
       <Typography variant="body2" color={plantsTheme.palette.background.paper}>
         {' © '}
-        <Link href="/" color={plantsTheme.palette.background.paper}>
+        <LinkMI href="/" color={plantsTheme.palette.background.paper}>
           FLORAPHILIE
-        </Link>{' '}
+        </LinkMI>{' '}
         {new Date().getFullYear()}
       </Typography>
     </ThemeProvider>
@@ -41,10 +42,18 @@ export default function Footer() {
             background: alpha(plantsTheme.palette.background.paper, 0.3),
           }}
         >
-          <Box>✿ FAQ ✿</Box>
-          <Box>✿ Shipping ✿</Box>
-          <Box>✿ Guarantee ✿</Box>
-          <Box>✿ Contact us ✿</Box>
+          <Box>
+            <Link to="/questions">✿ FAQ ✿</Link>
+          </Box>
+          <Box>
+            <Link to="/shipping">✿ Shipping ✿</Link>
+          </Box>
+          <Box>
+            <Link to="/guarantee">✿ Guarantee ✿</Link>
+          </Box>
+          <Box>
+            <Link to="/contacts">✿ Contact us ✿</Link>
+          </Box>
         </Box>
         <Container sx={{ display: 'flex', justifyContent: 'center', py: '10px' }}>
           <Copyright />

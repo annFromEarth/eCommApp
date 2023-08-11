@@ -7,6 +7,10 @@ import { BasketPage } from './pages/basket/basket_page';
 import About from './pages/about/about';
 import { PlantsPage } from './pages/plants/plants_page';
 import { WorkshopsPage } from './pages/workshops/workshops_page';
+import { QuestionsPage } from './pages/questions/questions_page';
+import { ShippingPage } from './pages/shipping/shipping_page';
+import { GuaranteePage } from './pages/guarantee/guarantee_page';
+import { ContactsPage } from './pages/contacts/contacts_page';
 
 function App() {
   return (
@@ -18,6 +22,10 @@ function App() {
       <Route path="/plants" element={<PlantsPage />} />
       <Route path="/workshops" element={<WorkshopsPage />} />
       <Route path="/about" element={<About />} />
+      <Route path="/questions" element={<QuestionsPage />} />
+      <Route path="/shipping" element={<ShippingPage />} />
+      <Route path="/guarantee" element={<GuaranteePage />} />
+      <Route path="/contacts" element={<ContactsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
