@@ -3,11 +3,11 @@ import { Typography, createTheme } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import { PagesHeaderMenu } from '../../data/pages';
 import { Link } from 'react-router-dom';
-import { PATH } from '../../data/path';
+import { PATH } from '../../data/PATH';
 
 const plantsTheme = createTheme(themeOptions);
 
-export default function HeaderNav() {
+export default function HeaderNavPages() {
   return (
     <>
       <Typography

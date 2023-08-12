@@ -3,5 +3,6 @@ export const PagesHeaderMenu = {
   workshops: 'WORKSHOPS',
   about: 'ABOUT',
   login: 'LOGIN',
-  basket: 'Basket',
+  register: 'REGISTER',
+  basket: 'BASKET',
 };
