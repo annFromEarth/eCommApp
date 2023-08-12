@@ -15,6 +15,7 @@ export function NotFoundPage() {
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingTop: '20px',
           color: plantsTheme.palette.text.primary,
           textAlign: 'center',
         }}

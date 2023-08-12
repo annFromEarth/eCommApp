@@ -13,6 +13,7 @@ export function ContactsPage() {
           width: '100%',
           justifyContent: 'center',
           alignItems: 'flex-start',
+          padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
       >
