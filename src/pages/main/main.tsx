@@ -3,6 +3,7 @@ import { Container, Typography, Box, createTheme, alpha } from '@mui/material';
 import MainImage from './main-image';
 
 import { themeOptions } from '../../assets/theme1';
+import { PagesTitles } from '../../data/titles';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -41,7 +42,7 @@ export default function Main() {
           }}
         >
           <Typography variant="h2" component="h1" gutterBottom>
-            Welcome plant lovers!
+            {PagesTitles.main}
           </Typography>
           <Typography variant="h5" component="h2" gutterBottom>
             {'Hot deals to celebrate ☀the summer☀'}

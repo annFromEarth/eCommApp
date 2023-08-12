@@ -3,6 +3,7 @@ import { Typography, createTheme } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import { PagesHeaderMenu } from '../../data/pages';
 import { Link } from 'react-router-dom';
+import { PATH } from '../../data/path';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -25,9 +26,9 @@ export default function HeaderNav() {
           textDecoration: 'none',
         }}
       >
-        <Link to="/plants"> {PagesHeaderMenu.plants}</Link>
-        <Link to="/workshops"> {PagesHeaderMenu.workshops}</Link>
-        <Link to="/about"> {PagesHeaderMenu.about}</Link>
+        <Link to={PATH.plants}> {PagesHeaderMenu.plants}</Link>
+        <Link to={PATH.workshops}> {PagesHeaderMenu.workshops}</Link>
+        <Link to={PATH.about}> {PagesHeaderMenu.about}</Link>
       </Typography>
     </>
   );

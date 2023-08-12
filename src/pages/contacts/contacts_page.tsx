@@ -1,5 +1,6 @@
 import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
+import { PagesTitles } from '../../data/titles';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -18,7 +19,7 @@ export function ContactsPage() {
         }}
       >
         <Typography variant="h2" component="h1" gutterBottom>
-          Contacts us
+          {PagesTitles.contacts}
         </Typography>
       </Box>
     </>

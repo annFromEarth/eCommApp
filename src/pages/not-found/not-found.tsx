@@ -2,6 +2,7 @@ import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
 import NotFoundImage from './not-found-img';
+import { PATH } from '../../data/path';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -36,7 +37,7 @@ export function NotFoundPage() {
             color: plantsTheme.palette.text.primary,
           }}
         >
-          <Link to="/">Home</Link>
+          <Link to={PATH.main}>Home</Link>
         </Box>
       </Box>
     </>

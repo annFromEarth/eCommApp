@@ -1,6 +1,8 @@
 import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
+import { PagesTitles } from '../../data/titles';
+import { PATH } from '../../data/path';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -19,7 +21,7 @@ export function LoginPage() {
         }}
       >
         <Typography variant="h2" component="h1" gutterBottom>
-          Login Page
+          {PagesTitles.login}
         </Typography>
         <RegisterLink />
       </Box>
@@ -42,7 +44,7 @@ function RegisterLink() {
             textDecoration: 'underline',
           }}
         >
-          <Link to="/register"> Create an account</Link>
+          <Link to={PATH.register}> Create an account</Link>
         </Box>
       </Box>
     </>
