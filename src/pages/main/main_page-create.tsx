@@ -1,9 +1,6 @@
 import { Box, ThemeProvider, createTheme } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
-
-import Header from '../../components/header/header';
 import Main from './main';
-import Footer from '../../components/footer/footer';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -19,9 +16,7 @@ function MainPage() {
           backgroundSize: 'cover',
         }}
       >
-        <Header />
         <Main />
-        <Footer />
       </Box>
     </ThemeProvider>
   );

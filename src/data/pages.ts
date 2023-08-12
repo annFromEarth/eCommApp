@@ -1,5 +1,7 @@
-export const PagesHeaderMenu = [
-  { name: 'PLANTS', id: 1 },
-  { name: 'WORKSHOPS', id: 2 },
-  { name: 'ABOUT', id: 3 },
-];
+export const PagesHeaderMenu = {
+  plants: 'PLANTS',
+  workshops: 'WORKSHOPS',
+  about: 'ABOUT',
+  login: 'LOGIN',
+  basket: 'Basket',
+};

@@ -1,5 +1,4 @@
 import { Container, Typography, Box, createTheme } from '@mui/material';
-
 import { themeOptions } from '../../assets/theme1';
 
 const plantsTheme = createTheme(themeOptions);

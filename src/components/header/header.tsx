@@ -4,6 +4,9 @@ import { themeOptions } from '../../assets/theme1';
 import HeaderNav from './header-nav';
 
 import { Link } from 'react-router-dom';
+import { PATH } from '../../data/path';
+import { PagesHeaderMenu } from '../../data/pages';
+import { HeaderTitles } from '../../data/titles';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -39,7 +42,7 @@ export default function Header() {
                 textDecoration: 'none',
               }}
             >
-              FLORAPHILIE
+              {HeaderTitles.main}
             </Typography>
 
             <Box
@@ -60,9 +63,8 @@ export default function Header() {
                 gap: '10px',
               }}
             >
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-              <Link to="/basket">Basket</Link>
+              <Link to={PATH.login}>{PagesHeaderMenu.login}</Link>
+              <Link to={PATH.basket}>{PagesHeaderMenu.basket}</Link>
             </Typography>
           </Box>
         </Toolbar>
@@ -82,7 +84,7 @@ export default function Header() {
           color: plantsTheme.palette.text.primary,
         }}
       >
-        ✿ We are open! ✿
+        {HeaderTitles.additional}
       </Box>
     </>
   );
