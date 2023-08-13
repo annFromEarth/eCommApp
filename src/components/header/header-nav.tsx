@@ -26,9 +26,15 @@ export default function HeaderNavPages() {
           textDecoration: 'none',
         }}
       >
-        <Link to={PATH.plants}> {PagesHeaderMenu.plants}</Link>
-        <Link to={PATH.workshops}> {PagesHeaderMenu.workshops}</Link>
-        <Link to={PATH.about}> {PagesHeaderMenu.about}</Link>
+        <Link className="link" to={PATH.plants}>
+          {PagesHeaderMenu.plants}
+        </Link>
+        <Link className="link" to={PATH.workshops}>
+          {PagesHeaderMenu.workshops}
+        </Link>
+        <Link className="link" to={PATH.about}>
+          {PagesHeaderMenu.about}
+        </Link>
       </Typography>
     </>
   );
