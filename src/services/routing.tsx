@@ -11,7 +11,7 @@ import { QuestionsPage } from '../pages/questions/questions_page';
 import { RegistrationPage } from '../pages/registration/registration_page';
 import { ShippingPage } from '../pages/shipping/shipping_page';
 import { WorkshopsPage } from '../pages/workshops/workshops_page';
-import { PATH } from '../data/path';
+import { PATH } from '../data/PATH';
 
 function RoutingApp() {
   return (

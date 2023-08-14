@@ -1,6 +1,6 @@
 import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
-import { PagesTitles } from '../../data/titles';
+import { PAGES_TITLES } from '../../data/TITLES';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -19,7 +19,7 @@ export function PlantsPage() {
         }}
       >
         <Typography variant="h2" component="h1" gutterBottom>
-          {PagesTitles.plants}
+          {PAGES_TITLES.plants}
         </Typography>
       </Box>
     </>

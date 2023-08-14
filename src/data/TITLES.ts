@@ -1,9 +1,9 @@
-export const HeaderTitles = {
+export const HEADER_TITLES = {
   main: 'FLORAPHILIE',
   additional: '✿ We are open! ✿',
 };
 
-export const PagesTitles = {
+export const PAGES_TITLES = {
   main: 'Welcome plant lovers!',
   basket: 'Basket',
   contacts: 'Contacts us',
@@ -13,5 +13,5 @@ export const PagesTitles = {
   questions: 'FAQ',
   register: 'Registration Page',
   shipping: 'Shipping',
-  workshops: 'Workshops',
+  workshops: 'Online & Retail Workshops',
 };

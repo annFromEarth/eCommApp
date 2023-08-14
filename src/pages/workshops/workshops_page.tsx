@@ -1,6 +1,8 @@
 import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
-import { PagesTitles } from '../../data/titles';
+import { PAGES_TITLES } from '../../data/TITLES';
+import { MAIN_CONTENT } from './dataWorkshops';
+import { TabsWorkshops } from './tabsWorkshops';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -12,16 +14,25 @@ export function WorkshopsPage() {
           display: 'flex',
           flexDirection: 'column',
           width: '100%',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Typography variant="h2" component="h1" gutterBottom>
-          {PagesTitles.workshops}
+        <Typography variant="h4" gutterBottom>
+          {PAGES_TITLES.workshops}
         </Typography>
+        <WorkshopsContent />
       </Box>
+    </>
+  );
+}
+
+function WorkshopsContent() {
+  return (
+    <>
+      <Box sx={{ marginBottom: '10px' }}>{MAIN_CONTENT.text}</Box>
+      <TabsWorkshops />
     </>
   );
 }

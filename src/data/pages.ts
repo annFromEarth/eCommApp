@@ -1,4 +1,4 @@
-export const PagesHeaderMenu = {
+export const PAGES_HEADER_MENU = {
   plants: 'PLANTS',
   workshops: 'WORKSHOPS',
   about: 'ABOUT',

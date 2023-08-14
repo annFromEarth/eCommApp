@@ -2,7 +2,7 @@ import { Typography, Box, createTheme, alpha } from '@mui/material';
 import Button from '@mui/material/Button';
 
 import { themeOptions } from '../../assets/theme1';
-import { PagesTitles } from '../../data/TITLES';
+import { PAGES_TITLES } from '../../data/TITLES';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
 
@@ -17,7 +17,7 @@ export default function Main() {
         flex: '1 1 auto',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'url(plants-main1.jpg) 50% / cover no-repeat',
+        background: 'url(./img/plants-main.jpg) 50% / cover no-repeat',
       }}
     >
       <Box sx={{ flex: '1 1 auto' }}>
@@ -35,7 +35,7 @@ export default function Main() {
           }}
         >
           <Typography variant="h2" component="h1" gutterBottom>
-            {PagesTitles.main}
+            {PAGES_TITLES.main}
           </Typography>
           <Typography sx={{ marginBottom: '40px' }} variant="h5" component="h2" gutterBottom>
             {'Hot deals to celebrate ☀the summer☀'}
