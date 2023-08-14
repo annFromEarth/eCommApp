@@ -43,16 +43,24 @@ export default function Footer() {
           }}
         >
           <Box>
-            <Link to="/questions">✿ FAQ ✿</Link>
+            <Link className="link" to="/questions">
+              ✿ FAQ ✿
+            </Link>
           </Box>
           <Box>
-            <Link to="/shipping">✿ Shipping ✿</Link>
+            <Link className="link" to="/shipping">
+              ✿ Shipping ✿
+            </Link>
           </Box>
           <Box>
-            <Link to="/guarantee">✿ Guarantee ✿</Link>
+            <Link className="link" to="/guarantee">
+              ✿ Guarantee ✿
+            </Link>
           </Box>
           <Box>
-            <Link to="/contacts">✿ Contact us ✿</Link>
+            <Link className="link" to="/contacts">
+              ✿ Contact us ✿
+            </Link>
           </Box>
         </Box>
         <Container sx={{ display: 'flex', justifyContent: 'center', py: '10px' }}>

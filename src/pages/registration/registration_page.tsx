@@ -1,8 +1,10 @@
 import { Box, createTheme, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
-import { PATH } from '../../data/path';
-import { PagesTitles } from '../../data/titles';
+import { PATH } from '../../data/PATH';
+import { PagesTitles } from '../../data/TITLES';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -15,7 +17,7 @@ export function RegistrationPage() {
           flexDirection: 'column',
           width: '100%',
           justifyContent: 'center',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
@@ -35,7 +37,10 @@ function LoginLink() {
       <Box
         sx={{
           display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           gap: '8px',
+          fontSize: '24px',
         }}
       >
         Already have an account?
@@ -44,7 +49,11 @@ function LoginLink() {
             textDecoration: 'underline',
           }}
         >
-          <Link to={PATH.login}> Log in</Link>
+          <Button variant="outlined">
+            <Link to={PATH.login}>
+              Login <span style={{ marginLeft: '15px' }}>&#128273;</span>
+            </Link>
+          </Button>
         </Box>
       </Box>
     </>

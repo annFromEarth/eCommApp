@@ -3,6 +3,11 @@ body {
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s linear;
+}
+
+.link:hover{
+  color: #fbde00d0;
 }

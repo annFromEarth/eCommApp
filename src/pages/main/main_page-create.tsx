@@ -9,9 +9,10 @@ function MainPage() {
     <ThemeProvider theme={plantsTheme}>
       <Box
         sx={{
+          flex: '1 1 auto',
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '100vh',
+          minHeight: '100%',
           background: plantsTheme.palette.background.paper,
           backgroundSize: 'cover',
         }}

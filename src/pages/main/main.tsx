@@ -1,42 +1,35 @@
-import { Container, Typography, Box, createTheme, alpha } from '@mui/material';
-
-import MainImage from './main-image';
+import { Typography, Box, createTheme, alpha } from '@mui/material';
+import Button from '@mui/material/Button';
 
 import { themeOptions } from '../../assets/theme1';
-import { PagesTitles } from '../../data/titles';
+import { PagesTitles } from '../../data/TITLES';
+import { Link } from 'react-router-dom';
+import { PATH } from '../../data/PATH';
 
 const plantsTheme = createTheme(themeOptions);
 
 export default function Main() {
   return (
-    <Container
+    <Box
       component="main"
       sx={{
         display: 'flex',
-        flex: '2',
-        paddingRight: '0px',
-        paddingLeft: '0px',
-        position: 'relative',
-        minHeight: '90vh',
+        flex: '1 1 auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'url(plants-main1.jpg) 50% / cover no-repeat',
       }}
     >
-      <Box
-        sx={{
-          position: 'absolute',
-          width: '100vw',
-          height: '100%',
-          display: 'flex',
-          left: '50%',
-          transform: 'translate(-50%, 0)',
-        }}
-      >
+      <Box sx={{ flex: '1 1 auto' }}>
         <Box
           sx={{
             display: 'flex',
+            flex: '1 1 auto',
             flexDirection: 'column',
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
+            padding: '40px 0',
             color: plantsTheme.palette.text.primary,
             background: alpha(plantsTheme.palette.background.paper, 0.3),
           }}
@@ -44,16 +37,17 @@ export default function Main() {
           <Typography variant="h2" component="h1" gutterBottom>
             {PagesTitles.main}
           </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography sx={{ marginBottom: '40px' }} variant="h5" component="h2" gutterBottom>
             {'Hot deals to celebrate ☀the summer☀'}
           </Typography>
-          <Typography sx={{ pt: '40px' }}>
+          <Button variant="contained" href="#contained-buttons">
+            <Link to={PATH.plants}>browse plants</Link>
+          </Button>
+          <Typography variant="h6" sx={{ pt: '40px' }}>
             <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn
           </Typography>
         </Box>
-
-        <MainImage />
       </Box>
-    </Container>
+    </Box>
   );
 }
