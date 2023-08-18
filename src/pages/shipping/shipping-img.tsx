@@ -6,7 +6,7 @@ export default function ShippingImage() {
       sx={{
         minHeight: '400px',
         minWidth: '300px',
-        background: 'url(./img/shipping/shipping-plant.webp) 0 0 / cover no-repeat',
+        background: 'url(./img/shipping/plants-shipping.webp) 0 0 / cover no-repeat',
       }}
     ></Box>
   );
