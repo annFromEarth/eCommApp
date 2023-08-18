@@ -29,7 +29,7 @@ export function GuaranteePage() {
   );
 }
 
-export function GuaranteeContent() {
+function GuaranteeContent() {
   return (
     <>
       <Box
@@ -51,15 +51,13 @@ export function GuaranteeContent() {
 
 function TextGuarantee() {
   const text = TEXT_GUARANTEE.map((item, index) => (
-    <Typography
-      key={index + 'text-guarantee'}
-      variant="body2"
-      color="text.secondary"
-      gutterBottom
-      sx={{ textAlign: 'justify' }}
-    >
-      {item}
-    </Typography>
+    <Box key={index + 'text-shipping'} sx={{ maxWidth: '700px' }}>
+      <Typography variant="body2" color="text.secondary" gutterBottom sx={{ textAlign: 'justify' }}>
+        <span>{item.first}</span>
+        {item.strong && <span className="strong-text">{item.strong}</span>}
+        <span>{item.second}</span>
+      </Typography>
+    </Box>
   ));
 
   return <Box sx={{ margin: '0 40px' }}>{text}</Box>;
