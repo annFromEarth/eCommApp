@@ -1,7 +1,7 @@
 import { Typography, createTheme } from '@mui/material';
 
 import { themeOptions } from '../../assets/theme1';
-import { PagesHeaderMenu } from '../../data/pages';
+import { PAGES_HEADER_MENU } from '../../data/pages';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
 
@@ -27,13 +27,13 @@ export default function HeaderNavPages() {
         }}
       >
         <Link className="link" to={PATH.plants}>
-          {PagesHeaderMenu.plants}
+          {PAGES_HEADER_MENU.plants}
         </Link>
         <Link className="link" to={PATH.workshops}>
-          {PagesHeaderMenu.workshops}
+          {PAGES_HEADER_MENU.workshops}
         </Link>
         <Link className="link" to={PATH.about}>
-          {PagesHeaderMenu.about}
+          {PAGES_HEADER_MENU.about}
         </Link>
       </Typography>
     </>

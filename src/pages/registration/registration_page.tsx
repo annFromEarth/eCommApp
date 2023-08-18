@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
-import { PagesTitles } from '../../data/TITLES';
+import { PAGES_TITLES } from '../../data/TITLES';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -23,7 +23,7 @@ export function RegistrationPage() {
         }}
       >
         <Typography variant="h2" component="h1" gutterBottom>
-          {PagesTitles.register}
+          {PAGES_TITLES.register}
         </Typography>
         <LoginLink />
       </Box>
