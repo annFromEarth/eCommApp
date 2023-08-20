@@ -1,0 +1,16 @@
+label {
+  color: black;
+}
+
+input {
+  display: block;
+  margin: 2px 0;
+  margin-bottom: 8px;
+  padding: 2px 0 2px 2px;
+  width: 100%;
+}
+
+input[type='submit'] {
+  color: blue;
+  border-radius: 5px;
+}

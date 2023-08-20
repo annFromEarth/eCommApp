@@ -20,7 +20,7 @@ module.exports = module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', '.env'],
   plugins: ['@typescript-eslint', 'react', 'prettier', 'react-hooks'],
   rules: {
     'no-console': 'error',
