@@ -15,40 +15,14 @@ import {
   cityRegEx,
 } from '../../utils/regexToValidate';
 
+import { IFormInput } from './types';
+
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 
 const plantsTheme = createTheme(themeOptions);
 
 import './registration-form.css';
 import { Box } from '@mui/material';
-
-enum CountryEnum {
-  uk = 'United Kingdom',
-  fr = 'France',
-}
-
-type Address = {
-  streetName: string;
-  city: string;
-  postalCode: string;
-  country: CountryEnum;
-};
-
-interface IFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  dateOfBirth: string | null;
-  addresses: Address[];
-  street: string;
-  city: string;
-  postalCode: string;
-  country: CountryEnum;
-  defaultAddress: '0' | '1';
-  defaultShippingAddress?: number;
-  defaultBillingAddress?: number;
-}
 
 export default function Form1() {
   const {
@@ -95,7 +69,9 @@ export default function Form1() {
 
       const result = await createCustomer(data);
       setCreationResult(result);
-    } catch (e) {}
+    } catch (e) {
+      //TODO: add error handling
+    }
   };
 
   return (
