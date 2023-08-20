@@ -15,6 +15,8 @@ import {
   cityRegEx,
 } from '../../utils/regexToValidate';
 
+import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
+
 const plantsTheme = createTheme(themeOptions);
 
 import './registration-form.css';
@@ -161,7 +163,6 @@ export default function Form1() {
         </p>
         <label>
           Password<br></br>
-          {/* //TODO: make similar with login RegEx */}
         </label>
         <input
           {...register('password', {
@@ -186,14 +187,7 @@ export default function Form1() {
         <input
           {...(register('dateOfBirth'),
           {
-            max: `${new Date(Date.now() - 441504000000).getFullYear()}-${(
-              new Date(Date.now() - 441504000000).getMonth() + 1
-            )
-              .toString()
-              .padStart(2, '0')}-${new Date(Date.now() - 441504000000)
-              .getDate()
-              .toString()
-              .padStart(2, '0')}`,
+            max: calcDateXYearsAgo(14),
             min: '1950-01-01',
           })}
           type="date"
