@@ -61,8 +61,11 @@ export default function Form1() {
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setDate(e.currentTarget.value);
   };
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    //TODO: add message on customer creation, add redirection and login on customer creation
+
+  const [creationResult, setCreationResult] = useState('');
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    //TODO: add message on customer creation(?), add redirection and login on customer creation
     try {
       data.addresses = [
         {
@@ -83,7 +86,10 @@ export default function Form1() {
       }
 
       data.dateOfBirth = date;
-      createCustomer(data);
+
+      const result = await createCustomer(data);
+      //   creationResult = result;
+      setCreationResult(result);
     } catch (e) {}
   };
 
@@ -104,7 +110,6 @@ export default function Form1() {
           Register
         </Typography>
       </Box>
-
       <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '50%', padding: '1em' }}>
         <label>
           First Name <br></br>
@@ -153,6 +158,7 @@ export default function Form1() {
         </p>
         <label>
           Password<br></br>
+          {/* //TODO: make similar with login RegEx */}
         </label>
         <input
           {...register('password', {
@@ -191,11 +197,13 @@ export default function Form1() {
           type="date"
           onChange={handleChange}
           ref={dateInputRef}
+          //   TODO: add no-date validation
         />
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.dateOfBirth?.message}
         </p>
         <label>Address:</label>
+        {/* //TODO: add handling multiple adresses to choose defaultBilling & Shipping */}
         <br></br>
         <label>Country</label>
         <select {...register('country', { required: 'This field is required' })}>
@@ -231,8 +239,8 @@ export default function Form1() {
         <label>Postal Code</label>
         <br></br>
         <Typography sx={{ fontStyle: 'italic', fontSize: '0.7em' }}>
-          Five to seven alphanumeric characters separated by a space. Example: &apos;AA1 1AA&apos;
-          or &apos;AA11 1AA&apos;
+          Five to seven alphanumeric characters (uppercase) separated by a space. Example: &apos;AA1
+          1AA&apos; or &apos;AA11 1AA&apos;
         </Typography>
         <input
           {...register('postalCode', {
@@ -240,7 +248,7 @@ export default function Form1() {
             pattern: {
               value: postcodeRegEx,
               message:
-                'Five to seven alphanumeric characters separated by a space. Example: "AA1 1AA" or "AA11 1AA"',
+                'Five to seven alphanumeric (uppercase) characters separated by a space. Example: "AA1 1AA" or "AA11 1AA"',
             },
           })}
         />
@@ -255,7 +263,7 @@ export default function Form1() {
         </select>
         <input type="submit" value="Submit" style={{ cursor: 'pointer' }} />
       </form>
-
+      <p style={{ color: 'red', marginBottom: '10px' }}>{creationResult}</p>
       <Typography>
         Already have an account? <Link href="#">Login</Link>
       </Typography>

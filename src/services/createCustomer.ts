@@ -14,7 +14,12 @@ export async function createCustomer(data = {}) {
         body: JSON.stringify(data),
       }
     );
-    return response.json();
+    const result = await response.json();
+    if (response.status === 201) {
+      return `Customer created. Welcome ${result.customer.firstName}!`;
+    } else {
+      return result.message;
+    }
   } catch (e) {
     //TODO: error handling
   }
