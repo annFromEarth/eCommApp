@@ -62,6 +62,7 @@ export default function Form1() {
     setDate(e.currentTarget.value);
   };
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    //TODO: add message on customer creation, add redirection and login on customer creation
     try {
       data.addresses = [
         {
@@ -83,7 +84,6 @@ export default function Form1() {
 
       data.dateOfBirth = date;
       createCustomer(data);
-      //   getBearerToken();
     } catch (e) {}
   };
 

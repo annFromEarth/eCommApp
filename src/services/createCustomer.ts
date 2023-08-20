@@ -1,33 +1,21 @@
-import { getBearerToken } from './getBearerToken';
+import { getAdminBearerToken } from './getAdminBearerToken';
 
 export async function createCustomer(data = {}) {
   try {
-    const BEARER_TOKEN = await getBearerToken();
+    const ADMIN_BEARER_TOKEN = await getAdminBearerToken();
     const response = await fetch(
       'https://api.europe-west1.gcp.commercetools.com/ecommerceapp_951/customers',
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${BEARER_TOKEN}`, //admin
+          Authorization: `Bearer ${ADMIN_BEARER_TOKEN}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       }
     );
     return response.json();
-  } catch (e) {}
+  } catch (e) {
+    //TODO: error handling
+  }
 }
-
-// ***Commersetools sample request
-// curl https://api.{region}.commercetools.com/{projectKey}/customers -i \
-// --header 'Authorization: Bearer ${BEARER_TOKEN}' \
-// --header 'Content-Type: application/json' \
-// --data-binary @- << DATA
-// {
-//   "email" : "johndoe@example.com",
-//   "firstName" : "John",
-//   "lastName" : "Doe",
-//   "password" : "secret123",
-
-// }
-// DATA
