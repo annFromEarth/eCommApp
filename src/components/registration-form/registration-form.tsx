@@ -1,38 +1,52 @@
+import { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Typography, createTheme, Link } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { themeOptions } from '../../assets/theme1';
 
+import { createCustomer } from '../../services/createCustomer';
+
+import {
+  emailRegExpRFC,
+  nameRegExp,
+  passwordRegExp,
+  postcodeRegEx,
+  streetRegEx,
+  cityRegEx,
+} from '../../utils/regexToValidate';
+
 const plantsTheme = createTheme(themeOptions);
 
 import './registration-form.css';
 import { Box } from '@mui/material';
-import { red } from '@mui/material/colors';
 
 enum CountryEnum {
   uk = 'United Kingdom',
-  ie = 'Ireland',
+  fr = 'France',
 }
+
+type Address = {
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: CountryEnum;
+};
 
 interface IFormInput {
   firstName: string;
   lastName: string;
-  eMail: string;
+  email: string;
   password: string;
-  dateOfBirth: string;
+  dateOfBirth: string | null;
+  addresses: Address[];
   street: string;
   city: string;
   postalCode: string;
   country: CountryEnum;
-  defaultShippingAddress: boolean;
-  defaultBillingAddress: boolean;
+  defaultAddress: '0' | '1';
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
 }
-
-// const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const emailRegExpRFC =
-  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-const nameRegExp = /^[a-zA-Z]+$/;
-const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 export default function Form1() {
   const {
@@ -40,20 +54,46 @@ export default function Form1() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
-  console.log(errors);
+  const [date, setDate] = useState('');
+  const dateInputRef = useRef(null);
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setDate(e.currentTarget.value);
+  };
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    try {
+      data.addresses = [
+        {
+          country: data.country,
+          postalCode: data.postalCode,
+          streetName: data.street,
+          city: data.city,
+        },
+      ];
+
+      if (data.defaultAddress === '0') {
+        data.defaultBillingAddress = Number('0');
+        data.defaultShippingAddress = Number('0');
+      }
+      if (data.defaultAddress === '1') {
+        data.defaultBillingAddress = undefined;
+        data.defaultShippingAddress = undefined;
+      }
+
+      data.dateOfBirth = date;
+      createCustomer(data);
+      //   getBearerToken();
+    } catch (e) {}
+  };
 
   return (
     <Box
       sx={{
         marginTop: 8,
-        width: '80%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        boxShadow: 3,
-        borderRadius: 2,
         px: 4,
         py: 6,
       }}
@@ -68,14 +108,13 @@ export default function Form1() {
       <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '50%', padding: '1em' }}>
         <label>
           First Name <br></br>
-          {/* <span style={{ fontStyle: 'italic' }}>* letters only</span> */}
         </label>
         <input
           {...register('firstName', {
             required: 'This field is required',
             pattern: {
               value: nameRegExp,
-              message: 'at least one letter, no numbers, no special characters',
+              message: 'At least one letter, no numbers, no special characters',
             },
           })}
           placeholder="Pomona"
@@ -83,17 +122,15 @@ export default function Form1() {
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.firstName?.message}
         </p>
-
         <label>
           Last Name <br></br>
-          {/* <span style={{ fontStyle: 'italic' }}>* letters only</span> */}
         </label>
         <input
           {...register('lastName', {
             required: 'This field is required',
             pattern: {
               value: nameRegExp,
-              message: 'minimum one letter, no numbers, no special characters',
+              message: 'Minimum one letter, no numbers, no special characters',
             },
           })}
           placeholder="Sprout"
@@ -101,31 +138,21 @@ export default function Form1() {
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.lastName?.message}
         </p>
-
         <label>
           Email<br></br>
         </label>
         <input
-          {...register('eMail', {
+          {...register('email', {
             required: 'This field is required',
             pattern: { value: emailRegExpRFC, message: 'not a valid email' },
           })}
           placeholder="pomona_sprout@gmail.com"
         />
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
-          {errors.eMail?.message}
+          {errors.email?.message}
         </p>
-
         <label>
           Password<br></br>
-          {/* <span style={{ fontStyle: 'italic' }}>
-            <ul>
-              <li>* minimum 8 characters</li>
-              <li>* at least 1 uppercase letter</li>
-              <li>* at least 1 lowercase letter</li>
-              <li>* at least 1 number</li>
-            </ul>
-          </span> */}
         </label>
         <input
           {...register('password', {
@@ -133,7 +160,7 @@ export default function Form1() {
             pattern: {
               value: passwordRegExp,
               message:
-                'minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number',
+                'Password too weak. Please use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number',
             },
           })}
           placeholder="****"
@@ -141,55 +168,91 @@ export default function Form1() {
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.password?.message}
         </p>
-
         <label>
           Date of birth <br></br>
-          <span style={{ fontStyle: 'italic' }}>(Date format: YYYY-MM-DD)</span>
         </label>
-        <input {...register('dateOfBirth')} />
+        <Typography sx={{ fontStyle: 'italic', fontSize: '0.7em' }}>
+          You have to be minimum 14 years of age
+        </Typography>
+        <input
+          {...(register('dateOfBirth'),
+          {
+            required: true,
+            max: `${new Date(Date.now() - 441504000000).getFullYear()}-${(
+              new Date(Date.now() - 441504000000).getMonth() + 1
+            )
+              .toString()
+              .padStart(2, '0')}-${new Date(Date.now() - 441504000000)
+              .getDate()
+              .toString()
+              .padStart(2, '0')}`,
+            min: '1950-01-01',
+          })}
+          type="date"
+          onChange={handleChange}
+          ref={dateInputRef}
+        />
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.dateOfBirth?.message}
         </p>
-
         <label>Address:</label>
         <br></br>
-
-        <label>Street</label>
-        <input {...register('street')} placeholder="street" />
-
-        <label>City</label>
-        <input {...register('city')} placeholder="city" />
-
-        <label>Postal Code</label>
-        <input {...register('postalCode')} placeholder="postal code" />
-
         <label>Country</label>
-        <select {...register('country')}>
-          <option value="United Kingdom">United Kingdom</option>
-          <option value="Ireland">Ireland</option>
+        <select {...register('country', { required: 'This field is required' })}>
+          <option value="UK">United Kingdom</option>
+          <option value="FR">France</option>
         </select>
         <br></br>
-
+        <label>Street</label>
         <input
-          {...register('defaultShippingAddress')}
-          style={{ display: 'inline', width: '10%' }}
-          type="checkbox"
-          id="defaultShippingAddress"
-          name="defaultShippingAddress"
+          {...register('street', {
+            required: 'This field is required',
+            pattern: { value: streetRegEx, message: 'Not a valid street address' },
+          })}
+          placeholder="street"
         />
-        <label>Set as default shipping address</label>
-
+        <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
+          {errors.street?.message}
+        </p>
+        <label>City</label>
+        <input
+          {...register('city', {
+            required: 'This field is required',
+            pattern: {
+              value: cityRegEx,
+              message: 'Not a valid city name',
+            },
+          })}
+          placeholder="city"
+        />
+        <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
+          {errors.city?.message}
+        </p>
+        <label>Postal Code</label>
         <br></br>
-
+        <Typography sx={{ fontStyle: 'italic', fontSize: '0.7em' }}>
+          Five to seven alphanumeric characters separated by a space. Example: &apos;AA1 1AA&apos;
+          or &apos;AA11 1AA&apos;
+        </Typography>
         <input
-          {...register('defaultBillingAddress')}
-          style={{ display: 'inline', width: '10%' }}
-          type="checkbox"
-          id="defaultBillingAddress"
-          name="defaultBillingAddress"
+          {...register('postalCode', {
+            required: 'This field is required',
+            pattern: {
+              value: postcodeRegEx,
+              message:
+                'Five to seven alphanumeric characters separated by a space. Example: "AA1 1AA" or "AA11 1AA"',
+            },
+          })}
         />
-        <label style={{ display: 'inline' }}>Set as default billing address</label>
+        <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
+          {errors.postalCode?.message}
+        </p>
 
+        <label>Set as default address</label>
+        <select {...register('defaultAddress')}>
+          <option value="0">Yes</option>
+          <option value="1">No</option>
+        </select>
         <input type="submit" value="Submit" style={{ cursor: 'pointer' }} />
       </form>
 
