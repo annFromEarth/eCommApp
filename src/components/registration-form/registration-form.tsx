@@ -53,7 +53,11 @@ export default function Form1() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<IFormInput>({
+    defaultValues: {
+      dateOfBirth: '2009-09-09',
+    },
+  });
 
   const [date, setDate] = useState('');
   const dateInputRef = useRef(null);
@@ -88,7 +92,6 @@ export default function Form1() {
       data.dateOfBirth = date;
 
       const result = await createCustomer(data);
-      //   creationResult = result;
       setCreationResult(result);
     } catch (e) {}
   };
@@ -166,7 +169,7 @@ export default function Form1() {
             pattern: {
               value: passwordRegExp,
               message:
-                'Password too weak. Please use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number',
+                'Password too weak. Please use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
             },
           })}
           placeholder="****"
@@ -183,7 +186,6 @@ export default function Form1() {
         <input
           {...(register('dateOfBirth'),
           {
-            required: true,
             max: `${new Date(Date.now() - 441504000000).getFullYear()}-${(
               new Date(Date.now() - 441504000000).getMonth() + 1
             )
@@ -197,7 +199,6 @@ export default function Form1() {
           type="date"
           onChange={handleChange}
           ref={dateInputRef}
-          //   TODO: add no-date validation
         />
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>
           {errors.dateOfBirth?.message}
