@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, createTheme, Typography, TextField, FormGroup } from '@mui/material';
-import Button from '@mui/material/Button';
+import {
+  Box,
+  createTheme,
+  Typography,
+  TextField,
+  FormGroup,
+  IconButton,
+  InputAdornment,
+  Button,
+} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
@@ -14,6 +24,7 @@ const plantsTheme = createTheme(themeOptions);
 export function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   function encodeLoginRequestBody() {
@@ -68,6 +79,12 @@ export function LoginPage() {
   //       );
   //   };
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Box
@@ -101,13 +118,28 @@ export function LoginPage() {
             />
             <TextField
               id="outlined-basic"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               label="Password"
               variant="outlined"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(event.target.value)
               }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+
             <Button variant="contained" onClick={(e) => handleLogin(e)}>
               Login
             </Button>
