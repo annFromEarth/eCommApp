@@ -5,7 +5,7 @@ import HeaderNavPages from './header-nav';
 
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
-import { PAGES_HEADER_MENU } from '../../data/pages';
+import { PagesHeaderMenu } from '../../data/pages';
 import { HeaderTitles } from '../../data/TITLES';
 
 const plantsTheme = createTheme(themeOptions);
@@ -82,29 +82,22 @@ function HeaderNavLinks() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
           gap: '10px',
         }}
       >
-        {sessionStorage.getItem('authorization-token') ? (
-          <Typography component="p">You're logged in.</Typography>
-        ) : (
-          <>
-            <Button variant="contained" href="#contained-buttons">
-              <Link to={PATH.login}>
-                {PAGES_HEADER_MENU.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
-              </Link>
-            </Button>
-            <Button variant="contained" href="#contained-buttons">
-              <Link to={PATH.register}>
-                {PAGES_HEADER_MENU.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
-              </Link>
-            </Button>
-          </>
-        )}
-        <Button variant="contained">
+        <Button variant="contained" href="#contained-buttons">
+          <Link to={PATH.login}>
+            {PagesHeaderMenu.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
+          </Link>
+        </Button>
+        <Button variant="contained" href="#contained-buttons">
+          <Link to={PATH.register}>
+            {PagesHeaderMenu.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
+          </Link>
+        </Button>
+        <Button variant="contained" href="#contained-buttons">
           <Link to={PATH.basket}>
-            {PAGES_HEADER_MENU.basket} <span style={{ marginLeft: '15px' }}>&#128722;</span>
+            {PagesHeaderMenu.basket} <span style={{ marginLeft: '15px' }}>&#128722;</span>
           </Link>
         </Button>
       </Typography>
