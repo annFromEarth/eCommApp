@@ -82,20 +82,27 @@ function HeaderNavLinks() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
           gap: '10px',
         }}
       >
-        <Button variant="contained" href="#contained-buttons">
-          <Link to={PATH.login}>
-            {PagesHeaderMenu.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
-          </Link>
-        </Button>
-        <Button variant="contained" href="#contained-buttons">
-          <Link to={PATH.register}>
-            {PagesHeaderMenu.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
-          </Link>
-        </Button>
-        <Button variant="contained" href="#contained-buttons">
+        {sessionStorage.getItem('authorization-token') ? (
+          <Typography component="p">You're logged in.</Typography>
+        ) : (
+          <>
+            <Button variant="contained">
+              <Link to={PATH.login}>
+                {PagesHeaderMenu.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
+              </Link>
+            </Button>
+            <Button variant="contained">
+              <Link to={PATH.register}>
+                {PagesHeaderMenu.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
+              </Link>
+            </Button>
+          </>
+        )}
+        <Button variant="contained">
           <Link to={PATH.basket}>
             {PagesHeaderMenu.basket} <span style={{ marginLeft: '15px' }}>&#128722;</span>
           </Link>
