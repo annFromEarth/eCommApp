@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, AppBar, Toolbar, Typography, createTheme, Container } from '@mui/material';
 import Button from '@mui/material/Button';
 import { themeOptions } from '../../assets/theme1';
@@ -76,6 +77,13 @@ function HeaderTitle() {
 }
 
 function HeaderNavLinks() {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.removeItem('authorization-token');
+    navigate(PATH.main);
+  };
+
   return (
     <Box>
       <Typography
@@ -85,17 +93,25 @@ function HeaderNavLinks() {
           gap: '10px',
         }}
       >
-        <Button variant="contained" href="#contained-buttons">
-          <Link to={PATH.login}>
-            {PAGES_HEADER_MENU.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
-          </Link>
-        </Button>
-        <Button variant="contained" href="#contained-buttons">
-          <Link to={PATH.register}>
-            {PAGES_HEADER_MENU.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
-          </Link>
-        </Button>
-        <Button variant="contained" href="#contained-buttons">
+        {sessionStorage.getItem('authorization-token') ? (
+          <Button variant="contained" onClick={() => logout()}>
+            {PAGES_HEADER_MENU.logout} <span style={{ marginLeft: '15px' }}>&#128682;</span>
+          </Button>
+        ) : (
+          <>
+            <Button variant="contained">
+              <Link to={PATH.login}>
+                {PAGES_HEADER_MENU.login} <span style={{ marginLeft: '15px' }}>&#128273;</span>
+              </Link>
+            </Button>
+            <Button variant="contained">
+              <Link to={PATH.register}>
+                {PAGES_HEADER_MENU.register} <span style={{ marginLeft: '15px' }}>&#10133;</span>
+              </Link>
+            </Button>
+          </>
+        )}
+        <Button variant="contained">
           <Link to={PATH.basket}>
             {PAGES_HEADER_MENU.basket} <span style={{ marginLeft: '15px' }}>&#128722;</span>
           </Link>

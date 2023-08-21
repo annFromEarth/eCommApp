@@ -1,8 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
 import { createCustomer } from '../../services/createCustomer';
+import { loginUser } from '../login-form/login-request';
 
 import {
   emailRegExpRFC,
@@ -19,6 +21,7 @@ import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 
 import './registration-form.css';
 import { Box } from '@mui/material';
+import { PATH } from '../../data/PATH';
 
 export default function Form1() {
   const {
@@ -34,11 +37,19 @@ export default function Form1() {
   const [date, setDate] = useState('');
   const dateInputRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setDate(e.currentTarget.value);
   };
 
   const [creationResult, setCreationResult] = useState('');
+
+  useEffect(() => {
+    if (sessionStorage.getItem('authorization-token')) {
+      navigate(PATH.main);
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     //TODO: add message on customer creation(?), add redirection and login on customer creation
@@ -63,8 +74,13 @@ export default function Form1() {
 
       data.dateOfBirth = date;
 
-      const result = await createCustomer(data);
-      setCreationResult(result);
+      createCustomer(data).then((result) => {
+        setCreationResult(result);
+        loginUser(data.email, data.password).then((response) => {
+          sessionStorage.setItem('authorization-token', response.access_token);
+          navigate(PATH.main);
+        });
+      });
     } catch (e) {
       //TODO: add error handling
     }

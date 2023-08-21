@@ -5,4 +5,5 @@ export const PAGES_HEADER_MENU = {
   login: 'LOGIN',
   register: 'REGISTER',
   basket: 'BASKET',
+  logout: 'LOGOUT'
 };
