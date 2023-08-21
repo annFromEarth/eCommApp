@@ -1,21 +1,19 @@
 import Form1 from '../../components/registration-form/registration-form';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
-import { Box, createTheme,ThemeProvider, createTheme, Typography } from '@mui/material';
+import { Box, createTheme, ThemeProvider } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
-import { PAGES_TITLES } from '../../data/TITLES';
-
+// import { PAGES_TITLES } from '../../data/TITLES';
 
 const plantsTheme = createTheme(themeOptions);
 
 export function RegistrationPage() {
   return (
-
     <ThemeProvider theme={plantsTheme}>
-
+      {/* <Typography variant="h2" component="h1" gutterBottom>
+        {PAGES_TITLES.register}
+      </Typography> */}
       <Box
         sx={{
           display: 'flex',
@@ -26,12 +24,11 @@ export function RegistrationPage() {
           backgroundSize: 'cover',
         }}
       >
-        <Header />
         <Form1 />
-        <Footer />
       </Box>
-    </ThemeProvider>
-
+      {/* </ThemeProvider> */}
+      <Box
+        sx={{
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
@@ -39,12 +36,9 @@ export function RegistrationPage() {
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Typography variant="h2" component="h1" gutterBottom>
-          {PAGES_TITLES.register}
-        </Typography>
         <LoginLink />
       </Box>
-    </>
+    </ThemeProvider>
   );
 }
 
@@ -74,6 +68,5 @@ function LoginLink() {
         </Box>
       </Box>
     </>
-
   );
 }

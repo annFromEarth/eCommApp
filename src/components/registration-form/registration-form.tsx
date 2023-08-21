@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Typography, createTheme, Link } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import { themeOptions } from '../../assets/theme1';
+import { Typography } from '@mui/material';
 
 import { createCustomer } from '../../services/createCustomer';
 
@@ -18,8 +16,6 @@ import {
 import { IFormInput } from './types';
 
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
-
-const plantsTheme = createTheme(themeOptions);
 
 import './registration-form.css';
 import { Box } from '@mui/material';
@@ -77,7 +73,7 @@ export default function Form1() {
   return (
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 0,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -85,7 +81,6 @@ export default function Form1() {
         py: 6,
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: plantsTheme.palette.background.default }}>FPH</Avatar>
       <Box>
         <Typography component="h1" variant="h5">
           Register
@@ -235,9 +230,6 @@ export default function Form1() {
         <input type="submit" value="Submit" style={{ cursor: 'pointer' }} />
       </form>
       <p style={{ color: 'red', marginBottom: '10px' }}>{creationResult}</p>
-      <Typography>
-        Already have an account? <Link href="#">Login</Link>
-      </Typography>
     </Box>
   );
 }
