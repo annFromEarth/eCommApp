@@ -10,8 +10,9 @@ import {
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
-import { DetailsType } from './login.types';
 import { PATH } from '../../data/PATH';
+import { emailRegExpRFC, passwordRegExp } from '../../utils/regexToValidate';
+import { loginUser } from './login-request';
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
@@ -26,43 +27,10 @@ export default function LoginForm() {
     }
   }, []);
 
-  function encodeLoginRequestBody() {
-    const details: DetailsType = {
-      grant_type: 'password',
-      username: email,
-      password: password,
-    };
-
-    const formBody: string[] = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property as keyof typeof details]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    return formBody.join('&');
-  }
-
-  async function loginUser() {
-    const response = await fetch(
-      'https://auth.europe-west1.gcp.commercetools.com/oauth/ecommerceapp_951/customers/token',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization:
-            'Basic N29zbFJYLVN3dUVPWWsycERSeHdTSS1wOmRXX0Q1eGNRU004WC1lbHRxUXFyMHp1bVRQUGo4QVlt',
-        },
-        body: encodeLoginRequestBody(),
-      }
-    );
-    const data = await response.json();
-    return data;
-  }
-
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (validateEmail(email) && validatePassword(password)) {
-      loginUser().then((response) => {
+      loginUser(email, password).then((response) => {
         if (response.statusCode === 400) {
           setErrorLogin(response.message);
         } else if (response.access_token) {
@@ -74,16 +42,10 @@ export default function LoginForm() {
   };
 
   const validateEmail = (mail: string) => {
-    return String(mail)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+    return String(mail).toLowerCase().match(emailRegExpRFC);
   };
   const validatePassword = (passwordString: string) => {
-    return String(passwordString).match(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    );
+    return String(passwordString).match(passwordRegExp);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
