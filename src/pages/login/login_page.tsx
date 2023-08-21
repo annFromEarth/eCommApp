@@ -1,6 +1,6 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Box, createTheme, Typography, Button } from '@mui/material';
 
+import LoginForm from '../../components/login-form/login-form';
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/TITLES';
@@ -25,6 +25,7 @@ export function LoginPage() {
         <Typography variant="h2" component="h1" gutterBottom>
           {PAGES_TITLES.login}
         </Typography>
+        <LoginForm />
         <RegisterLink />
       </Box>
     </>
