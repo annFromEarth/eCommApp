@@ -25,7 +25,7 @@ export default function LoginForm() {
     if (sessionStorage.getItem('authorization-token')) {
       navigate(PATH.main);
     }
-  }, []);
+  }); //,[])
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();

@@ -1,12 +1,10 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import NotFoundImage from './not-found-img';
 import { PATH } from '../../data/PATH';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function NotFoundPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

@@ -1,26 +1,18 @@
 import { useRef, useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+
+import { PATTERNS } from './pattern-constants';
 
 import { createCustomer } from '../../services/createCustomer';
 import { loginUser } from '../login-form/login-request';
-
-import {
-  emailRegExpRFC,
-  nameRegExp,
-  passwordRegExp,
-  postcodeRegEx,
-  streetRegEx,
-  cityRegEx,
-} from '../../utils/regexToValidate';
 
 import { IFormInput } from './types';
 
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 
 import './registration-form.css';
-import { Box } from '@mui/material';
 import { PATH } from '../../data/PATH';
 
 export default function Form1() {
@@ -49,7 +41,7 @@ export default function Form1() {
     if (sessionStorage.getItem('authorization-token')) {
       navigate(PATH.main);
     }
-  }, []);
+  }); //,[])
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     //TODO: add message on customer creation(?), add redirection and login on customer creation
@@ -66,8 +58,7 @@ export default function Form1() {
       if (data.defaultAddress === '0') {
         data.defaultBillingAddress = Number('0');
         data.defaultShippingAddress = Number('0');
-      }
-      if (data.defaultAddress === '1') {
+      } else if (data.defaultAddress === '1') {
         data.defaultBillingAddress = undefined;
         data.defaultShippingAddress = undefined;
       }
@@ -97,11 +88,6 @@ export default function Form1() {
         py: 6,
       }}
     >
-      <Box>
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-      </Box>
       <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '50%', padding: '1em' }}>
         <label>
           First Name <br></br>
@@ -109,10 +95,7 @@ export default function Form1() {
         <input
           {...register('firstName', {
             required: 'This field is required',
-            pattern: {
-              value: nameRegExp,
-              message: 'At least one letter, no numbers, no special characters',
-            },
+            pattern: PATTERNS.FIRST_NAME,
           })}
           placeholder="Pomona"
         />
@@ -125,10 +108,7 @@ export default function Form1() {
         <input
           {...register('lastName', {
             required: 'This field is required',
-            pattern: {
-              value: nameRegExp,
-              message: 'Minimum one letter, no numbers, no special characters',
-            },
+            pattern: PATTERNS.LAST_NAME,
           })}
           placeholder="Sprout"
         />
@@ -141,7 +121,7 @@ export default function Form1() {
         <input
           {...register('email', {
             required: 'This field is required',
-            pattern: { value: emailRegExpRFC, message: 'not a valid email' },
+            pattern: PATTERNS.EMAIL,
           })}
           placeholder="pomona_sprout@gmail.com"
         />
@@ -154,11 +134,7 @@ export default function Form1() {
         <input
           {...register('password', {
             required: 'This field is required',
-            pattern: {
-              value: passwordRegExp,
-              message:
-                'Password too weak. Please use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
-            },
+            pattern: PATTERNS.PASSWORD,
           })}
           placeholder="****"
         />
@@ -190,14 +166,13 @@ export default function Form1() {
         <label>Country</label>
         <select {...register('country', { required: 'This field is required' })}>
           <option value="UK">United Kingdom</option>
-          <option value="FR">France</option>
         </select>
         <br></br>
         <label>Street</label>
         <input
           {...register('street', {
             required: 'This field is required',
-            pattern: { value: streetRegEx, message: 'Not a valid street address' },
+            pattern: PATTERNS.STREET,
           })}
           placeholder="street"
         />
@@ -208,10 +183,7 @@ export default function Form1() {
         <input
           {...register('city', {
             required: 'This field is required',
-            pattern: {
-              value: cityRegEx,
-              message: 'Not a valid city name',
-            },
+            pattern: PATTERNS.CITY,
           })}
           placeholder="city"
         />
@@ -227,11 +199,7 @@ export default function Form1() {
         <input
           {...register('postalCode', {
             required: 'This field is required',
-            pattern: {
-              value: postcodeRegEx,
-              message:
-                'Five to seven alphanumeric (uppercase) characters separated by a space. Example: "AA1 1AA" or "AA11 1AA"',
-            },
+            pattern: PATTERNS.POSTCODE,
           })}
         />
         <p style={{ fontSize: '0.8em', margin: '5px 0 10px 0', color: 'red' }}>

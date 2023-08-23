@@ -1,12 +1,15 @@
-import Card from '@mui/material/Card';
-import { Box, Typography } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { IDescription, IWorkshopCard } from '../../types/types';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IDescription, IWorkshopCard } from '../../types/types';
 
 export default function CardWorkshops(props: IWorkshopCard) {
   return (

@@ -1,14 +1,10 @@
-import { Typography, Box, createTheme, alpha } from '@mui/material';
-import Button from '@mui/material/Button';
-
-import { themeOptions } from '../../assets/theme1';
+import { Typography, Box, useTheme, alpha, Button } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
 
-const plantsTheme = createTheme(themeOptions);
-
 export default function Main() {
+  const plantsTheme = useTheme();
   return (
     <Box
       component="main"

@@ -4,7 +4,7 @@ import { BasketPage } from '../pages/basket/basket_page';
 import { ContactsPage } from '../pages/contacts/contacts_page';
 import { GuaranteePage } from '../pages/guarantee/guarantee_page';
 import { LoginPage } from '../pages/login/login_page';
-import MainPage from '../pages/main/main_page-create';
+import MainPage from '../pages/main/main-page-create';
 import { NotFoundPage } from '../pages/not-found/not-found';
 import { PlantsPage } from '../pages/plants/plants_page';
 import { QuestionsPage } from '../pages/questions/questions_page';

@@ -1,6 +1,4 @@
-import { Box, Typography } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Box, Typography, Tabs, Tab } from '@mui/material';
 import { INCOMING_WORKSHOPS, MAIN_CONTENT, PAST_WORKSHOPS } from './dataWorkshops';
 import React from 'react';
 import CardWorkshops from './cardWorkshops';
