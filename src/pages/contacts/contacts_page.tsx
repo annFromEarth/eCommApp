@@ -1,4 +1,4 @@
-import { Box, createTheme, Typography } from '@mui/material';
+import { Box, Button, createTheme, Typography } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import Link from '@mui/material/Link';
@@ -61,7 +61,7 @@ function ContactsContent() {
 
 function ContactsInfo() {
   const text = CONTACTS_INFO.map((item, index) => (
-    <Link href={item.link} key={index + 'contacts-info'} sx={{ '& > :not(style)': { m: 1 } }}>
+    <Button href={item.link} key={index + 'contacts-info'} sx={{ '& > :not(style)': { m: 1 } }}>
       <Fab variant="extended" color="primary">
         {item.address && <NavigationIcon sx={{ mr: 1 }} />}
         {item.phone && <CallIcon sx={{ mr: 1 }} />}
@@ -69,7 +69,7 @@ function ContactsInfo() {
         {item.instagram && <InstagramIcon sx={{ mr: 1 }} />}
         {item.title}
       </Fab>
-    </Link>
+    </Button>
   ));
 
   return <Box sx={{ margin: '0 40px' }}>{text}</Box>;

@@ -11,7 +11,7 @@ export default function HeaderNavPages() {
   return (
     <>
       <Typography
-        variant="h6"
+        component="div"
         noWrap
         sx={{
           mr: 2,
@@ -19,6 +19,7 @@ export default function HeaderNavPages() {
           width: '800px',
           justifyContent: 'space-between',
           fontFamily: 'monospace',
+          fontSize: '1.215rem',
           fontWeight: 700,
           letterSpacing: '.3rem',
           color: plantsTheme.palette.background.paper,

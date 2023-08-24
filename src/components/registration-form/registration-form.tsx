@@ -19,7 +19,6 @@ import { IFormInput } from './types';
 
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 
-import './registration-form.css';
 import { Box } from '@mui/material';
 import { PATH } from '../../data/PATH';
 

@@ -47,7 +47,6 @@ function HeaderTitle() {
   return (
     <Box sx={{ display: 'flex' }}>
       <Typography
-        variant="h6"
         noWrap
         component="a"
         href={PATH.main}

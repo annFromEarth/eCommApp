@@ -13,10 +13,10 @@ export default function CardWorkshops(props: IWorkshopCard) {
     <Card sx={{ maxWidth: 345, minWidth: 300 }}>
       <CardMedia component="img" alt="green iguana" height="140" image={props.img} />
       <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <Typography gutterBottom variant="h6">
+        <Typography gutterBottom variant="body2" sx={{ fontSize: '1.25rem' }}>
           {props.title}
         </Typography>
-        <Typography variant="subtitle2" color="red">
+        <Typography variant="body2" color="red">
           {props.date}
         </Typography>
         <Typography variant="body2" color="text.secondary">
