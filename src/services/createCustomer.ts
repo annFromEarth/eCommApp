@@ -18,7 +18,7 @@ export async function createCustomer(data = {}) {
     if (response.status === 201) {
       return `Customer created. Welcome ${result.customer.firstName}!`;
     } else {
-      return result.message;
+      return result;
     }
   } catch (e) {
     //TODO: error handling

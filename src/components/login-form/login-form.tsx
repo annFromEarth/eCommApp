@@ -19,17 +19,19 @@ export default function LoginForm() {
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorLogin, setErrorLogin] = useState<string>('');
+  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(false);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionStorage.getItem('authorization-token')) {
       navigate(PATH.main);
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    if (validateEmail(email) && validatePassword(password)) {
+    if (validateEmail(email) && validatePassword(password) && !isEmailEmpty && !isPasswordEmpty) {
       loginUser(email, password).then((response) => {
         if (response.statusCode === 400) {
           setErrorLogin(response.message);
@@ -55,7 +57,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form style={{ minWidth: '340px' }}>
+    <form style={{ width: '340px' }}>
       <FormGroup
         sx={{
           gap: '15px',
@@ -63,28 +65,36 @@ export default function LoginForm() {
         }}
       >
         <TextField
-          error={email !== '' && !validateEmail(email)}
+          error={(email !== '' && !validateEmail(email)) || isEmailEmpty}
           id="outlined-basic"
           label="Email"
           variant="outlined"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             errorLogin !== '' && setErrorLogin('');
             setEmail(event.target.value);
+            event.target.value === '' ? setIsEmailEmpty(true) : setIsEmailEmpty(false);
           }}
-          helperText={email !== '' && !validateEmail(email) && 'Please, enter valid email'}
+          helperText={
+            (email !== '' && !validateEmail(email) && 'Please, enter valid email.') ||
+            (isEmailEmpty && 'Email is required.')
+          }
         />
         <TextField
-          error={password !== '' && !validatePassword(password)}
+          error={(password !== '' && !validatePassword(password)) || isPasswordEmpty}
           id="outlined-basic"
           type={showPassword ? 'text' : 'password'}
           label="Password"
           variant="outlined"
           helperText={
-            password !== '' && !validatePassword(password) && 'Please, enter valid password'
+            (password !== '' &&
+              !validatePassword(password) &&
+              'Please, enter valid password. Use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character') ||
+            (isPasswordEmpty && 'Password is required')
           }
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             errorLogin !== '' && setErrorLogin('');
             setPassword(event.target.value);
+            event.target.value === '' ? setIsPasswordEmpty(true) : setIsPasswordEmpty(false);
           }}
           InputProps={{
             endAdornment: (

@@ -49,7 +49,7 @@ export default function Form1() {
     if (sessionStorage.getItem('authorization-token')) {
       navigate(PATH.main);
     }
-  }, []);
+  }, [navigate]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     //TODO: add message on customer creation(?), add redirection and login on customer creation
@@ -75,11 +75,17 @@ export default function Form1() {
       data.dateOfBirth = date;
 
       createCustomer(data).then((result) => {
-        setCreationResult(result);
-        loginUser(data.email, data.password).then((response) => {
-          sessionStorage.setItem('authorization-token', response.access_token);
-          navigate(PATH.main);
-        });
+        if (result.message) {
+          setCreationResult(result.message);
+        } else {
+          setCreationResult(result);
+          loginUser(data.email, data.password).then((response) => {
+            if (response.access_token) {
+              sessionStorage.setItem('authorization-token', response.access_token);
+              navigate(PATH.main);
+            }
+          });
+        }
       });
     } catch (e) {
       //TODO: add error handling
