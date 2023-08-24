@@ -1,11 +1,9 @@
 import { Box, Button, createTheme, Typography } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import NavigationIcon from '@mui/icons-material/Navigation';
-import Link from '@mui/material/Link';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import InstagramIcon from '@mui/icons-material/Instagram';
-
 import { themeOptions } from '../../assets/theme1';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { CONTACTS_INFO, CONTACTS_TEXT } from './dataContacts';

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 
 import { themeOptions } from '../../assets/theme1';
 import { PAGES_TITLES } from '../../data/TITLES';
-import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
 
 const plantsTheme = createTheme(themeOptions);
