@@ -11,7 +11,7 @@ export const PAGES_TITLES = {
   login: 'Login Page',
   plants: 'Plants',
   questions: 'FAQ',
-  register: 'Registration Page',
+  register: 'Register',
   shipping: 'Shipping',
   workshops: 'Online & Retail Workshops',
 };

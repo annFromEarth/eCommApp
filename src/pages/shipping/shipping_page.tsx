@@ -1,12 +1,10 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 import ShippingImage from './shipping-img';
 import { TEXT_SHIPPING } from './dataShipping';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function ShippingPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box
@@ -30,6 +28,7 @@ export function ShippingPage() {
 }
 
 function ShippingContent() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

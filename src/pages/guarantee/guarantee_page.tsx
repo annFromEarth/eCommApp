@@ -1,12 +1,10 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { TEXT_GUARANTEE } from './dataGuarantee';
 import GuaranteeImage from './guarantee-img';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function GuaranteePage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box
@@ -30,6 +28,7 @@ export function GuaranteePage() {
 }
 
 function GuaranteeContent() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

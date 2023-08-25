@@ -1,13 +1,11 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 import QuestionsImage from './questions-img';
 import { QUESTIONS } from './dataQuestions';
 import { AccordionQuestionsCard } from './questionsCard';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function QuestionsPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

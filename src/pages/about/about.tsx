@@ -1,9 +1,7 @@
-import { Container, Typography, Box, createTheme } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
-
-const plantsTheme = createTheme(themeOptions);
+import { Container, Typography, Box, useTheme } from '@mui/material';
 
 export default function About() {
+  const plantsTheme = useTheme();
   return (
     <Container component="main" sx={{ display: 'flex', flex: '2' }}>
       <Box

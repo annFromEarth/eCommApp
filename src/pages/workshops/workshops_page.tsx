@@ -1,12 +1,10 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { MAIN_CONTENT } from './dataWorkshops';
 import TabsWorkshops from './tabsWorkshops';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function WorkshopsPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box
