@@ -11,15 +11,15 @@ export default function HeaderNavPages() {
   return (
     <>
       <Typography
-        variant="h6"
+        component="div"
         noWrap
-        component="a"
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
           width: '800px',
           justifyContent: 'space-between',
           fontFamily: 'monospace',
+          fontSize: '1.215rem',
           fontWeight: 700,
           letterSpacing: '.3rem',
           color: plantsTheme.palette.background.paper,

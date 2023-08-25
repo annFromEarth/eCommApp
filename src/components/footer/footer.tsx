@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import LinkMI from '@mui/material/Link';
 import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
 
@@ -14,9 +13,9 @@ function Copyright() {
     <ThemeProvider theme={plantsTheme}>
       <Typography variant="body2" color={plantsTheme.palette.background.paper}>
         {' © '}
-        <LinkMI href="/" color={plantsTheme.palette.background.paper}>
+        <Link to="/" color={plantsTheme.palette.background.paper}>
           FLORAPHILIE
-        </LinkMI>{' '}
+        </Link>{' '}
         {new Date().getFullYear()}
       </Typography>
     </ThemeProvider>

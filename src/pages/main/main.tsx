@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 
 import { themeOptions } from '../../assets/theme1';
 import { PAGES_TITLES } from '../../data/TITLES';
-import { Link } from 'react-router-dom';
 import { PATH } from '../../data/PATH';
 
 const plantsTheme = createTheme(themeOptions);
@@ -40,8 +39,9 @@ export default function Main() {
           <Typography sx={{ marginBottom: '40px' }} variant="h5" component="h2" gutterBottom>
             {'Hot deals to celebrate ☀the summer☀'}
           </Typography>
-          <Button variant="contained" href="#contained-buttons">
-            <Link to={PATH.plants}>browse plants</Link>
+          <Button variant="contained" href={PATH.plants}>
+            {' '}
+            browse plants{' '}
           </Button>
           <Typography variant="h6" sx={{ pt: '40px' }}>
             <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn

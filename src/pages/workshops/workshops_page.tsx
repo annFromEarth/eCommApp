@@ -2,7 +2,7 @@ import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme1';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { MAIN_CONTENT } from './dataWorkshops';
-import { TabsWorkshops } from './tabsWorkshops';
+import TabsWorkshops from './tabsWorkshops';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -19,7 +19,7 @@ export function WorkshopsPage() {
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="body2" sx={{ fontSize: '2.125rem' }} gutterBottom>
           {PAGES_TITLES.workshops}
         </Typography>
         <WorkshopsContent />

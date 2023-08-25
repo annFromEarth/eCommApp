@@ -10,7 +10,7 @@ input {
   width: 100%;
 }
 
-input[type='submit'] {
+input[type=submit] {
   color: blue;
   border-radius: 5px;
 }

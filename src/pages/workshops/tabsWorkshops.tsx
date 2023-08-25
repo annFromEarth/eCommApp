@@ -1,61 +1,37 @@
-import { Box, Typography } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
+import { Box } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import { INCOMING_WORKSHOPS, MAIN_CONTENT, PAST_WORKSHOPS } from './dataWorkshops';
 import React from 'react';
 import CardWorkshops from './cardWorkshops';
-import { TabPanelProps } from '../../types/types';
+import { TabPanel } from '@mui/lab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
 
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+export default function TabsWorkshops() {
+  const [value, setValue] = React.useState('1');
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export function TabsWorkshops() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     if (event) {
       setValue(newValue);
     }
   };
 
   return (
-    <Box sx={{ width: '100%', margin: ' 0 60px' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label={MAIN_CONTENT.buttons[0]} {...a11yProps(0)} />
-          <Tab label={MAIN_CONTENT.buttons[1]} {...a11yProps(1)} />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <IncomingWorkshops />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <PastWorkshops />
-      </CustomTabPanel>
+    <Box sx={{ width: '100%', typography: 'body1' }}>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label={MAIN_CONTENT.buttons[0]} value="1" />
+            <Tab label={MAIN_CONTENT.buttons[1]} value="2" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">
+          <IncomingWorkshops />
+        </TabPanel>
+        <TabPanel value="2">
+          <PastWorkshops />o
+        </TabPanel>
+      </TabContext>
     </Box>
   );
 }
