@@ -1,11 +1,8 @@
-import { Box } from '@mui/material';
-import Tab from '@mui/material/Tab';
+import { Box, Tab } from '@mui/material';
 import { INCOMING_WORKSHOPS, MAIN_CONTENT, PAST_WORKSHOPS } from './dataWorkshops';
 import React from 'react';
 import CardWorkshops from './cardWorkshops';
-import { TabPanel } from '@mui/lab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
+import { TabPanel, TabContext, TabList } from '@mui/lab';
 
 export default function TabsWorkshops() {
   const [value, setValue] = React.useState('1');

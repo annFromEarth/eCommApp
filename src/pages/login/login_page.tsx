@@ -1,14 +1,12 @@
-import { Box, createTheme, Typography, Button } from '@mui/material';
+import { Box, useTheme, Typography, Button } from '@mui/material';
 
 import LoginForm from '../../components/login-form/login-form';
-import { themeOptions } from '../../assets/theme1';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/TITLES';
 import { PATH } from '../../data/PATH';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function LoginPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

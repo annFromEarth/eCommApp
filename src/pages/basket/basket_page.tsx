@@ -1,10 +1,8 @@
-import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/TITLES';
 
-const plantsTheme = createTheme(themeOptions);
-
 export function BasketPage() {
+  const plantsTheme = useTheme();
   return (
     <>
       <Box

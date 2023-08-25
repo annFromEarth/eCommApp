@@ -1,10 +1,8 @@
-import { Box, ThemeProvider, createTheme } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { Box, ThemeProvider, useTheme } from '@mui/material';
 import Main from './main';
 
-const plantsTheme = createTheme(themeOptions);
-
 function MainPage() {
+  const plantsTheme = useTheme();
   return (
     <ThemeProvider theme={plantsTheme}>
       <Box
