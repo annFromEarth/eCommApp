@@ -8,9 +8,9 @@ function encodeLoginRequestBody(emailString: string, passwordString: string) {
   };
 
   const formBody: string[] = [];
-  for (let property in details) {
-    let encodedKey = encodeURIComponent(property);
-    let encodedValue = encodeURIComponent(details[property as keyof typeof details]);
+  for (const property in details) {
+    const encodedKey = encodeURIComponent(property);
+    const encodedValue = encodeURIComponent(details[property as keyof typeof details]);
     formBody.push(encodedKey + '=' + encodedValue);
   }
   return formBody.join('&');
