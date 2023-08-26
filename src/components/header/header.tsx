@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, AppBar, Toolbar, Typography, createTheme, Container } from '@mui/material';
-import Button from '@mui/material/Button';
-import { themeOptions } from '../../assets/theme1';
+import { Box, AppBar, Toolbar, Typography, createTheme, Container, Button } from '@mui/material';
+import { themeOptions } from '../../assets/theme';
 import HeaderNavPages from './HeaderNav';
-
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/path';
 import { PAGES_HEADER_MENU } from '../../data/pages';

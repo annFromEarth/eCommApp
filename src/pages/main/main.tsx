@@ -1,7 +1,7 @@
 import { Typography, Box, createTheme, alpha } from '@mui/material';
 import Button from '@mui/material/Button';
 
-import { themeOptions } from '../../assets/theme1';
+import { themeOptions } from '../../assets/theme';
 import { PAGES_TITLES } from '../../data/titles';
 import { PATH } from '../../data/path';
 

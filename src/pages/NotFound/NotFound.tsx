@@ -1,5 +1,5 @@
 import { Box, createTheme, Typography } from '@mui/material';
-import { themeOptions } from '../../assets/theme1';
+import { themeOptions } from '../../assets/theme';
 import { Link } from 'react-router-dom';
 import NotFoundImage from './NotFoundImg';
 import { PATH } from '../../data/path';

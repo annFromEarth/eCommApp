@@ -1,6 +1,6 @@
 import { Typography, createTheme } from '@mui/material';
 
-import { themeOptions } from '../../assets/theme1';
+import { themeOptions } from '../../assets/theme';
 import { PAGES_HEADER_MENU } from '../../data/pages';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/path';
