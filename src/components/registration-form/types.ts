@@ -1,6 +1,7 @@
 export enum CountryEnum {
-  uk = 'United Kingdom',
-  fr = 'France',
+  UNDEFINED = 'UNDEFINED',
+  UK = 'United Kingdom',
+  FR = 'France',
 }
 
 export type Address = {
@@ -15,13 +16,20 @@ export interface IFormInput {
   lastName: string;
   email: string;
   password: string;
-  dateOfBirth: string | null;
+  dateOfBirth: string;
+
   addresses: Address[];
-  street: string;
-  city: string;
-  postalCode: string;
-  country: CountryEnum;
-  defaultAddress: '0' | '1';
+
+  countryPrimary: CountryEnum;
+  postalCodePrimary: string;
+  cityPrimary: string;
+  streetPrimary: string;
+
+  countrySecondary: CountryEnum;
+  postalCodeSecondary: string;
+  citySecondary: string;
+  streetSecondary: string;
+
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
 }

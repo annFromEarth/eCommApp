@@ -23,7 +23,7 @@ export const PATTERNS = {
   PASSWORD: {
     value: passwordRegExp,
     message:
-      'Password too weak. Please use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
+      'Password too weak! Use minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
   },
   POSTCODE: {
     value: postcodeRegEx,
