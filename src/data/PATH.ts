@@ -3,7 +3,7 @@ export const PATH = {
   main: '/',
   login: '/login',
   register: '/register',
-  basket: '/basket',
+  basket: '/cart',
   plants: '/plants',
   workshops: '/workshops',
   about: '/about',

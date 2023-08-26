@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
-import Header from './Header';
+import { PlantsPage } from './PlantsPage';
 
-test('should be rendered Header', () => {
+test('should be rendered Plants page', () => {
   render(
     <BrowserRouter>
-      <Header />
+      <PlantsPage />
     </BrowserRouter>
   );
-  const loginElement = screen.getByText(/login/i);
-  expect(loginElement).toBeInTheDocument();
+  const titleElement = screen.getByText('Plants');
+  expect(titleElement).toBeInTheDocument();
 });

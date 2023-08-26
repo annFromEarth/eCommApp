@@ -1,9 +1,9 @@
 import { Typography, Box, createTheme, alpha } from '@mui/material';
 import Button from '@mui/material/Button';
 
-import { themeOptions } from '../../assets/theme1';
-import { PAGES_TITLES } from '../../data/TITLES';
-import { PATH } from '../../data/PATH';
+import { themeOptions } from '../../assets/theme';
+import { PAGES_TITLES } from '../../data/titles';
+import { PATH } from '../../data/path';
 
 const plantsTheme = createTheme(themeOptions);
 
