@@ -8,6 +8,9 @@ import {
 } from '../../utils/regexToValidate';
 
 export const PATTERNS = {
+  EMPTY: {
+    message: 'This field is required',
+  },
   FIRST_NAME: {
     value: nameRegExp,
     message: 'At least one letter, no numbers, no special characters',
