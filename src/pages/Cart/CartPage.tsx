@@ -17,7 +17,7 @@ export function CartPage() {
         }}
       >
         <Typography variant="h2" component="h1" gutterBottom>
-          {PAGES_TITLES.basket}
+          {PAGES_TITLES.cart}
         </Typography>
       </Box>
     </>

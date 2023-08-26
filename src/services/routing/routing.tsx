@@ -19,7 +19,7 @@ function RoutingApp() {
       <Route path={PATH.main} element={<MainPage />} />
       <Route path={PATH.login} element={<LoginPage />} />
       <Route path={PATH.register} element={<RegistrationPage />} />
-      <Route path={PATH.basket} element={<CartPage />} />
+      <Route path={PATH.cart} element={<CartPage />} />
       <Route path={PATH.plants} element={<PlantsPage />} />
       <Route path={PATH.workshops} element={<WorkshopsPage />} />
       <Route path={PATH.about} element={<About />} />

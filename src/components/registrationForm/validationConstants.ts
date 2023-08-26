@@ -27,7 +27,10 @@ export const PATTERNS = {
     message:
       'Five to seven alphanumeric (uppercase) characters separated by a space. Example: "AA1 1AA" or "AA11 1AA"',
   },
-  STREET: { value: streetRegEx, message: 'Not a valid street address' },
+  STREET: {
+    value: streetRegEx,
+    message: 'Not a valid street address',
+  },
   CITY: {
     value: cityRegEx,
     message: 'Not a valid city name',

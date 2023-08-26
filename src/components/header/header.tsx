@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { Box, AppBar, Toolbar, Typography, createTheme, Container, Button } from '@mui/material';
-import { themeOptions } from '../../assets/theme';
-import HeaderNavPages from './HeaderNav';
 import { Link } from 'react-router-dom';
+
+import HeaderNavPages from './HeaderNav';
+import { themeOptions } from '../../assets/theme';
 import { PATH } from '../../data/path';
 import { PAGES_HEADER_MENU } from '../../data/pages';
 import { HEADER_TITLES } from '../../data/titles';
@@ -109,7 +110,7 @@ function HeaderNavLinks() {
           </>
         )}
         <Button variant="contained">
-          <Link to={PATH.basket}>
+          <Link to={PATH.cart}>
             {PAGES_HEADER_MENU.basket} <span style={{ marginLeft: '15px' }}>&#128722;</span>
           </Link>
         </Button>

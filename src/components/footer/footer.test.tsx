@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Footer from './Footer';
 import { BrowserRouter } from 'react-router-dom';
+
+import Footer from './Footer';
 
 test('should be rendered Footer', () => {
   render(

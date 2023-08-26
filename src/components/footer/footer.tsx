@@ -1,9 +1,10 @@
 import { createTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
+
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { themeOptions } from '../../assets/theme';
-import { Link } from 'react-router-dom';
 
 const plantsTheme = createTheme(themeOptions);
 

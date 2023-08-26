@@ -6,7 +6,7 @@ import { Typography, Box } from '@mui/material';
 import { createCustomer } from '../../services/createCustomer';
 import { loginUser } from '../loginForm/loginRequest';
 
-import { PATTERNS } from './validation-constants';
+import { PATTERNS } from './validationConstants';
 import { IFormInput } from './types';
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 import { PATH } from '../../data/path';
