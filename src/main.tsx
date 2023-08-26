@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './reset.css';
 import './main.css';
 import { BrowserRouter } from 'react-router-dom';
-import './components/registration-form/registration-form.css';
+import './components/registrationForm/registrationForm.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

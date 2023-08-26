@@ -5,7 +5,7 @@ export const HEADER_TITLES = {
 
 export const PAGES_TITLES = {
   main: 'Welcome plant lovers!',
-  basket: 'Basket',
+  basket: 'Cart',
   contacts: 'Contacts us',
   guarantee: 'Guarantee',
   login: 'Login Page',
