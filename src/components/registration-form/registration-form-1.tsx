@@ -221,7 +221,7 @@ export default function RegistrationForm() {
               },
             }}
             name="dateOfBirth"
-            render={({ field: { onChange: rhfOnChange } }) => (
+            render={({ field: { onChange: rhfOnChange, ref } }) => (
               <MuiDatePicker
                 slotProps={{
                   textField: {
@@ -237,6 +237,7 @@ export default function RegistrationForm() {
                     // console.log(date.format('YYYY-MM-DD'));
                   }
                 }}
+                ref={ref}
               />
             )}
           />
