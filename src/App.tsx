@@ -1,21 +1,33 @@
-import { useState } from 'react';
-// import './App.css';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import RoutingApp from './services/routing/routing';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
+import { themeOptions } from './assets/theme';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+const plantsTheme = createTheme(themeOptions);
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button role="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ThemeProvider theme={plantsTheme}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: '100vh',
+              background: plantsTheme.palette.background.paper,
+              backgroundSize: 'cover',
+            }}
+          >
+            <Header />
+            <RoutingApp />
+            <Footer />
+          </Box>
+        </ThemeProvider>
+      </LocalizationProvider>
     </>
   );
 }
