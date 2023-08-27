@@ -11,4 +11,5 @@ export const PATH = {
   shipping: '/shipping',
   guarantee: '/guarantee',
   contacts: '/contacts',
+  profile: '/profile',
 };

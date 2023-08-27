@@ -12,6 +12,7 @@ import { RegistrationPage } from '../../pages/Registration/RegistrationPage';
 import { ShippingPage } from '../../pages/Shipping/ShippingPage';
 import { WorkshopsPage } from '../../pages/Workshops/WorkshopsPage';
 import { PATH } from '../../data/paths';
+import { ProfilePage } from '../../pages/Profile/ProfilePage';
 
 function RoutingApp() {
   return (
@@ -28,6 +29,7 @@ function RoutingApp() {
       <Route path={PATH.guarantee} element={<GuaranteePage />} />
       <Route path={PATH.contacts} element={<ContactsPage />} />
       <Route path={PATH.incorrect} element={<NotFoundPage />} />
+      <Route path={PATH.profile} element={<ProfilePage />} />
     </Routes>
   );
 }
