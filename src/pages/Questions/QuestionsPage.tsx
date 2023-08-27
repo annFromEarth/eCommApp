@@ -2,7 +2,7 @@ import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/titlesTemp';
 import QuestionsImage from './QuestionsImg';
 import { QUESTIONS } from './dataQuestions';
-import { AccordionQuestionsCard } from './QuestionsCardTemp';
+import { AccordionQuestionsCard } from './QuestionsCard';
 
 export function QuestionsPage() {
   const plantsTheme = useTheme();

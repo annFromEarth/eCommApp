@@ -1,6 +1,6 @@
 import { Box, useTheme, Typography, Button } from '@mui/material';
 
-import LoginForm from '../../components/loginForm/LoginFormTemp';
+import LoginForm from '../../components/loginForm/LoginForm';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/titlesTemp';
 import { PATH } from '../../data/pathsTemp';

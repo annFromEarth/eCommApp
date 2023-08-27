@@ -1,7 +1,7 @@
 import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/titlesTemp';
 import { MAIN_CONTENT } from './dataWorkshops';
-import TabsWorkshops from './TabsWorkshopsTemp';
+import TabsWorkshops from './TabsWorkshops';
 
 export function WorkshopsPage() {
   const plantsTheme = useTheme();

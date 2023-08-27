@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
-import { ContactsPage } from './ContactsPageTemp';
+import { ContactsPage } from './ContactsPage';
 
 test('should be rendered Contacts us page', () => {
   render(

@@ -1,7 +1,7 @@
 import { Box, Tab } from '@mui/material';
 import { INCOMING_WORKSHOPS, MAIN_CONTENT, PAST_WORKSHOPS } from './dataWorkshops';
 import React from 'react';
-import CardWorkshops from './CardWorkshopsTemp';
+import CardWorkshops from './CardWorkshops';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
 
 export default function TabsWorkshops() {
