@@ -29,12 +29,7 @@ function RoutingApp() {
       <Route path={PATH.guarantee} element={<GuaranteePage />} />
       <Route path={PATH.contacts} element={<ContactsPage />} />
       <Route path={PATH.incorrect} element={<NotFoundPage />} />
-
-      {sessionStorage.getItem('authorization-token') ? (
-        <Route path={PATH.profile} element={<ProfilePage />} />
-      ) : (
-        <Route path={PATH.profile} element={<LoginPage />} />
-      )}
+      <Route path={PATH.profile} element={<ProfilePage />} />
     </Routes>
   );
 }
