@@ -11,7 +11,7 @@ import { IFormInput } from './types';
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
 import { PATH } from '../../data/paths';
 
-export default function Form1() {
+export default function RegistrationForm() {
   const {
     register,
     handleSubmit,

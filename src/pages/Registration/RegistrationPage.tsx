@@ -1,4 +1,4 @@
-import Form1 from '../../components/registrationForm/RegistrationForm';
+import RegistrationForm from '../../components/registrationForm/RegistrationForm';
 import { Box, useTheme, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/paths';
@@ -22,7 +22,7 @@ export function RegistrationPage() {
         <Typography variant="h2" component="h1" gutterBottom>
           {PAGES_TITLES.register}
         </Typography>
-        <Form1 />
+        <RegistrationForm />
         <LoginLink />
       </Box>
     </>
