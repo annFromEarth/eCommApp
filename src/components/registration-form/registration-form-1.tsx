@@ -34,6 +34,7 @@ export default function RegistrationForm() {
   const plantsTheme = useTheme();
 
   const form = useForm<IFormInput>({
+    mode: 'onChange',
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -221,24 +222,27 @@ export default function RegistrationForm() {
               },
             }}
             name="dateOfBirth"
-            render={({ field: { onChange: rhfOnChange, ref } }) => (
-              <MuiDatePicker
-                slotProps={{
-                  textField: {
-                    helperText: errors.dateOfBirth?.message,
-                  },
-                }}
-                minDate={maxAge}
-                maxDate={minAge}
-                format="YYYY-MM-DD"
-                onChange={(date) => {
-                  if (date) {
-                    rhfOnChange(date.format('YYYY-MM-DD'));
-                    // console.log(date.format('YYYY-MM-DD'));
-                  }
-                }}
-                ref={ref}
-              />
+            render={({ field: { onChange: rhfOnChange, ref }, fieldState: { error } }) => (
+              <>
+                <MuiDatePicker
+                  slotProps={{
+                    textField: {
+                      helperText: error?.message,
+                    },
+                  }}
+                  minDate={maxAge}
+                  maxDate={minAge}
+                  format="YYYY-MM-DD"
+                  onChange={(date) => {
+                    if (date) {
+                      rhfOnChange(date.format('YYYY-MM-DD'));
+                      // console.log(date.format('YYYY-MM-DD'));
+                    }
+                  }}
+                  ref={ref}
+                />
+                {error && <div>error.message</div>}
+              </>
             )}
           />
 
