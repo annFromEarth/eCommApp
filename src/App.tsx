@@ -1,5 +1,5 @@
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Header from './components/HeaderTemp/HeaderTemp';
+import Footer from './components/FooterTemp/FooterTemp';
 import RoutingApp from './services/routing/routing';
 import { Box, ThemeProvider, createTheme } from '@mui/material';
 import { themeOptions } from './assets/theme';

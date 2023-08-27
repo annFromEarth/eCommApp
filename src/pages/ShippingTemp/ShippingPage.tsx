@@ -1,5 +1,5 @@
 import { Box, useTheme, Typography } from '@mui/material';
-import { PAGES_TITLES } from '../../data/titles';
+import { PAGES_TITLES } from '../../data/titlesTemp';
 import ShippingImage from './ShippingImg';
 import { TEXT_SHIPPING } from './dataShipping';
 

@@ -1,17 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 import About from '../../pages/About/AboutPage';
 import { CartPage } from '../../pages/Cart/CartPage';
-import { ContactsPage } from '../../pages/Contacts/ContactsPage';
-import { GuaranteePage } from '../../pages/Guarantee/GuaranteePage';
+import { ContactsPage } from '../../pages/ContactsTemp/ContactsPageTemp';
+import { GuaranteePage } from '../../pages/GuaranteeTemp/GuaranteePage';
 import { LoginPage } from '../../pages/Login/LoginPage';
-import MainPage from '../../pages/Main/MainPageCreate';
+import MainPage from '../../pages/MainTemp/MainPageCreateTemp';
 import { NotFoundPage } from '../../pages/NotFound/NotFound';
 import { PlantsPage } from '../../pages/Plants/PlantsPage';
-import { QuestionsPage } from '../../pages/Questions/QuestionsPage';
+import { QuestionsPage } from '../../pages/QuestionsTemp/QuestionsPage';
 import { RegistrationPage } from '../../pages/Registration/RegistrationPage';
-import { ShippingPage } from '../../pages/Shipping/ShippingPage';
-import { WorkshopsPage } from '../../pages/Workshops/WorkshopsPage';
-import { PATH } from '../../data/path';
+import { ShippingPage } from '../../pages/ShippingTemp/ShippingPage';
+import { WorkshopsPage } from '../../pages/WorkshopsTemp/WorkshopsPage';
+import { PATH } from '../../data/pathsTemp';
 
 function RoutingApp() {
   return (

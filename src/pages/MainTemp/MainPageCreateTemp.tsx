@@ -1,5 +1,5 @@
 import { Box, ThemeProvider, useTheme } from '@mui/material';
-import Main from './Main';
+import Main from './MainTemp';
 
 function MainPage() {
   const plantsTheme = useTheme();
