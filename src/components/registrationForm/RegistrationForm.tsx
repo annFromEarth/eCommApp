@@ -9,7 +9,7 @@ import { loginUser } from '../loginForm/loginRequest';
 import { PATTERNS } from './validationConstants';
 import { IFormInput } from './types';
 import calcDateXYearsAgo from '../../utils/calcDateXYearsAgo';
-import { PATH } from '../../data/pathsTemp';
+import { PATH } from '../../data/paths';
 
 export default function Form1() {
   const {

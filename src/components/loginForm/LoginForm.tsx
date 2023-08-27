@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
-import { PATH } from '../../data/pathsTemp';
+import { PATH } from '../../data/paths';
 import { emailRegExpRFC, passwordRegExp } from '../../utils/regexToValidate';
 import { loginUser } from './loginRequest';
 

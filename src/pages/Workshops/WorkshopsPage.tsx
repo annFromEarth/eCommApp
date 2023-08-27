@@ -1,5 +1,5 @@
 import { Box, useTheme, Typography } from '@mui/material';
-import { PAGES_TITLES } from '../../data/titlesTemp';
+import { PAGES_TITLES } from '../../data/titles';
 import { MAIN_CONTENT } from './dataWorkshops';
 import TabsWorkshops from './TabsWorkshops';
 

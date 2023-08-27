@@ -1,6 +1,6 @@
 import { Box, Button, useTheme, Typography, Fab } from '@mui/material';
 import { Navigation, Call, Email, Instagram } from '@mui/icons-material';
-import { PAGES_TITLES } from '../../data/titlesTemp';
+import { PAGES_TITLES } from '../../data/titles';
 import { CONTACTS_INFO, CONTACTS_TEXT } from './dataContacts';
 import ContactsImage from './ContactsImg';
 

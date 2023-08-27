@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 import HeaderNavPages from './HeaderNav';
 import { themeOptions } from '../../assets/theme';
-import { PATH } from '../../data/pathsTemp';
+import { PATH } from '../../data/paths';
 import { PAGES_HEADER_MENU } from '../../data/pages';
-import { HEADER_TITLES } from '../../data/titlesTemp';
+import { HEADER_TITLES } from '../../data/titles';
 
 const plantsTheme = createTheme(themeOptions);
 
