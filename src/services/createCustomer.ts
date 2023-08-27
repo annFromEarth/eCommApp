@@ -4,7 +4,9 @@ export async function createCustomer(data = {}) {
   try {
     const ADMIN_BEARER_TOKEN = await getAdminBearerToken();
     const response = await fetch(
-      'https://api.europe-west1.gcp.commercetools.com/ecommerceapp_951/customers',
+      `${import.meta.env.VITE_ADMIN_CTP_API_URL}/${
+        import.meta.env.VITE_ADMIN_CTP_PROJECT_KEY
+      }/customers`,
       {
         method: 'POST',
         headers: {
