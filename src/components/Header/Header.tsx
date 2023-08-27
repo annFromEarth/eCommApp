@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, AppBar, Toolbar, Typography, createTheme, Container, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import HeaderNavPages from './HeaderNavTemp';
+import HeaderNavPages from './HeaderNav';
 import { themeOptions } from '../../assets/theme';
 import { PATH } from '../../data/pathsTemp';
 import { PAGES_HEADER_MENU } from '../../data/pages';

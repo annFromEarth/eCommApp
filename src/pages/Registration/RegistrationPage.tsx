@@ -1,4 +1,4 @@
-import Form1 from '../../components/registrationForm/RegistrationForm';
+import Form1 from '../../components/registrationForm/RegistrationFormTemp';
 import { Box, useTheme, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { PATH } from '../../data/pathsTemp';
