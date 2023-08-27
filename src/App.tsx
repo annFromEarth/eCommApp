@@ -1,8 +1,8 @@
-import Footer from './components/footer/footer';
-import Header from './components/header/header';
-import RoutingApp from './services/routing';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import RoutingApp from './services/routing/routing';
 import { Box, ThemeProvider, createTheme } from '@mui/material';
-import { themeOptions } from './assets/theme1';
+import { themeOptions } from './assets/theme';
 
 const plantsTheme = createTheme(themeOptions);
 
