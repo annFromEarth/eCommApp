@@ -14,4 +14,5 @@ export const PAGES_TITLES = {
   register: 'Register',
   shipping: 'Shipping',
   workshops: 'Online & Retail Workshops',
+  profile: 'User Profile',
 };
