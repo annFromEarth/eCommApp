@@ -1,5 +1,6 @@
 import { Box, useTheme, Typography } from '@mui/material';
 import { PAGES_TITLES } from '../../data/titles';
+import GetCatalog from '../../components/Catalog/catalog';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
@@ -20,6 +21,7 @@ export function PlantsPage() {
           {PAGES_TITLES.plants}
         </Typography>
       </Box>
+      <GetCatalog />
     </>
   );
 }
