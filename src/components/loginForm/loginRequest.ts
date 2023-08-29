@@ -18,7 +18,9 @@ function encodeLoginRequestBody(emailString: string, passwordString: string) {
 
 export async function loginUser(emailString: string, passwordString: string) {
   const response = await fetch(
-    'https://auth.europe-west1.gcp.commercetools.com/oauth/ecommerceapp_951/customers/token',
+    `${import.meta.env.VITE_CLIENT_CTP_AUTH_URL}/oauth/${
+      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
+    }/customers/token`,
     {
       method: 'POST',
       headers: {
