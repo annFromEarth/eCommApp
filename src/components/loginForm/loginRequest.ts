@@ -18,7 +18,9 @@ function encodeLoginRequestBody(emailString: string, passwordString: string) {
 
 export async function loginUser(emailString: string, passwordString: string) {
   const response = await fetch(
-    `${process.env.VITE_CLIENT_CTP_AUTH_URL}/oauth/${process.env.VITE_CLIENT_CTP_PROJECT_KEY}/customers/token`,
+    `${import.meta.env.VITE_CLIENT_CTP_AUTH_URL}/oauth/${
+      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
+    }/customers/token`,
     {
       method: 'POST',
       headers: {

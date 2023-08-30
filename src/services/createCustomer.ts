@@ -4,7 +4,9 @@ export async function createCustomer(data = {}) {
   try {
     const ADMIN_BEARER_TOKEN = await getAdminBearerToken();
     const response = await fetch(
-      `${process.env.VITE_ADMIN_CTP_API_URL}/${process.env.VITE_ADMIN_CTP_PROJECT_KEY}/customers`,
+      `${import.meta.env.VITE_ADMIN_CTP_API_URL}/${
+        import.meta.env.VITE_ADMIN_CTP_PROJECT_KEY
+      }/customers`,
       {
         method: 'POST',
         headers: {
