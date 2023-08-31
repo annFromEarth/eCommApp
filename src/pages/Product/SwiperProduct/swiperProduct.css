@@ -66,8 +66,8 @@
 /*.swiper-slide .swiper-slide-active*/
 
 .mySwiper2, .swiper-wrapper, .swiper-slide-active {
-  max-height: 320px;
-  max-width: 500px;
+  height: 320px;
+  width: 500px;
 }
 
 .swiper-slide-active img, .swiper-slide-visible img {
@@ -85,8 +85,8 @@
 }
 
 .mySwiper, .mySwiper .swiper-wrapper, .swiper-slide-visible {
-  max-width: 500px;
-  max-height: 100px;
+  width: 500px;
+  height: 100px;
 }
 
 .mySwiper .swiper-wrapper {
