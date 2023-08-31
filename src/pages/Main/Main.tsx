@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 import { themeOptions } from '../../assets/theme';
 import { PAGES_TITLES } from '../../data/titles';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 
 const plantsTheme = createTheme(themeOptions);
 

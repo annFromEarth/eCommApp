@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 import { PATTERNS } from './validationConstants';
 
 export default function RegistrationForm() {
