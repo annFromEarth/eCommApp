@@ -25,6 +25,6 @@ export type Customer = {
   shippingAddressIds?: string[];
   billingAddressIds?: string[];
   stores?: [];
-  version?: 1;
+  version: number;
   versionModifiedAt?: string;
 };

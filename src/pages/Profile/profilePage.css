@@ -13,3 +13,7 @@ p {
 .addressItem {
   margin: 30px;
 }
+
+.margined > * {
+  margin: 15px;
+}

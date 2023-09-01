@@ -8,11 +8,22 @@ import './profilePage.css';
 import { Customer } from './types';
 import { CustomerService } from '../../services/customerService';
 
+import FirstNameForm from '../../components/profileUpdateForms/firstNameForm';
+import LastNameForm from '../../components/profileUpdateForms/lastNameForm';
+import BirthDateForm from '../../components/profileUpdateForms/birthDateForm';
+import EmailForm from '../../components/profileUpdateForms/emailForm';
+
 export function ProfilePage() {
   const plantsTheme = useTheme();
   const navigate = useNavigate();
 
   const [customerData, setCustomerData] = useState<Customer | null>(null);
+  const fetchCustomerData = async (token: string) => {
+    //Try/catch
+    const customer = await CustomerService.getMe(token);
+    setCustomerData(customer);
+    sessionStorage.setItem('customerVersion', customer.version.toString());
+  };
 
   const [editPersonalData, setEditPersonalData] = useState<boolean>(false);
   const [editPassword, setEditPassword] = useState<boolean>(false);
@@ -21,19 +32,11 @@ export function ProfilePage() {
   const toggleEditPersonalData = () => {
     setEditPersonalData((editMode) => !editMode);
   };
-
   const toggleEditPassword = () => {
     setEditPassword((editMode) => !editMode);
   };
-
   const toggleEditAddresses = () => {
     setEditAddresses((editMode) => !editMode);
-  };
-
-  const fetchCustomerData = async (token: string) => {
-    //Try/catch
-    const customer = await CustomerService.getMe(token);
-    setCustomerData(customer);
   };
 
   const arrayAddresses = customerData?.addresses.map((address, index) => (
@@ -92,7 +95,14 @@ export function ProfilePage() {
               <p>Email: {customerData ? customerData.email : ''}</p>
             </>
           )}
-          {editPersonalData && <>Editing</>}
+          {editPersonalData && (
+            <Box className="margined">
+              <FirstNameForm setCustomerDataProp={setCustomerData} />
+              <LastNameForm setCustomerDataProp={setCustomerData} />
+              <BirthDateForm setCustomerDataProp={setCustomerData} />
+              <EmailForm setCustomerDataProp={setCustomerData} />
+            </Box>
+          )}
         </Box>
         <Box className="container">
           <Typography variant="h5" component="h5" gutterBottom>

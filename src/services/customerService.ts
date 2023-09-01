@@ -27,4 +27,21 @@ export class CustomerService {
     const result = await response.json();
     return result; //TODO add types
   }
+
+  static async updateMe(
+    authorizationToken: string,
+    version: number,
+    actions: []
+  ): Promise<Customer> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ version: version, actions: actions }),
+    });
+    const customer: Customer = await response.json();
+    return customer;
+  }
 }
