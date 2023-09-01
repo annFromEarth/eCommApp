@@ -1,6 +1,7 @@
-import { Box, useTheme, Typography } from '@mui/material';
+import { Box, useTheme, Typography, Container, Grid } from '@mui/material';
 import { PAGES_TITLES } from '../../data/titles';
 import GetCatalog from '../../components/Catalog/catalog';
+import GetCatalogNavigation from '../../components/CatalogNavigation/catalogNavigation';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
@@ -22,7 +23,16 @@ export function PlantsPage() {
           {PAGES_TITLES.plants}
         </Typography>
       </Box>
-      <GetCatalog />
+      <Container maxWidth={false}>
+        <Grid container>
+          <Grid item xs={12} sm={2}>
+            <GetCatalogNavigation />
+          </Grid>
+          <Grid item xs={12} sm={10}>
+            <GetCatalog />
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }
