@@ -21,15 +21,20 @@ export default function SwiperProduct(props: { images: Array<IImagesProduct> }) 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const arrImages = props.images;
 
-  const slidersImg = arrImages.map((image, index) => (
-    <SwiperSlide key={index + 'img-slider-product'}>
-      <img src={image.url} style={{ maxHeight: '320px' }} />
-    </SwiperSlide>
-  ));
+  const slidersImg = createSlidersImage(arrImages);
+
+  const [imgModal, setImgModal] = useState(slidersImg);
+
+  function changeImgModal() {
+    const newUrl = getNewURLImagesAfterClick();
+    const newSlidersImg = createSlidersImageForModal(newUrl);
+    setImgModal(newSlidersImg);
+  }
 
   return (
     <>
       <Box
+        onClick={changeImgModal}
         sx={{
           maxHeight: '500px',
           maxWidth: '500px',
@@ -67,11 +72,31 @@ export default function SwiperProduct(props: { images: Array<IImagesProduct> }) 
         aria-describedby="keep-mounted-modal-description"
       >
         <Box className="modal-prodact">
-          <SwiperModal images={slidersImg} />
+          <SwiperModal images={imgModal} />
         </Box>
       </Modal>
     </>
   );
+}
+
+function createSlidersImage(arrImages: Array<IImagesProduct>) {
+  const slidersImg = arrImages.map((image, index) => (
+    <SwiperSlide key={index + 'img-slider-product'}>
+      <img src={image.url} style={{ maxHeight: '320px' }} />
+    </SwiperSlide>
+  ));
+
+  return slidersImg;
+}
+
+function createSlidersImageForModal(arrImages: Array<string>) {
+  const slidersImg = arrImages.map((url, index) => (
+    <SwiperSlide key={index + 'img-slider-product-modal'}>
+      <img src={url} style={{ maxHeight: '320px' }} />
+    </SwiperSlide>
+  ));
+
+  return slidersImg;
 }
 
 function SwiperModal(props: { images: JSX.Element[] }) {
@@ -80,9 +105,26 @@ function SwiperModal(props: { images: JSX.Element[] }) {
       spaceBetween={10}
       navigation={true}
       modules={[FreeMode, Navigation, Thumbs]}
-      className="mySwiper2"
+      className="mySwiper3"
     >
       {props.images}
     </Swiper>
   );
+}
+
+function getNewURLImagesAfterClick() {
+  const currentImagesElements = document.querySelectorAll('.mySwiper2 img');
+  const newURL: Array<string> = [];
+  Array.from(currentImagesElements).map((element) => {
+    const sliderElement = element.parentElement;
+    if (sliderElement !== null && sliderElement.className.includes('swiper-slide-active')) {
+      if (element instanceof HTMLImageElement) {
+        newURL.unshift(element.src);
+      }
+    } else {
+      if (element instanceof HTMLImageElement) newURL.push(element.src);
+    }
+  });
+
+  return newURL;
 }
