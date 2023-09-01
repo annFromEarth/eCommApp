@@ -30,9 +30,9 @@ function TitleProduct(props: { name: string }) {
 
 function PriceProduct(props: { prices: Array<IPricesProduct> }) {
   const prices = props.prices[0];
-  const price = prices.value.centAmount;
+  const price = (prices.value.centAmount/ 100).toFixed(2);
   const discont = prices?.discounted?.value?.centAmount
-    ? prices.discounted.value.centAmount
+    ? (prices.discounted.value.centAmount/ 100).toFixed(2)
     : undefined;
   if (discont) {
     return (
