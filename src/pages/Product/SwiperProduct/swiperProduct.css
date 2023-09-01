@@ -8,7 +8,6 @@
   font-size: 18px;
   background: #fff;
 
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,9 +62,7 @@
    object-fit: cover;
 }
 
-/*.swiper-slide .swiper-slide-active*/
-
-.mySwiper2, .swiper-wrapper, .swiper-slide-active {
+.mySwiper2, .mySwiper3, .swiper-wrapper, .swiper-slide-active {
   height: 320px;
   width: 500px;
 }
@@ -98,4 +95,14 @@
   height: 100px;
 }
 
+/*modal product*/
+.modal-prodact{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: #e4fbd9;
+  padding: 15px 0;
+}
 

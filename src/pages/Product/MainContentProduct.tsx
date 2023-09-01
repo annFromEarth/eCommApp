@@ -46,7 +46,7 @@ function PriceProduct(props: { prices: Array<IPricesProduct> }) {
         </Typography>
         <Typography
           variant="body2"
-          sx={{ margin: '5px 0', fontSize: '20px', color: '#008000' }}
+          sx={{ margin: '5px 0', fontSize: '20px', color: 'red' }}
           gutterBottom
         >
           {discont} &#163;
