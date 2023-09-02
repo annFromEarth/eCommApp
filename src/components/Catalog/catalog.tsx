@@ -41,7 +41,7 @@ export default function GetCatalog() {
           {data.results.map((plant, index) => (
             <Card
               key={index}
-              onClick={() => openDetailPage(plant.id)}>
+              onClick={() => openDetailPage(plant.id)}
               sx={{
                 maxWidth: 345,
                 minHeight: 493,
