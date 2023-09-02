@@ -4,6 +4,7 @@ import GetCatalog from '../../components/Catalog/catalog';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
+
   return (
     <>
       <Box
@@ -12,7 +13,7 @@ export function PlantsPage() {
           flexDirection: 'column',
           width: '100%',
           justifyContent: 'center',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
