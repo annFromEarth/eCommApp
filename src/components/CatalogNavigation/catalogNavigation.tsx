@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import getCategories from './catalogNavigationRequests';
 import { ListItem, ListItemButton, ListItemText, List, Box } from '@mui/material';
 import { ICategoryNavigation } from './catalogNavigation.types';
-import { getProductsByCategory } from '../Catalog/catalogRequest';
+import { getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
 import { addProducts } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
+import { setCurrentCategory } from '../../features/categoriesSlice';
 
 export default function GetCatalogNavigation() {
   const [categories, setCategories] = useState<ICategoryNavigation>();
@@ -13,12 +14,21 @@ export default function GetCatalogNavigation() {
   useEffect(() => {
     getCategories().then((response) => {
       setCategories(response);
+      dispatch(setCurrentCategory('All Plants'));
     });
   }, []);
 
-  const handleCategory = (categoryId: string) => {
+  const handleCategory = (categoryId: string, categoryName: string) => {
     getProductsByCategory(categoryId).then((response) => {
       dispatch(addProducts(response.results));
+      dispatch(setCurrentCategory(categoryName));
+    });
+  };
+
+  const handleAllCategory = () => {
+    getProducts().then((response) => {
+      dispatch(addProducts(response.results));
+      dispatch(setCurrentCategory('All Plants'));
     });
   };
 
@@ -31,13 +41,13 @@ export default function GetCatalogNavigation() {
       {categories && categories.results && (
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleAllCategory()}>
               <ListItemText primary={'All Plants'} />
             </ListItemButton>
           </ListItem>
           {categories.results.map((category, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => handleCategory(category.id)}>
+              <ListItemButton onClick={() => handleCategory(category.id, category.name['en-GB'])}>
                 <ListItemText primary={category.name['en-GB']} />
               </ListItemButton>
             </ListItem>
