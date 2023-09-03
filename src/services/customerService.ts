@@ -2,6 +2,7 @@ import { Customer } from '../pages/Profile/types';
 import { API_URL, PROJECT_KEY } from '../constants';
 import { getAdminBearerToken } from './getAdminBearerToken';
 import { submitCustomer } from '../components/registrationForm/types';
+import { Action } from './types';
 
 export class CustomerService {
   static async getMe(authorizationToken: string): Promise<Customer> {
@@ -31,7 +32,7 @@ export class CustomerService {
   static async updateMe(
     authorizationToken: string,
     version: number,
-    actions: []
+    actions: Action[]
   ): Promise<Customer> {
     const response = await fetch(`${API_URL}/${PROJECT_KEY}/me`, {
       method: 'POST',
@@ -40,6 +41,28 @@ export class CustomerService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ version: version, actions: actions }),
+    });
+    const customer: Customer = await response.json();
+    return customer;
+  }
+
+  static async changePasswordMe(
+    authorizationToken: string,
+    version: number,
+    currentPassword: string,
+    newPassword: string
+  ) {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/password`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        version: version,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      }),
     });
     const customer: Customer = await response.json();
     return customer;

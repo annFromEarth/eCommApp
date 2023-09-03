@@ -11,8 +11,8 @@ export type Customer = {
   createdAt?: string;
   createdBy?: object;
   dateOfBirth: string;
-  defaultBillingAddressId?: string;
-  defaultShippingAddressId?: string;
+  defaultBillingAddressId: string;
+  defaultShippingAddressId: string;
   email: string;
   firstName: string;
   id?: string;

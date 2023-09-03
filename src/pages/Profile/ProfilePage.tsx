@@ -12,6 +12,9 @@ import FirstNameForm from '../../components/profileUpdateForms/firstNameForm';
 import LastNameForm from '../../components/profileUpdateForms/lastNameForm';
 import BirthDateForm from '../../components/profileUpdateForms/birthDateForm';
 import EmailForm from '../../components/profileUpdateForms/emailForm';
+import ChangePasswordForm from '../../components/profileUpdateForms/changePasswordForm';
+import ProfileAddressItem from './ProfileAddressItem';
+import AddAddressForm from '../../components/profileUpdateForms/addAddressForm';
 
 export function ProfilePage() {
   const plantsTheme = useTheme();
@@ -27,7 +30,8 @@ export function ProfilePage() {
 
   const [editPersonalData, setEditPersonalData] = useState<boolean>(false);
   const [editPassword, setEditPassword] = useState<boolean>(false);
-  const [editAddresses, setEditAddresses] = useState<boolean>(false);
+  const [viewAddresses, setViewAddresses] = useState<boolean>(false);
+  const [addAddress, setAddAddress] = useState<boolean>(false);
 
   const toggleEditPersonalData = () => {
     setEditPersonalData((editMode) => !editMode);
@@ -35,25 +39,12 @@ export function ProfilePage() {
   const toggleEditPassword = () => {
     setEditPassword((editMode) => !editMode);
   };
-  const toggleEditAddresses = () => {
-    setEditAddresses((editMode) => !editMode);
+  const toggleViewAddresses = () => {
+    setViewAddresses((viewAddresses) => !viewAddresses);
   };
-
-  const arrayAddresses = customerData?.addresses.map((address, index) => (
-    <li className="addressItem" key={address.id}>
-      <p>Address {index + 1}</p>
-      <p>Country: {address.country}</p>
-      <p>Postal Code: {address.postalCode}</p>
-      <p>City: {address.city}</p>
-      <p>Street: {address.streetName}</p>
-      {customerData.defaultShippingAddressId === address.id ? (
-        <p>✅ Default shipping address</p>
-      ) : (
-        ''
-      )}
-      {customerData.defaultBillingAddressId === address.id ? <p>✅ Default billing address</p> : ''}
-    </li>
-  ));
+  const toggleAddAddress = () => {
+    setAddAddress((addAddress) => !addAddress);
+  };
 
   useEffect(() => {
     const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
@@ -108,12 +99,30 @@ export function ProfilePage() {
           <Typography variant="h5" component="h5" gutterBottom>
             Addresses
           </Typography>
-          <Button variant="contained" onClick={toggleEditAddresses}>
-            {!editAddresses && 'edit'}
-            {editAddresses && 'return'}
-          </Button>
-          {!editAddresses && <ul>{arrayAddresses}</ul>}
-          {editAddresses && <>Editing</>}
+          <Box>
+            <Button sx={{ margin: '5px' }} variant="contained" onClick={toggleViewAddresses}>
+              {!viewAddresses && 'view addresses'}
+              {viewAddresses && 'hide addresses'}
+            </Button>
+            {viewAddresses &&
+              customerData?.addresses.map((address, index) => (
+                <ProfileAddressItem
+                  key={address.id}
+                  address={address}
+                  index={index}
+                  defaultShippingAddressId={customerData.defaultShippingAddressId}
+                  defaultBillingAddressId={customerData.defaultBillingAddressId}
+                  setCustomerDataProp={setCustomerData}
+                />
+              ))}
+          </Box>
+          <Box>
+            <Button sx={{ margin: '5px' }} variant="contained" onClick={toggleAddAddress}>
+              {!addAddress && 'add new address'}
+              {addAddress && 'hide'}
+            </Button>
+            {addAddress && <AddAddressForm setCustomerDataProp={setCustomerData} />}
+          </Box>
         </Box>
         <Box className="container">
           <Typography variant="h5" component="h5" gutterBottom>
@@ -123,7 +132,11 @@ export function ProfilePage() {
             {!editPassword && 'change password'}
             {editPassword && 'return'}
           </Button>
-          {editPassword && <>Editing</>}
+          {editPassword && (
+            <Box className="margined">
+              <ChangePasswordForm setCustomerDataProp={setCustomerData} />
+            </Box>
+          )}
         </Box>
       </Box>
     </>
