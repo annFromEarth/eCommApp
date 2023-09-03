@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getProducts } from './catalogRequest';
 import { IProducts } from './catalog.types';
 import { useNavigate } from 'react-router-dom';
@@ -11,15 +11,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack, Box } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addProducts } from '../../features/productsSlice';
 
 export default function GetCatalog() {
-  const [data, setData] = useState<IProducts>();
+  const products = useAppSelector((state) => state.products.data);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     getProducts().then((response) => {
-      setData(response);
+      dispatch(addProducts(response.results));
     });
-  }, []);
+  }, [dispatch]);
 
   const navigate = useNavigate();
 
@@ -29,16 +32,17 @@ export default function GetCatalog() {
 
   return (
     <>
-      {data && data.results && (
+      {products && (
         <Stack
           display="flex"
+          flexWrap="wrap"
           justifyContent="center"
           alignItems="center"
           mb="35px"
           direction="row"
-          spacing={4}
+          gap="20px"
         >
-          {data.results.map((plant, index) => (
+          {products.map((plant, index) => (
             <Card
               key={index}
               onClick={() => openDetailPage(plant.id)}
@@ -65,7 +69,7 @@ export default function GetCatalog() {
                   plant.masterVariant.images &&
                   plant.masterVariant.images[0].url
                 }
-              ></CardMedia>
+              />
               <CardContent
                 sx={{
                   minHeigh: 570,

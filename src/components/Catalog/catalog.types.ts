@@ -29,7 +29,7 @@ export interface INameOrSlugOrDescription {
   'en-GB': string;
 }
 export interface ISlug {
-  en: string;
+  'en-GB': string;
   aa?: string | null;
   de?: string | null;
 }
