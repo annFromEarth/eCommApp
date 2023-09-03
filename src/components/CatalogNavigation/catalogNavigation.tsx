@@ -16,7 +16,7 @@ export default function GetCatalogNavigation() {
       setCategories(response);
       dispatch(setCurrentCategory('All Plants'));
     });
-  }, []);
+  }, [dispatch]);
 
   const handleCategory = (categoryId: string, categoryName: string) => {
     getProductsByCategory(categoryId).then((response) => {
