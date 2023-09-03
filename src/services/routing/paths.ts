@@ -12,4 +12,5 @@ export const PATH = {
   guarantee: '/guarantee',
   contacts: '/contacts',
   profile: '/profile',
+  product: '/product',
 };

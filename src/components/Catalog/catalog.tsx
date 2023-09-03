@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getProducts } from './catalogRequest';
 import { IProducts } from './catalog.types';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../services/routing/paths';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -19,6 +21,12 @@ export default function GetCatalog() {
     });
   }, []);
 
+  const navigate = useNavigate();
+
+  const openDetailPage = (id: string) => {
+    navigate(PATH.product + '/:' + id);
+  };
+
   return (
     <>
       {data && data.results && (
@@ -33,6 +41,7 @@ export default function GetCatalog() {
           {data.results.map((plant, index) => (
             <Card
               key={index}
+              onClick={() => openDetailPage(plant.id)}
               sx={{
                 maxWidth: 345,
                 minHeight: 493,
