@@ -3,13 +3,18 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { CustomerService } from '../../services/customerService';
 import { TextField, Button, Box } from '@mui/material';
 import { PATTERNS } from '../registrationForm/validationConstants';
-// import { Customer } from '../../pages/Profile/types';
+import { Customer } from '../../pages/Profile/types';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface IFirstNameInput {
   firstName: string;
 }
 
-export default function FirstNameForm({ setCustomerDataProp }) {
+export default function FirstNameForm({
+  setCustomerDataProp,
+}: {
+  setCustomerDataProp: React.Dispatch<React.SetStateAction<Customer | null>>;
+}) {
   const [errorUpdate, setErrorUpdate] = useState<string>('');
 
   const form = useForm<IFirstNameInput>({
@@ -29,26 +34,28 @@ export default function FirstNameForm({ setCustomerDataProp }) {
   const version = Number(sessionStorage?.getItem('customerVersion'));
 
   const onSubmit: SubmitHandler<IFirstNameInput> = async (data) => {
-    try {
-      const result = await CustomerService.updateMe(authorizationToken, version, [
-        {
-          action: 'setFirstName',
-          firstName: data.firstName,
-        },
-      ]);
+    if (authorizationToken) {
+      try {
+        const result = await CustomerService.updateMe(authorizationToken, version, [
+          {
+            action: 'setFirstName',
+            firstName: data.firstName,
+          },
+        ]);
 
-      sessionStorage.setItem('customerVersion', result.version.toString());
-      setCustomerDataProp(result);
-      alert(`First Name updated to ${result.firstName}!`);
-      return result;
-    } catch (err) {
-      const error = err as Error;
-      setErrorUpdate(error.message);
+        sessionStorage.setItem('customerVersion', result.version.toString());
+        setCustomerDataProp(result);
+        alert(`First Name updated to ${result.firstName}!`);
+        return result;
+      } catch (err) {
+        const error = err as Error;
+        setErrorUpdate(error.message);
+      }
     }
   };
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '340px' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '320px' }}>
       <TextField
         id="firstName"
         label="FirstName"
@@ -60,8 +67,8 @@ export default function FirstNameForm({ setCustomerDataProp }) {
         error={!!errors.firstName}
         helperText={errors.firstName?.message}
       />
-      <Button type="submit" variant="contained">
-        save
+      <Button sx={{ margin: '8px' }} type="submit" variant="contained">
+        <SaveIcon />
       </Button>
       <Box sx={{ color: 'red' }}>{errorUpdate}</Box>
     </form>

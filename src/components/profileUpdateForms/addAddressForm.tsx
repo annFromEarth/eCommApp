@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CountryEnum } from '../registrationForm/types';
 import { CustomerService } from '../../services/customerService';
+
 import {
   TextField,
   Button,
@@ -88,14 +89,14 @@ export default function AddAddressForm({
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '340px' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '300px' }}>
       <FormGroup
         sx={{
           gap: '15px',
           marginBottom: '50px',
         }}
       >
-        <Typography>New Address</Typography>
+        <Typography>Add New Address</Typography>
 
         <FormControl>
           <InputLabel id="country">Country</InputLabel>

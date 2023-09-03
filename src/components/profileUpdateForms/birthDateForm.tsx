@@ -4,13 +4,18 @@ import { CustomerService } from '../../services/customerService';
 import dayjs from 'dayjs';
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers';
 import { Button, Box } from '@mui/material';
-// import { Customer } from '../../pages/Profile/types';
+import { Customer } from '../../pages/Profile/types';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface IBirthDateInput {
   dateOfBirth: string;
 }
 
-export default function BirthDateForm({ setCustomerDataProp }) {
+export default function BirthDateForm({
+  setCustomerDataProp,
+}: {
+  setCustomerDataProp: React.Dispatch<React.SetStateAction<Customer | null>>;
+}) {
   const [errorUpdate, setErrorUpdate] = useState<string>('');
 
   const form = useForm<IBirthDateInput>({
@@ -29,7 +34,7 @@ export default function BirthDateForm({ setCustomerDataProp }) {
   const maxAge = dayjs().subtract(99, 'year');
 
   const onSubmit: SubmitHandler<IBirthDateInput> = async (data) => {
-    if (data.dateOfBirth !== 'Invalid Date') {
+    if (authorizationToken && data.dateOfBirth !== 'Invalid Date') {
       try {
         const result = await CustomerService.updateMe(authorizationToken, version, [
           {
@@ -50,7 +55,7 @@ export default function BirthDateForm({ setCustomerDataProp }) {
   };
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '340px' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '320px' }}>
       <Controller
         control={control}
         rules={{
@@ -68,6 +73,7 @@ export default function BirthDateForm({ setCustomerDataProp }) {
         render={({ field: { onChange: rhfOnChange, ref }, fieldState: { error } }) => (
           <>
             <MuiDatePicker
+              sx={{ width: '222px' }}
               slotProps={{
                 textField: {
                   helperText: error?.message,
@@ -79,7 +85,6 @@ export default function BirthDateForm({ setCustomerDataProp }) {
               onChange={(date) => {
                 if (date) {
                   rhfOnChange(date.format('YYYY-MM-DD'));
-                  // console.log(date.format('YYYY-MM-DD'));
                 }
               }}
               ref={ref}
@@ -88,8 +93,8 @@ export default function BirthDateForm({ setCustomerDataProp }) {
           </>
         )}
       />
-      <Button type="submit" variant="contained">
-        save
+      <Button sx={{ margin: '8px' }} type="submit" variant="contained">
+        <SaveIcon />
       </Button>
       <Box sx={{ color: 'red' }}>{errorUpdate}</Box>
     </form>

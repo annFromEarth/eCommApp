@@ -5,14 +5,18 @@ import { TextField, Button, Box, InputAdornment, IconButton, FormGroup } from '@
 import { PATTERNS } from '../registrationForm/validationConstants';
 import { loginUser } from '../loginForm/loginRequest';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-// import { Customer } from '../../pages/Profile/types';
+import { Customer } from '../../pages/Profile/types';
 
 interface IChangePasswordInput {
   currentPassword: string;
   newPassword: string;
 }
 
-export default function ChangePasswordForm({ setCustomerDataProp }) {
+export default function ChangePasswordForm({
+  setCustomerDataProp,
+}: {
+  setCustomerDataProp: React.Dispatch<React.SetStateAction<Customer | null>>;
+}) {
   const [errorUpdate, setErrorUpdate] = useState<string>('');
 
   const form = useForm<IChangePasswordInput>({
@@ -41,32 +45,35 @@ export default function ChangePasswordForm({ setCustomerDataProp }) {
   const version = Number(sessionStorage?.getItem('customerVersion'));
 
   const onSubmit: SubmitHandler<IChangePasswordInput> = async (data) => {
-    try {
-      const result = await CustomerService.changePasswordMe(
-        authorizationToken,
-        version,
-        data.currentPassword,
-        data.newPassword
-      );
+    if (authorizationToken) {
+      try {
+        const result = await CustomerService.changePasswordMe(
+          authorizationToken,
+          version,
+          data.currentPassword,
+          data.newPassword
+        );
 
-      if (result.statusCode === 400) {
-        setErrorUpdate(result.message);
-      } else {
-        sessionStorage.setItem('customerVersion', result.version.toString());
-        setCustomerDataProp(result);
-        alert(`Password Updated Successfully`);
-        const renewLogin = await loginUser(result.email, data.newPassword);
-        sessionStorage.setItem('authorization-token', renewLogin.access_token);
+        if (result.statusCode === 400) {
+          //TODO: response type!
+          setErrorUpdate(result.message);
+        } else {
+          sessionStorage.setItem('customerVersion', result.version.toString());
+          setCustomerDataProp(result);
+          alert(`Password Updated Successfully`);
+          const renewLogin = await loginUser(result.email, data.newPassword);
+          sessionStorage.setItem('authorization-token', renewLogin.access_token);
+        }
+        return result;
+      } catch (err) {
+        const error = err as Error;
+        setErrorUpdate(error.message);
       }
-      return result;
-    } catch (err) {
-      const error = err as Error;
-      setErrorUpdate(error.message);
     }
   };
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '340px' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '300px' }}>
       <FormGroup
         sx={{
           gap: '15px',

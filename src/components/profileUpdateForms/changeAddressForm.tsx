@@ -90,7 +90,7 @@ export default function ChangeAddressForm({
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '300px' }}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '250px' }}>
       <FormGroup
         sx={{
           gap: '15px',
