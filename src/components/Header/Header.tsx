@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import HeaderNavPages from './HeaderNav';
 import { themeOptions } from '../../assets/theme';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 import { PAGES_HEADER_MENU } from '../../data/pages';
 import { HEADER_TITLES } from '../../data/titles';
 

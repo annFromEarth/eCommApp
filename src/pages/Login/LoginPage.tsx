@@ -3,7 +3,7 @@ import { Box, useTheme, Typography, Button } from '@mui/material';
 import LoginForm from '../../components/loginForm/LoginForm';
 import { Link } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/titles';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 
 export function LoginPage() {
   const plantsTheme = useTheme();

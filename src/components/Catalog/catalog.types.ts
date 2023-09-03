@@ -8,47 +8,74 @@ export interface IProducts {
 export interface ResultsEntity {
   id: string;
   version: number;
-  productType: ProductType;
-  name: NameOrSlugOrDescription;
+  productType: IProductType;
+  name: INameOrSlugOrDescription;
   categories?: null[] | null;
-  slug: Slug;
-  masterVariant: MasterVariant;
+  slug: ISlug;
+  masterVariant?: IMasterVariant;
   variants?: null[] | null;
-  searchKeywords: SearchKeywords;
+  searchKeywords: ISearchKeywords;
   hasStagedChanges: boolean;
   published: boolean;
   createdAt: string;
   lastModifiedAt: string;
-  description?: NameOrSlugOrDescription1 | null;
+  description?: INameOrSlugOrDescription | null;
 }
-export interface ProductType {
+export interface IProductType {
   typeId: string;
   id: string;
 }
-export interface NameOrSlugOrDescription {
+export interface INameOrSlugOrDescription {
   'en-GB': string;
 }
-export interface Slug {
-  en: string;
+export interface ISlug {
+  'en-GB': string;
   aa?: string | null;
   de?: string | null;
 }
-export interface MasterVariant {
+export interface IMasterVariant {
   id: number;
-  prices?: null[] | null;
-  images?: null[] | null;
-  attributes?: AttributesEntity[] | null;
+  prices?: IPrices[];
+  images?: IImages[];
+  attributes?: IAttributesEntity[] | null;
 }
-export interface AttributesEntity {
+export interface IImages {
+  url: string;
+  dimensions: IImagesDimensions;
+}
+export interface IImagesDimensions {
+  w: number;
+  h: number;
+}
+export interface IAttributesEntity {
   name: string;
-  value: Value | boolean;
+  value: IAttributesEntityValue | boolean;
 }
-export interface Value {
+export interface IAttributesEntityValue {
   it: string;
   de: string;
   en: string;
 }
-export interface SearchKeywords {}
-export interface NameOrSlugOrDescription1 {
-  en: string;
+export interface ISearchKeywords {}
+export interface IPrices {
+  id: string;
+  value: IPricesValue;
+  key: string;
+  country: string;
+  customerGroup: IDiscountOrCustomerGroup;
+  discounted: IDiscounted;
+}
+export interface IPricesValue {
+  type: string;
+  currencyCode: string;
+  centAmount: number;
+  fractionDigits: number;
+}
+export interface IDiscountOrCustomerGroup {
+  typeId: string;
+  id: string;
+}
+export interface IDiscounted {
+  value: IPricesValue;
+  discount: IDiscountOrCustomerGroup;
 }

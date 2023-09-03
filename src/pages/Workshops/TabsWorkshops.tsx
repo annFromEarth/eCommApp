@@ -26,7 +26,7 @@ export default function TabsWorkshops() {
           <IncomingWorkshops />
         </TabPanel>
         <TabPanel value="2">
-          <PastWorkshops />o
+          <PastWorkshops />
         </TabPanel>
       </TabContext>
     </Box>

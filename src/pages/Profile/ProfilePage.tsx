@@ -1,7 +1,8 @@
 import { Box, useTheme, Typography, Button } from '@mui/material';
 import { PAGES_TITLES } from '../../data/titles';
-import { PATH } from '../../data/paths';
 import { useEffect, useState } from 'react';
+import { PATH } from '../../services/routing/paths';
+
 import { useNavigate } from 'react-router-dom';
 
 import './profilePage.css';
