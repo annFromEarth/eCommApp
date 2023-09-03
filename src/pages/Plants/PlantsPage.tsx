@@ -1,9 +1,12 @@
-import { Box, useTheme, Typography } from '@mui/material';
-import { PAGES_TITLES } from '../../data/titles';
+import { Box, useTheme, Container, Grid, Divider } from '@mui/material';
 import GetCatalog from '../../components/Catalog/catalog';
+import GetCatalogNavigation from '../../components/CatalogNavigation/catalogNavigation';
+import GetCatalogPageName from '../../components/CatalogPageName/catalogpageName';
+import CatalogFilter from '../../components/CatalogFiltration/catalogFiltration';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
+
   return (
     <>
       <Box
@@ -12,16 +15,26 @@ export function PlantsPage() {
           flexDirection: 'column',
           width: '100%',
           justifyContent: 'center',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Typography variant="h2" component="h1" gutterBottom>
-          {PAGES_TITLES.plants}
-        </Typography>
+        <GetCatalogPageName />
       </Box>
-      <GetCatalog />
+      <Container maxWidth={false}>
+        <Grid container>
+          <Grid item xs={12} sm={2}>
+            <GetCatalogNavigation />
+            <Divider sx={{ marginBottom: '20px' }} />
+            <CatalogFilter />
+          </Grid>
+
+          <Grid item xs={12} sm={10}>
+            <GetCatalog />
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }

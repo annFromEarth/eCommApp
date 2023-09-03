@@ -2,7 +2,7 @@ import { Box, createTheme, Typography } from '@mui/material';
 import { themeOptions } from '../../assets/theme';
 import { Link } from 'react-router-dom';
 import NotFoundImage from './NotFoundImg';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 
 const plantsTheme = createTheme(themeOptions);
 
