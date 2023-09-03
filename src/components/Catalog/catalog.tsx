@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { getProducts } from './catalogRequest';
-import { IProducts } from './catalog.types';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../services/routing/paths';
 
