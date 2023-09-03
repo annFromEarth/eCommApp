@@ -4,9 +4,7 @@ export async function getProduct(id: string) {
   const authorizationToken: string = window.sessionStorage.getItem('authorization-token')!;
 
   const response = await fetch(
-    `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
-      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
-    }/product-projections/${id}`,
+    `${process.env.VITE_CLIENT_CTP_API_URL}/${process.env.VITE_CLIENT_CTP_PROJECT_KEY}/product-projections/${id}`,
     {
       method: 'GET',
       headers: {

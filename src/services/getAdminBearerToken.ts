@@ -1,17 +1,13 @@
 export async function getAdminBearerToken() {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_ADMIN_CTP_AUTH_URL}/oauth/token?grant_type=client_credentials&scope=${
-        import.meta.env.VITE_ADMIN_CTP_SCOPES
-      }`,
+      `${process.env.VITE_ADMIN_CTP_AUTH_URL}/oauth/token?grant_type=client_credentials&scope=${process.env.VITE_ADMIN_CTP_SCOPES}`,
       {
         headers: {
           Authorization:
             'Basic ' +
             btoa(
-              `${import.meta.env.VITE_ADMIN_CTP_CLIENT_ID}:${
-                import.meta.env.VITE_ADMIN_CTP_CLIENT_SECRET
-              }`
+              `${process.env.VITE_ADMIN_CTP_CLIENT_ID}:${process.env.VITE_ADMIN_CTP_CLIENT_SECRET}`
             ),
           'Content-Type': 'application/x-www-form-urlencoded',
         },

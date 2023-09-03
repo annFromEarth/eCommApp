@@ -8,8 +8,8 @@ export async function getFilteredProducts({ priceFrom, priceTo }: IFiltrationReq
   };
 
   const response = await fetch(
-    `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
-      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
+    `${process.env.VITE_CLIENT_CTP_API_URL}/${
+      process.env.VITE_CLIENT_CTP_PROJECT_KEY
     }/product-projections/search?filter=${makeSearchString()}`,
     {
       method: 'GET',
