@@ -23,7 +23,7 @@ export function ProductPage() {
         setProduct(data);
       });
     }
-  }, [id]); //id inserted into []!!
+  }, []);
 
   return (
     <Box
