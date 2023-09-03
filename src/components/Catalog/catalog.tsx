@@ -19,7 +19,7 @@ export default function GetCatalog() {
     getProducts().then((response) => {
       dispatch(addProducts(response.results));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
