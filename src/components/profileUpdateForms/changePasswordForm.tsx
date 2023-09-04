@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CustomerService } from '../../services/customerService';
 import { TextField, Button, Box, InputAdornment, IconButton, FormGroup } from '@mui/material';
@@ -30,7 +30,8 @@ export default function ChangePasswordForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
+    reset,
   } = form;
 
   const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
@@ -71,6 +72,10 @@ export default function ChangePasswordForm({
       }
     }
   };
+
+  useEffect(() => {
+    reset({ currentPassword: '', newPassword: '' });
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '300px' }}>
