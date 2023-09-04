@@ -5,7 +5,7 @@ import { ICategoryNavigation } from './catalogNavigation.types';
 import { getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
 import { addProducts } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentCategory } from '../../features/categoriesSlice';
+import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
 
 export default function GetCatalogNavigation() {
   const [categories, setCategories] = useState<ICategoryNavigation>();
@@ -14,7 +14,6 @@ export default function GetCatalogNavigation() {
   useEffect(() => {
     getCategories().then((response) => {
       setCategories(response);
-      dispatch(setCurrentCategory('All Plants'));
     });
   }, [dispatch]);
 
@@ -22,6 +21,7 @@ export default function GetCatalogNavigation() {
     getProductsByCategory(categoryId).then((response) => {
       dispatch(addProducts(response.results));
       dispatch(setCurrentCategory(categoryName));
+      dispatch(setCurrentCategoryId(categoryId));
     });
   };
 
@@ -29,6 +29,7 @@ export default function GetCatalogNavigation() {
     getProducts().then((response) => {
       dispatch(addProducts(response.results));
       dispatch(setCurrentCategory('All Plants'));
+      dispatch(setCurrentCategoryId(''));
     });
   };
 

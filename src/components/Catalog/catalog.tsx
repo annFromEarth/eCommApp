@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { getProducts } from './catalogRequest';
+import { useEffect, useState } from 'react';
+import { getProducts, getProductsByCategory } from './catalogRequest';
+
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../services/routing/paths';
 
@@ -10,18 +11,50 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack, Box } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector, useQuery } from '../../hooks';
 import { addProducts } from '../../features/productsSlice';
+import { Bars } from 'react-loader-spinner';
+import { setCurrentCategory } from '../../features/categoriesSlice';
+import { generateToken } from '../../utils/token';
 
 export default function GetCatalog() {
+  const query = useQuery();
   const products = useAppSelector((state) => state.products.data);
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProducts().then((response) => {
-      dispatch(addProducts(response.results));
-    });
-  }, [dispatch]);
+    if (!window.sessionStorage.getItem('token')) {
+      generateToken().then((response) => {
+        window.sessionStorage.setItem('token', response.access_token);
+        if (query.get('category') && query.get('category') !== null) {
+          getProductsByCategory(query.get('category')).then((response) => {
+            dispatch(addProducts(response.results));
+            setLoading(false);
+          });
+        } else {
+          getProducts().then((response) => {
+            dispatch(addProducts(response.results));
+            dispatch(setCurrentCategory('All Plants'));
+            setLoading(false);
+          });
+        }
+      });
+    } else {
+      if (query.get('category') && query.get('category') !== null) {
+        getProductsByCategory(query.get('category')).then((response) => {
+          dispatch(addProducts(response.results));
+          setLoading(false);
+        });
+      } else {
+        getProducts().then((response) => {
+          dispatch(addProducts(response.results));
+          dispatch(setCurrentCategory('All Plants'));
+          setLoading(false);
+        });
+      }
+    }
+  }, [dispatch, query]);
 
   const navigate = useNavigate();
 
@@ -30,8 +63,27 @@ export default function GetCatalog() {
   };
 
   return (
-    <>
-      {products && (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        width: '100%',
+        margin: 'auto',
+      }}
+    >
+      {loading && (
+        <Bars
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="bars-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      )}
+      {products && !loading && (
         <Stack
           display="flex"
           flexWrap="wrap"
@@ -132,6 +184,6 @@ export default function GetCatalog() {
           ))}
         </Stack>
       )}
-    </>
+    </Box>
   );
 }

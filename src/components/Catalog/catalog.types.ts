@@ -79,3 +79,9 @@ export interface IDiscounted {
   value: IPricesValue;
   discount: IDiscountOrCustomerGroup;
 }
+export interface IFiltrationRequest {
+  priceFrom?: string;
+  priceTo?: string;
+  size?: string;
+  currentCategoryId: string;
+}
