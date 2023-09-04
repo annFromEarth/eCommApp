@@ -23,7 +23,7 @@ export function ProductPage() {
         setProduct(data);
       });
     }
-  }, []);
+  }, [id]); // id added to dependencies []
 
   return (
     <Box

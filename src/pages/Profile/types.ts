@@ -27,4 +27,6 @@ export type Customer = {
   stores?: [];
   version: number;
   versionModifiedAt?: string;
+  statusCode?: string | number; //TODO: fix catching server error
+  message?: string; //TODO: fix catching server error
 };

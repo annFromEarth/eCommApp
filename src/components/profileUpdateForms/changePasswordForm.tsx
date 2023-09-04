@@ -56,7 +56,7 @@ export default function ChangePasswordForm({
 
         if (result.statusCode === 400) {
           //TODO: response type!
-          setErrorUpdate(result.message);
+          if (result.message) setErrorUpdate(result.message);
         } else {
           sessionStorage.setItem('customerVersion', result.version.toString());
           setCustomerDataProp(result);
