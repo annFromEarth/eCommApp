@@ -6,15 +6,25 @@ import { getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
 import { addProducts } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
+import { generateToken } from '../../utils/token';
 
 export default function GetCatalogNavigation() {
   const [categories, setCategories] = useState<ICategoryNavigation>();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getCategories().then((response) => {
-      setCategories(response);
-    });
+    if (!window.sessionStorage.getItem('token')) {
+      generateToken().then((response) => {
+        window.sessionStorage.setItem('token', response.access_token);
+        getCategories().then((response) => {
+          setCategories(response);
+        });
+      });
+    } else {
+      getCategories().then((response) => {
+        setCategories(response);
+      });
+    }
   }, [dispatch]);
 
   const handleCategory = (categoryId: string, categoryName: string) => {
