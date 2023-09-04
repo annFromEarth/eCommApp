@@ -3,6 +3,7 @@ import GetCatalog from '../../components/Catalog/catalog';
 import GetCatalogNavigation from '../../components/CatalogNavigation/catalogNavigation';
 import GetCatalogPageName from '../../components/CatalogPageName/catalogpageName';
 import CatalogFilter from '../../components/CatalogFiltration/catalogFiltration';
+import { SearchProduct } from '../../components/SearchProduct/SearchProduct';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
@@ -20,6 +21,9 @@ export function PlantsPage() {
           color: plantsTheme.palette.text.primary,
         }}
       >
+        <Box sx={{ alignSelf: 'flex-end' }}>
+          <SearchProduct />
+        </Box>
         <GetCatalogPageName />
       </Box>
       <Container maxWidth={false}>
@@ -29,7 +33,6 @@ export function PlantsPage() {
             <Divider sx={{ marginBottom: '20px' }} />
             <CatalogFilter />
           </Grid>
-
           <Grid item xs={12} sm={10}>
             <GetCatalog />
           </Grid>
