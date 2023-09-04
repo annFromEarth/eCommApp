@@ -30,7 +30,7 @@ export function ProductPage() {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'strench',
+        alignItems: 'stretch',
         width: '100%',
         margin: 'auto',
       }}
