@@ -23,14 +23,14 @@ export function ProductPage() {
         setProduct(data);
       });
     }
-  }, []);
+  }, [id]); // id added to dependencies []
 
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'strench',
+        alignItems: 'stretch',
         width: '100%',
         margin: 'auto',
       }}

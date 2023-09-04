@@ -4,11 +4,36 @@ export enum CountryEnum {
   FR = 'France',
 }
 
-export type Address = {
+export type submitAddress = {
   streetName: string;
   city: string;
   postalCode: string;
   country: CountryEnum;
+  id?: string;
+};
+
+export type submitCustomer = {
+  addresses: submitAddress[];
+  authenticationMode?: string;
+  createdAt?: string;
+  createdBy?: object;
+  dateOfBirth: string;
+  defaultBillingAddress?: number;
+  defaultShippingAddress?: number;
+  email: string;
+  firstName: string;
+  id?: string;
+  isEmailVerified?: boolean;
+  lastMessageSequenceNumber?: number;
+  lastModifiedAt?: string;
+  lastModifiedBy?: object;
+  lastName: string;
+  password: string;
+  shippingAddressIds?: string[];
+  billingAddressIds?: string[];
+  stores?: [];
+  version?: 1;
+  versionModifiedAt?: string;
 };
 
 export interface IFormInput {
@@ -18,7 +43,7 @@ export interface IFormInput {
   password: string;
   dateOfBirth: string;
 
-  addresses: Address[];
+  addresses: submitAddress[];
 
   countryPrimary: CountryEnum;
   postalCodePrimary: string;
@@ -32,4 +57,18 @@ export interface IFormInput {
 
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
+
+  authenticationMode?: string;
+  createdAt?: string;
+  createdBy?: object;
+  id?: string;
+  isEmailVerified?: boolean;
+  lastMessageSequenceNumber?: number;
+  lastModifiedAt?: string;
+  lastModifiedBy?: object;
+  shippingAddressIds?: string[];
+  billingAddressIds?: string[];
+  stores?: [];
+  version?: 1;
+  versionModifiedAt?: string;
 }
