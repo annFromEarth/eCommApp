@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CustomerService } from '../../services/customerService';
 import { TextField, Button, Box } from '@mui/material';
@@ -27,7 +27,8 @@ export default function LastNameForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
+    reset,
   } = form;
 
   const authorizationToken = sessionStorage?.getItem('authorization-token');
@@ -53,6 +54,10 @@ export default function LastNameForm({
       }
     }
   };
+
+  useEffect(() => {
+    reset({ lastName: '' });
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)} style={{ width: '320px' }}>
