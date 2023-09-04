@@ -1,5 +1,5 @@
 export default async function getCategories() {
-  const authorizationToken: string = window.sessionStorage.getItem('authorization-token')!;
+  const authorizationToken: string = window.sessionStorage.getItem('token')!;
 
   const response = await fetch(
     `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${

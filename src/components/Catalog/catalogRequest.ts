@@ -1,25 +1,27 @@
 import { IFiltrationRequest } from './catalog.types';
 
 export async function getProducts() {
-  const authorizationToken: string = window.sessionStorage.getItem('authorization-token')!;
+  if (window.sessionStorage.getItem('token')) {
+    const authorizationToken: string = window.sessionStorage.getItem('token')!;
 
-  const response = await fetch(
-    `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
-      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
-    }/product-projections`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${authorizationToken}`,
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
+    const response = await fetch(
+      `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
+        import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
+      }/product-projections`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${authorizationToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
 }
 
 export async function getProductsByCategory(category: string | null) {
-  const authorizationToken: string = window.sessionStorage.getItem('authorization-token')!;
+  const authorizationToken: string = window.sessionStorage.getItem('token')!;
 
   const response = await fetch(
     `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
@@ -42,7 +44,7 @@ export async function getFilteredProducts({
   size,
   currentCategoryId,
 }: IFiltrationRequest) {
-  const authorizationToken: string = window.sessionStorage.getItem('authorization-token')!;
+  const authorizationToken: string = window.sessionStorage.getItem('token')!;
 
   const makeSearchString = (): string => {
     let priceFromFinal: string | number = Number(priceFrom) * 100;

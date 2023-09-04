@@ -11,6 +11,7 @@ import { Bars } from 'react-loader-spinner';
 import { BasicBreadcrumbs } from '../../components/CatalogBreadcrumbs/catalogBreadcrumbs';
 import { setCurrentProduct } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
+import { generateToken } from '../../utils/token';
 
 export function ProductPage() {
   const plantsTheme = useTheme();
@@ -20,12 +21,25 @@ export function ProductPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id) {
-      getProduct(id.slice(1)).then((data: IProduct) => {
-        setLoading(false);
-        setProduct(data);
-        dispatch(setCurrentProduct(data.name['en-GB']));
+    if (!window.sessionStorage.getItem('token')) {
+      generateToken().then((response) => {
+        window.sessionStorage.setItem('token', response.access_token);
+        if (id) {
+          getProduct(id.slice(1)).then((data: IProduct) => {
+            setLoading(false);
+            setProduct(data);
+            dispatch(setCurrentProduct(data.name['en-GB']));
+          });
+        }
       });
+    } else {
+      if (id) {
+        getProduct(id.slice(1)).then((data: IProduct) => {
+          setLoading(false);
+          setProduct(data);
+          dispatch(setCurrentProduct(data.name['en-GB']));
+        });
+      }
     }
   }, [dispatch, id]); // id added to dependencies []
 

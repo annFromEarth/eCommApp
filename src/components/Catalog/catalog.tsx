@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector, useQuery } from '../../hooks';
 import { addProducts } from '../../features/productsSlice';
 import { Bars } from 'react-loader-spinner';
 import { setCurrentCategory } from '../../features/categoriesSlice';
+import { generateToken } from '../../utils/token';
 
 export default function GetCatalog() {
   const query = useQuery();
@@ -23,17 +24,35 @@ export default function GetCatalog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (query.get('category') && query.get('category') !== null) {
-      getProductsByCategory(query.get('category')).then((response) => {
-        dispatch(addProducts(response.results));
-        setLoading(false);
+    if (!window.sessionStorage.getItem('token')) {
+      generateToken().then((response) => {
+        window.sessionStorage.setItem('token', response.access_token);
+        if (query.get('category') && query.get('category') !== null) {
+          getProductsByCategory(query.get('category')).then((response) => {
+            dispatch(addProducts(response.results));
+            setLoading(false);
+          });
+        } else {
+          getProducts().then((response) => {
+            dispatch(addProducts(response.results));
+            dispatch(setCurrentCategory('All Plants'));
+            setLoading(false);
+          });
+        }
       });
     } else {
-      getProducts().then((response) => {
-        dispatch(addProducts(response.results));
-        dispatch(setCurrentCategory('All Plants'));
-        setLoading(false);
-      });
+      if (query.get('category') && query.get('category') !== null) {
+        getProductsByCategory(query.get('category')).then((response) => {
+          dispatch(addProducts(response.results));
+          setLoading(false);
+        });
+      } else {
+        getProducts().then((response) => {
+          dispatch(addProducts(response.results));
+          dispatch(setCurrentCategory('All Plants'));
+          setLoading(false);
+        });
+      }
     }
   }, [dispatch, query]);
 
