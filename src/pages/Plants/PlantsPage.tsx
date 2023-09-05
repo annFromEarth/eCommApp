@@ -4,6 +4,7 @@ import GetCatalogNavigation from '../../components/CatalogNavigation/catalogNavi
 import GetCatalogPageName from '../../components/CatalogPageName/catalogpageName';
 import CatalogFilter from '../../components/CatalogFiltration/catalogFiltration';
 import { BasicBreadcrumbs } from '../../components/CatalogBreadcrumbs/catalogBreadcrumbs';
+import { SearchProductForm } from '../../components/SearchProduct/SearchProductForm';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
@@ -15,16 +16,19 @@ export function PlantsPage() {
           display: 'flex',
           width: '100%',
           position: 'relative',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: '15px',
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Box sx={{ position: 'absolute', left: '25px' }}>
+        <Box>
           <BasicBreadcrumbs />
         </Box>
         <GetCatalogPageName />
+        <Box>
+          <SearchProductForm />
+        </Box>
       </Box>
       <Container maxWidth={false} sx={{ marginBottom: '20px' }}>
         <Grid container>
