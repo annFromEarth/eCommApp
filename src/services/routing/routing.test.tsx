@@ -4,13 +4,17 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import App from '../../App';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 describe('App', () => {
   it('renders Main page App component by default', () => {
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const buttonElement = screen.getByText(/browse plants/i);
     expect(buttonElement).toBeInTheDocument();
@@ -18,9 +22,11 @@ describe('App', () => {
 
   it('follow the login link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const loginLink = getByText(/login/i);
     expect(loginLink).toBeInTheDocument();
@@ -29,15 +35,17 @@ describe('App', () => {
     expect(textElementLogin).toBeInTheDocument();
     const registerLink = getByText(/Create an account/i);
     fireEvent.click(registerLink);
-    const textElementRegister = getByText(/First Name/i);
+    const textElementRegister = getByText(/Already have an account/i);
     expect(textElementRegister).toBeInTheDocument();
   });
 
   it('follow the register link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const registerLink = getByText('REGISTER');
     expect(registerLink).toBeInTheDocument();
@@ -52,9 +60,11 @@ describe('App', () => {
 
   it('follow the cart link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText(/cart/i);
     expect(linkElement).toBeInTheDocument();
@@ -65,9 +75,11 @@ describe('App', () => {
 
   it('follow the plants link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText(/plants/i);
     expect(linkElement).toBeInTheDocument();
@@ -78,9 +90,11 @@ describe('App', () => {
 
   it('follow the workshops link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText(/workshops/i);
     expect(linkElement).toBeInTheDocument();
@@ -91,9 +105,11 @@ describe('App', () => {
 
   it('follow the about link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText(/about/i);
     expect(linkElement).toBeInTheDocument();
@@ -104,9 +120,11 @@ describe('App', () => {
 
   it('follow the FAQ link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText(/FAQ/i);
     expect(linkElement).toBeInTheDocument();
@@ -117,9 +135,11 @@ describe('App', () => {
 
   it('follow the shipping link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText('✿ Shipping ✿');
     expect(linkElement).toBeInTheDocument();
@@ -130,9 +150,11 @@ describe('App', () => {
 
   it('follow the guarantee link', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const linkElement = getByText('✿ Guarantee ✿');
     expect(linkElement).toBeInTheDocument();
@@ -143,9 +165,11 @@ describe('App', () => {
 
   it('follow the link Contacts us', () => {
     const { getByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LocalizationProvider>
     );
     const button = getByText(/✿ Contact us ✿/i);
     expect(button).toBeInTheDocument();

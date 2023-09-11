@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import HeaderNavPages from './HeaderNav';
 import { themeOptions } from '../../assets/theme';
-import { PATH } from '../../data/paths';
+import { PATH } from '../../services/routing/paths';
 import { PAGES_HEADER_MENU } from '../../data/pages';
 import { HEADER_TITLES } from '../../data/titles';
 
@@ -92,9 +92,16 @@ function HeaderNavLinks() {
         }}
       >
         {sessionStorage.getItem('authorization-token') ? (
-          <Button variant="contained" onClick={() => logout()}>
-            {PAGES_HEADER_MENU.logout} <span style={{ marginLeft: '15px' }}>&#128682;</span>
-          </Button>
+          <>
+            <Button variant="contained" onClick={() => logout()}>
+              {PAGES_HEADER_MENU.logout} <span style={{ marginLeft: '15px' }}>&#128682;</span>
+            </Button>
+            <Button variant="contained">
+              <Link to={PATH.profile}>
+                {PAGES_HEADER_MENU.profile} <span style={{ marginLeft: '15px' }}>&#127968;</span>
+              </Link>
+            </Button>
+          </>
         ) : (
           <>
             <Button variant="contained">

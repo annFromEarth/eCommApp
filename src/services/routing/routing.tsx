@@ -11,7 +11,9 @@ import { QuestionsPage } from '../../pages/Questions/QuestionsPage';
 import { RegistrationPage } from '../../pages/Registration/RegistrationPage';
 import { ShippingPage } from '../../pages/Shipping/ShippingPage';
 import { WorkshopsPage } from '../../pages/Workshops/WorkshopsPage';
-import { PATH } from '../../data/paths';
+import { PATH } from './paths';
+import { ProfilePage } from '../../pages/Profile/ProfilePage';
+import { ProductPage } from '../../pages/Product/ProductPage';
 
 function RoutingApp() {
   return (
@@ -28,6 +30,8 @@ function RoutingApp() {
       <Route path={PATH.guarantee} element={<GuaranteePage />} />
       <Route path={PATH.contacts} element={<ContactsPage />} />
       <Route path={PATH.incorrect} element={<NotFoundPage />} />
+      <Route path={PATH.profile} element={<ProfilePage />} />
+      <Route path={PATH.product + '/:id'} element={<ProductPage />} />
     </Routes>
   );
 }

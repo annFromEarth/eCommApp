@@ -1,13 +1,18 @@
-const CLIENT_ID_ADMIN = 'vbWTQUWV93wkxP9xT_rIpvQf';
-const CLIENT_SECRET_ADMIN = 'fMH8UHOh0kKfgaD8NAeH1M08kp4rULa_';
-
 export async function getAdminBearerToken() {
   try {
     const response = await fetch(
-      'https://auth.europe-west1.gcp.commercetools.com/oauth/token?grant_type=client_credentials&scope=manage_project:ecommerceapp_951',
+      `${import.meta.env.VITE_ADMIN_CTP_AUTH_URL}/oauth/token?grant_type=client_credentials&scope=${
+        import.meta.env.VITE_ADMIN_CTP_SCOPES
+      }`,
       {
         headers: {
-          Authorization: 'Basic ' + btoa(`${CLIENT_ID_ADMIN}:${CLIENT_SECRET_ADMIN}`),
+          Authorization:
+            'Basic ' +
+            btoa(
+              `${import.meta.env.VITE_ADMIN_CTP_CLIENT_ID}:${
+                import.meta.env.VITE_ADMIN_CTP_CLIENT_SECRET
+              }`
+            ),
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         method: 'POST',
