@@ -41,7 +41,7 @@ function LoginLink() {
           fontSize: '24px',
         }}
       >
-        Already have an account?
+        <Typography>Already have an account?</Typography>
         <Box
           sx={{
             textDecoration: 'underline',

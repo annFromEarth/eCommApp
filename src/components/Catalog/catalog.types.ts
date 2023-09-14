@@ -83,5 +83,5 @@ export interface IFiltrationRequest {
   priceFrom?: string;
   priceTo?: string;
   size?: string;
-  currentCategoryId: string;
+  currentCategoryId?: string;
 }

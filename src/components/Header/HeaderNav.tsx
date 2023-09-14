@@ -18,7 +18,6 @@ export default function HeaderNavPages() {
           display: { xs: 'none', md: 'flex' },
           width: '800px',
           justifyContent: 'space-between',
-          fontFamily: 'monospace',
           fontSize: '1.215rem',
           fontWeight: 700,
           letterSpacing: '.3rem',
