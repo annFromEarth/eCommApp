@@ -2,7 +2,7 @@ import { Box, TextField, Stack, Typography, Button, RadioGroup } from '@mui/mate
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { useState } from 'react';
-import { getFilteredProducts, getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
+import { getFilteredProducts, getProducts } from '../Catalog/catalogRequest';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addProducts } from '../../features/productsSlice';
 
@@ -11,17 +11,17 @@ export default function CatalogFilter() {
   const [priceTo, setPriceTo] = useState<string>('');
   const [size, setSize] = useState<string>('');
   const dispatch = useAppDispatch();
-  const currentCategoryId = useAppSelector((state) => state.categories.currentCategoryId);
+  const currentCategory = useAppSelector((state) => state.categories.currentCategoryId);
 
   const filterProducts = () => {
-    getFilteredProducts({ priceFrom, priceTo, size, currentCategoryId }).then((response) => {
+    getFilteredProducts(currentCategory, priceFrom, priceTo, size).then((response) => {
       dispatch(addProducts(response.results));
     });
   };
 
   const resetFilters = () => {
-    if (currentCategoryId && currentCategoryId !== '') {
-      getProductsByCategory(currentCategoryId).then((response) => {
+    if (currentCategory && currentCategory !== '') {
+      getFilteredProducts(currentCategory).then((response) => {
         dispatch(addProducts(response.results));
       });
     } else {

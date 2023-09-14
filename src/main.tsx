@@ -5,6 +5,7 @@ import App from './App.tsx';
 
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './store';
+import '@fontsource-variable/nunito';
 import './components/registrationForm/registrationForm.css';
 import './reset.css';
 import './main.css';

@@ -36,6 +36,7 @@ export default function Footer() {
           py: '10px',
           color: plantsTheme.palette.text.primary,
           background: alpha(plantsTheme.palette.background.paper, 0.3),
+          fontFamily: "'Nunito Variable', sans-serif",
         }}
       >
         <Box>
