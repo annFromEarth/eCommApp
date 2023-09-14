@@ -2,7 +2,7 @@ import { Customer } from '../pages/Profile/types';
 import { API_URL, PROJECT_KEY } from '../constants';
 import { getAdminBearerToken } from './getAdminBearerToken';
 import { submitCustomer } from '../components/registrationForm/types';
-import { Action, Cart, CartPagedQueryResponse } from './types';
+import { Action, Cart, CartAction, CartPagedQueryResponse } from './types';
 
 export class CustomerService {
   static async getMe(authorizationToken: string): Promise<Customer> {
@@ -95,6 +95,24 @@ export class CustomerService {
       },
     });
 
+    const cart: Cart = await response.json();
+    return cart;
+  }
+
+  static async updateMyCart(
+    authorizationToken: string,
+    id: string,
+    version: number,
+    actions: CartAction[]
+  ): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts/${id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ version: version, actions: actions }),
+    });
     const cart: Cart = await response.json();
     return cart;
   }

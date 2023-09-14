@@ -10,3 +10,5 @@ export const postcodeRegEx = /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/;
 export const streetRegEx = /^[#.0-9a-zA-Z\s,-]+$/;
 
 export const cityRegEx = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+
+export const numbersOnly = /^[0-9]*$/;

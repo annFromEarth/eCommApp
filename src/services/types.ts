@@ -18,6 +18,13 @@ export type Action = {
   addressId?: string;
 };
 
+export type CartAction = {
+  action: 'changeLineItemQuantity' | 'removeLineItem' | 'addDiscountCode';
+  lineItemId?: string;
+  quantity?: number;
+  code?: string;
+};
+
 export type Cart = {
   type: string;
   id: string;
@@ -50,6 +57,8 @@ export type Cart = {
   refusedGifts: [];
   origin: string;
   itemShippingAddresses: Address[];
+  statusCode?: string | number; //TODO: fix catching server error
+  message?: string; //TODO: fix catching server error
 };
 
 export type CartPagedQueryResponse = {
@@ -58,6 +67,8 @@ export type CartPagedQueryResponse = {
   count: number;
   total: number;
   results: Cart[];
+  statusCode?: string | number; //TODO: fix catching server error
+  message?: string; //TODO: fix catching server error
 };
 
 export type LineItem = {
@@ -66,7 +77,7 @@ export type LineItem = {
   productId: string;
   name: {
     de?: string;
-    en?: string;
+    'en-GB': string;
   };
   productType: {
     typeId: string;
@@ -103,6 +114,10 @@ export type LineItem = {
     assets: [];
   };
   price: {
+    discounted: {
+      discount: { id: string; typeId: string };
+      value: { type: string; fractionDigits: number; currencyCode: 'EUR'; centAmount: number };
+    };
     value: {
       type: string;
       fractionDigits: number;
@@ -126,9 +141,9 @@ export type LineItem = {
   lineItemMode: 'Standard';
   totalPrice: {
     type: 'centPrecision';
-    fractionDigits: 2;
+    fractionDigits: number;
     currencyCode: 'EUR';
-    centAmount: 8400;
+    centAmount: number;
   };
   custom: {
     type: {

@@ -28,7 +28,7 @@ export function SearchListData(props: { valueSearch: string }) {
     } catch (error) {
       //TODO: error handling
     }
-  }, []);
+  }, [props.valueSearch]);
 
   const navigate = useNavigate();
   const openDetailPage = (id: string) => {
