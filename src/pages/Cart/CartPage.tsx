@@ -62,15 +62,15 @@ export function CartPage() {
     const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
     const fetchCartData = async (token: string) => {
       try {
-        //   const cartQuery = await CustomerService.getActiveCart(token);
-        const cartQuery = await CustomerService.requestCarts(token);
+        const cartQuery = await CustomerService.getActiveCart(token);
+        // const cartQuery = await CustomerService.requestCarts(token);
 
         if (!cartQuery.message) {
-          // setCartData(cartQuery);
+          setCartData(cartQuery);
           setCartDataAvailable(true);
           // console.log(cartQuery.results[2].lineItems);
-          setCartData(cartQuery.results[2]);
-          dispatch(setCurrentVersion(cartQuery.results[2].version));
+          //   setCartData(cartQuery.results[2]);
+          dispatch(setCurrentVersion(cartQuery.version));
         } else {
           setCartErrorUpdate(cartQuery.message);
           setCartDataAvailable(false);
