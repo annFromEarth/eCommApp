@@ -122,7 +122,7 @@ export function CartPage() {
                 margin: '20px',
                 height: '15vw',
                 width: '20vw',
-                background: 'url(../../../public/img/emptyCart/emptyBag.svg)',
+                background: 'url(../../../img/emptyCart/emptyBag.svg)',
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
               }}
