@@ -116,4 +116,19 @@ export class CustomerService {
     const cart: Cart = await response.json();
     return cart;
   }
+
+  static async clearCartById(
+    authorizationToken: string,
+    id: string,
+    version: number
+  ): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts/${id}?version=${version}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+    });
+    const cart: Cart = await response.json();
+    return cart;
+  }
 }
