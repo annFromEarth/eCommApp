@@ -100,12 +100,9 @@ export function CartPage() {
           color: plantsTheme.palette.text.primary,
         }}
       >
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Typography variant="h2" component="h1" gutterBottom sx={{ margin: '30px' }}>
           {PAGES_TITLES.cart}
         </Typography>
-        <Box sx={{ color: 'red', alignSelf: 'center', margin: '20px', fontSize: '1em' }}>
-          {cartErrorUpdate}
-        </Box>
 
         {!cartDataAvailable && (
           <>
@@ -198,6 +195,9 @@ export function CartPage() {
             </Table>
           </TableContainer>
         )}
+        <Box sx={{ color: 'red', alignSelf: 'center', margin: '20px', fontSize: '1em' }}>
+          {cartErrorUpdate}
+        </Box>
       </Box>
     </>
   );
