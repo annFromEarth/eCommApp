@@ -5,6 +5,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useState } from 'react';
 import QuantityForm from './quantityForm';
 import { CustomerService } from '../../services/customerService';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 export function CartRow({
   itemProp,
@@ -24,13 +26,17 @@ export function CartRow({
 
   const [ErrorUpdate, setErrorUpdate] = useState<string>('');
   const authorizationToken = sessionStorage?.getItem('authorization-token');
+
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
+
   const funcRemoveItem = async () => {
     if (authorizationToken) {
       try {
         const result = await CustomerService.updateMyCart(
           authorizationToken,
           cartProp.id,
-          cartProp.version,
+          cartVersion,
           [
             {
               action: 'removeLineItem',
@@ -39,6 +45,7 @@ export function CartRow({
           ]
         );
         setCartDataProp(result);
+        dispatch(setCurrentVersion(result.version));
       } catch (err) {
         const error = err as Error;
         setErrorUpdate(error.message);

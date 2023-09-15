@@ -6,7 +6,8 @@ import { PAGES_TITLES } from '../../data/titles';
 import { CustomerService } from '../../services/customerService';
 import { Cart } from '../../services/types';
 import { CartRow } from '../../components/Cart/cartRow';
-// import '../../../public/img/emptyCart/emptyBag.svg';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 import {
   Table,
@@ -26,34 +27,65 @@ export function CartPage() {
   const [cartErrorUpdate, setCartErrorUpdate] = useState<string>('');
   const [cartDataAvailable, setCartDataAvailable] = useState<boolean>(true);
 
-  const fetchCartData = async (token: string) => {
-    try {
-      const cartQuery = await CustomerService.getActiveCart(token);
-      //   const cartQuery = await CustomerService.requestCarts(token);
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
 
-      if (!cartQuery.message) {
-        setCartData(cartQuery);
-        setCartDataAvailable(true);
-        // console.log(cartQuery.results[2].lineItems);
-        // setCartData(cartQuery.results[2]);
-      } else {
-        setCartErrorUpdate(cartQuery.message);
-        setCartDataAvailable(false);
+  const funcClearCart = async () => {
+    if (
+      confirm('Irreversible action! Please confirm, if you want to clear all the goods from cart.')
+    ) {
+      const authorizationToken = sessionStorage.getItem('authorization-token');
+      if (authorizationToken && cartData) {
+        try {
+          const clearCart = await CustomerService.clearCartById(
+            authorizationToken,
+            cartData?.id,
+            cartVersion
+          );
+          if (!clearCart.message) {
+            setCartData(clearCart);
+            dispatch(setCurrentVersion(clearCart.version));
+            setCartDataAvailable(false);
+          } else {
+            setCartErrorUpdate(clearCart.message);
+          }
+        } catch (err) {
+          const error = err as Error;
+          setCartErrorUpdate(error.message);
+          setCartDataAvailable(false);
+        }
       }
-    } catch (err) {
-      const error = err as Error;
-      setCartErrorUpdate(error.message);
-      setCartDataAvailable(false);
-    }
+    } else return;
   };
 
   useEffect(() => {
     const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
+    const fetchCartData = async (token: string) => {
+      try {
+        //   const cartQuery = await CustomerService.getActiveCart(token);
+        const cartQuery = await CustomerService.requestCarts(token);
+
+        if (!cartQuery.message) {
+          // setCartData(cartQuery);
+          setCartDataAvailable(true);
+          // console.log(cartQuery.results[2].lineItems);
+          setCartData(cartQuery.results[2]);
+          dispatch(setCurrentVersion(cartQuery.results[2].version));
+        } else {
+          setCartErrorUpdate(cartQuery.message);
+          setCartDataAvailable(false);
+        }
+      } catch (err) {
+        const error = err as Error;
+        setCartErrorUpdate(error.message);
+        setCartDataAvailable(false);
+      }
+    };
     if (!authorizationToken) {
       navigate(PATH.login);
     }
-    fetchCartData(authorizationToken);
-  }, [navigate]);
+    if (authorizationToken) fetchCartData(authorizationToken);
+  }, [navigate, dispatch]);
 
   return (
     <>
@@ -156,14 +188,7 @@ export function CartPage() {
                   </TableCell>
                   <TableCell align="center">
                     <Tooltip title="Remove all items">
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="error"
-                        onClick={() => {
-                          alert('clicked');
-                        }}
-                      >
+                      <Button size="small" variant="outlined" color="error" onClick={funcClearCart}>
                         Clear all
                       </Button>
                     </Tooltip>
