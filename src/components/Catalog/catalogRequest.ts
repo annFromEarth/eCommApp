@@ -1,83 +1,70 @@
-import { IFiltrationRequest } from './catalog.types';
+import axios from 'axios';
 
 export async function getProducts() {
   if (window.sessionStorage.getItem('token')) {
     const authorizationToken: string = window.sessionStorage.getItem('token')!;
 
-    const response = await fetch(
+    const response = await axios.get(
       `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
         import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
       }/product-projections`,
       {
-        method: 'GET',
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
         },
       }
     );
-    const data = await response.json();
+
+    const data = await response.data;
     return data;
   }
 }
 
-export async function getProductsByCategory(category: string | null) {
-  const authorizationToken: string = window.sessionStorage.getItem('token')!;
-
-  const response = await fetch(
-    `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
-      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
-    }/product-projections/search?filter=categories.id:"${category}"`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${authorizationToken}`,
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
-}
-
-export async function getFilteredProducts({
-  priceFrom,
-  priceTo,
-  size,
-  currentCategoryId,
-}: IFiltrationRequest) {
-  const authorizationToken: string = window.sessionStorage.getItem('token')!;
-
-  const makeSearchString = (): string => {
+export async function getFilteredProducts(
+  currentCategoryId?: string | null,
+  priceFrom?: string,
+  priceTo?: string,
+  size?: string
+) {
+  if (window.sessionStorage.getItem('token')) {
+    const authorizationToken: string = window.sessionStorage.getItem('token')!;
+    const params = new URLSearchParams();
     let priceFromFinal: string | number = Number(priceFrom) * 100;
     let priceToFinal: string | number = Number(priceTo) * 100;
 
-    if (priceTo === '0' || priceTo === '') {
-      priceToFinal = '*';
+    if (!!currentCategoryId) {
+      params.append('filter', `categories.id:"${currentCategoryId}"`);
     }
 
-    if (priceFrom === '') {
-      priceFromFinal = '0';
+    if (!!priceFrom || !!priceTo) {
+      console.log(!!priceFrom, !!priceTo);
+      if (priceTo === '0' || priceTo === '') {
+        priceToFinal = '*';
+      }
+      if (priceFrom === '') {
+        priceFromFinal = '0';
+      }
+      params.append(
+        'filter',
+        `variants.price.centAmount:range (${priceFromFinal} to ${priceToFinal})`
+      );
+    }
+    if (!!size) {
+      params.append('filter', `variants.attributes.size:"${size}"`);
     }
 
-    return `?filter=variants.price.centAmount:range (${priceFromFinal} to ${priceToFinal})${
-      size && size !== '' && `&filter=variants.attributes.size:"${size}"`
-    }${
-      currentCategoryId &&
-      currentCategoryId !== '' &&
-      `&filter=categories.id:"${currentCategoryId}"`
-    }`;
-  };
-
-  const response = await fetch(
-    `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
-      import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
-    }/product-projections/search${makeSearchString()}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${authorizationToken}`,
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
+    const response = await axios.get(
+      `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
+        import.meta.env.VITE_CLIENT_CTP_PROJECT_KEY
+      }/product-projections/search`,
+      {
+        params: params,
+        headers: {
+          Authorization: `Bearer ${authorizationToken}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  }
 }

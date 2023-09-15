@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import getCategories from './catalogNavigationRequests';
 import { ListItem, ListItemButton, ListItemText, List, Box } from '@mui/material';
 import { ICategoryNavigation } from './catalogNavigation.types';
-import { getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
+import { getFilteredProducts, getProducts } from '../Catalog/catalogRequest';
 import { addProducts } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
@@ -28,7 +28,7 @@ export default function GetCatalogNavigation() {
   }, [dispatch]);
 
   const handleCategory = (categoryId: string, categoryName: string) => {
-    getProductsByCategory(categoryId).then((response) => {
+    getFilteredProducts(categoryId).then((response) => {
       dispatch(addProducts(response.results));
       dispatch(setCurrentCategory(categoryName));
       dispatch(setCurrentCategoryId(categoryId));

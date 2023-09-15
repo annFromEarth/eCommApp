@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts, getProductsByCategory } from './catalogRequest';
+import { getFilteredProducts, getProducts } from './catalogRequest';
 
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../services/routing/paths';
@@ -28,7 +28,7 @@ export default function GetCatalog() {
       generateToken().then((response) => {
         window.sessionStorage.setItem('token', response.access_token);
         if (query.get('category') && query.get('category') !== null) {
-          getProductsByCategory(query.get('category')).then((response) => {
+          getFilteredProducts(query.get('category')).then((response) => {
             dispatch(addProducts(response.results));
             setLoading(false);
           });
@@ -42,7 +42,7 @@ export default function GetCatalog() {
       });
     } else {
       if (query.get('category') && query.get('category') !== null) {
-        getProductsByCategory(query.get('category')).then((response) => {
+        getFilteredProducts(query.get('category')).then((response) => {
           dispatch(addProducts(response.results));
           setLoading(false);
         });

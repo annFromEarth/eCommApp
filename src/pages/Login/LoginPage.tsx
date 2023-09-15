@@ -42,7 +42,7 @@ function RegisterLink() {
           fontSize: '24px',
         }}
       >
-        New here?
+        <Typography>New here?</Typography>
         <Box
           sx={{
             textDecoration: 'underline',

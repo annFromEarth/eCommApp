@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <>
       <Box sx={{ textAlign: 'center', bgcolor: '#EFFD5F', py: '10px' }}>
-        Free Shipping + 30-day Guarantee
+        <Typography>Free Shipping + 30-day Guarantee</Typography>
       </Box>
 
       <AppBar position="static">
@@ -52,7 +52,6 @@ function HeaderTitle() {
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
           fontWeight: 700,
           letterSpacing: '.3rem',
           color: plantsTheme.palette.background.paper,
@@ -136,7 +135,7 @@ function HeaderTitleAdditional() {
         color: plantsTheme.palette.text.primary,
       }}
     >
-      {HEADER_TITLES.additional}
+      <Typography>{HEADER_TITLES.additional}</Typography>
     </Box>
   );
 }
