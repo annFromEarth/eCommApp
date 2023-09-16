@@ -94,7 +94,7 @@ export function ProductPage() {
             }}
           >
             <SwiperProduct images={product.masterVariant.images} />
-            <MainContentProduct product={product} />
+            <MainContentProduct product={product} id={id} />
           </Box>
         )}
       </Box>
