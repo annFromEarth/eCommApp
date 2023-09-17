@@ -110,7 +110,7 @@ export function CartPage() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          width: '100%',
+          //   width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
           padding: '15px',
@@ -166,7 +166,7 @@ export function CartPage() {
         {!loading && cartData && cartData?.lineItems[0] && (
           <TableContainer component={Paper}>
             <Table
-              sx={{ minWidth: 320, maxWidth: '98%', margin: '0 auto' }}
+              sx={{ minWidth: 100, maxWidth: '98%', margin: '0 auto' }}
               aria-label="customized table"
             >
               <TableHead>

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import DoneIcon from '@mui/icons-material/Done';
-import { Button, Box, Input } from '@mui/material';
+import { Button, Input } from '@mui/material';
 import { CustomerService } from '../../services/customerService';
 import { Cart } from '../../services/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -18,8 +18,6 @@ export default function PromoCodeForm({
   cartProp: Cart;
   setCartDataProp: React.Dispatch<React.SetStateAction<Cart | null>>;
 }) {
-  const [errorUpdate, setErrorUpdate] = useState<string>('');
-
   const form = useForm<IPromoCodeInput>({
     mode: 'onChange',
     defaultValues: {
@@ -55,16 +53,12 @@ export default function PromoCodeForm({
         );
 
         if (result.message) {
-          setErrorUpdate(result.message);
           return result.message;
         } else {
           setCartDataProp(result);
           dispatch(setCurrentVersion(result.version));
         }
-      } catch (err) {
-        const error = err as Error;
-        setErrorUpdate(error.message);
-      }
+      } catch (err) {} //TODO: do smth
     }
   };
 
@@ -90,7 +84,6 @@ export default function PromoCodeForm({
       <Button size="small" type="submit">
         <DoneIcon />
       </Button>
-      <Box sx={{ color: 'red' }}>{errorUpdate}</Box>
     </form>
   );
 }
