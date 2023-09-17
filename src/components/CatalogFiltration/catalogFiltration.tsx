@@ -2,9 +2,16 @@ import { Box, TextField, Stack, Typography, Button, RadioGroup } from '@mui/mate
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { useState } from 'react';
-import { getFilteredProducts, getProducts } from '../Catalog/catalogRequest';
+import { getFilteredProducts } from '../Catalog/catalogRequest';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addProducts } from '../../features/productsSlice';
+import {
+  addProducts,
+  setOffset,
+  setPriceFromFilter,
+  setPriceToFilter,
+  setSizeFilter,
+  setTotal,
+} from '../../features/productsSlice';
 
 export default function CatalogFilter() {
   const [priceFrom, setPriceFrom] = useState<string>('');
@@ -12,21 +19,34 @@ export default function CatalogFilter() {
   const [size, setSize] = useState<string>('');
   const dispatch = useAppDispatch();
   const currentCategory = useAppSelector((state) => state.categories.currentCategoryId);
+  const sort = useAppSelector((state) => state.products.sorting);
 
   const filterProducts = () => {
-    getFilteredProducts(currentCategory, priceFrom, priceTo, size).then((response) => {
+    if (priceFrom !== '') {
+      dispatch(setPriceFromFilter(priceFrom));
+    }
+    if (priceTo !== '') {
+      dispatch(setPriceToFilter(priceTo));
+    }
+    if (size !== '') {
+      dispatch(setSizeFilter(size));
+    }
+    dispatch(setOffset(0));
+    getFilteredProducts(currentCategory, priceFrom, priceTo, size, sort, 0).then((response) => {
       dispatch(addProducts(response.results));
+      dispatch(setTotal(response.total));
     });
   };
 
   const resetFilters = () => {
+    dispatch(setPriceFromFilter(''));
+    dispatch(setPriceToFilter(''));
+    dispatch(setSizeFilter(''));
+    dispatch(setOffset(0));
     if (currentCategory && currentCategory !== '') {
-      getFilteredProducts(currentCategory).then((response) => {
+      getFilteredProducts(currentCategory, '', '', '', sort, 0).then((response) => {
         dispatch(addProducts(response.results));
-      });
-    } else {
-      getProducts().then((response) => {
-        dispatch(addProducts(response.results));
+        dispatch(setTotal(response.total));
       });
     }
     setPriceFrom('');

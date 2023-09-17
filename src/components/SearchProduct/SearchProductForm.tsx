@@ -50,7 +50,7 @@ export function SearchProductForm() {
           minWidth: '300px',
         }}
       >
-        <SearchIcon onClick={() => setResultSearch(true)} />
+        <SearchIcon sx={{ cursor: 'pointer' }} onClick={() => setResultSearch(true)} />
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}

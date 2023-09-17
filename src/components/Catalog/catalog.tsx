@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getFilteredProducts, getProducts } from './catalogRequest';
+import { getFilteredProducts } from './catalogRequest';
 
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../services/routing/paths';
@@ -12,10 +12,19 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack, Box } from '@mui/material';
 import { useAppDispatch, useAppSelector, useQuery } from '../../hooks';
-import { addProducts } from '../../features/productsSlice';
+import {
+  addProducts,
+  setOffset,
+  setPriceFromFilter,
+  setPriceToFilter,
+  setSizeFilter,
+  setSorting,
+  setTotal,
+} from '../../features/productsSlice';
 import { Bars } from 'react-loader-spinner';
-import { setCurrentCategory } from '../../features/categoriesSlice';
+import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
 import { generateToken } from '../../utils/token';
+import CatalogPagination from '../CatalogPagination/catalogPagination';
 import { ButtonCart } from '../ButtonCart/ButtonCart';
 
 export default function GetCatalog() {
@@ -25,17 +34,27 @@ export default function GetCatalog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    dispatch(setOffset(0));
+    dispatch(setCurrentCategoryId(''));
+    dispatch(setCurrentCategory('All Plants'));
+    dispatch(setPriceFromFilter(''));
+    dispatch(setPriceToFilter(''));
+    dispatch(setSorting(''));
+    dispatch(setSizeFilter(''));
     if (!window.sessionStorage.getItem('token')) {
       generateToken().then((response) => {
         window.sessionStorage.setItem('token', response.access_token);
         if (query.get('category') && query.get('category') !== null) {
-          getFilteredProducts(query.get('category')).then((response) => {
+          dispatch(setCurrentCategoryId(query.get('category')));
+          getFilteredProducts(query.get('category'), '', '', '', '', 0).then((response) => {
             dispatch(addProducts(response.results));
+            dispatch(setTotal(response.total));
             setLoading(false);
           });
         } else {
-          getProducts().then((response) => {
+          getFilteredProducts('', '', '', '', '', 0).then((response) => {
             dispatch(addProducts(response.results));
+            dispatch(setTotal(response.total));
             dispatch(setCurrentCategory('All Plants'));
             setLoading(false);
           });
@@ -43,13 +62,16 @@ export default function GetCatalog() {
       });
     } else {
       if (query.get('category') && query.get('category') !== null) {
-        getFilteredProducts(query.get('category')).then((response) => {
+        dispatch(setCurrentCategoryId(query.get('category')));
+        getFilteredProducts(query.get('category'), '', '', '', '', 0).then((response) => {
           dispatch(addProducts(response.results));
+          dispatch(setTotal(response.total));
           setLoading(false);
         });
       } else {
-        getProducts().then((response) => {
+        getFilteredProducts('', '', '', '', '', 0).then((response) => {
           dispatch(addProducts(response.results));
+          dispatch(setTotal(response.total));
           dispatch(setCurrentCategory('All Plants'));
           setLoading(false);
         });
@@ -71,10 +93,12 @@ export default function GetCatalog() {
     <Box
       sx={{
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'stretch',
+        alignItems: 'center',
         width: '100%',
         margin: 'auto',
+        paddingBottom: '30px',
       }}
     >
       {loading && (
@@ -192,6 +216,11 @@ export default function GetCatalog() {
           ))}
         </Stack>
       )}
+      {products && products.length === 0 && !loading && (
+        <Typography sx={{ fontSize: '24px' }}>No plants found.</Typography>
+      )}
+
+      {products && products.length > 0 && !loading && <CatalogPagination />}
     </Box>
   );
 }
