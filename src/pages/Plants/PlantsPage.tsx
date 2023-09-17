@@ -5,6 +5,7 @@ import GetCatalogPageName from '../../components/CatalogPageName/catalogpageName
 import CatalogFilter from '../../components/CatalogFiltration/catalogFiltration';
 import { BasicBreadcrumbs } from '../../components/CatalogBreadcrumbs/catalogBreadcrumbs';
 import { SearchProductForm } from '../../components/SearchProduct/SearchProductForm';
+import CatalogSorting from '../../components/CatalogSorting/catalogSorting';
 
 export function PlantsPage() {
   const plantsTheme = useTheme();
@@ -25,6 +26,7 @@ export function PlantsPage() {
         <Box>
           <BasicBreadcrumbs />
         </Box>
+        <CatalogSorting />
         <GetCatalogPageName />
         <Box>
           <SearchProductForm />
