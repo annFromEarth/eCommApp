@@ -1,3 +1,5 @@
+import { VersionLineListProductCartType } from './type';
+
 export async function createNewCart() {
   const authorizationToken: string | null = window.sessionStorage.getItem('authorization-token');
 
@@ -27,7 +29,7 @@ export async function addProductCart(idProduct: string | undefined, idCart: stri
 
   const sessionVersion = sessionStorage.getItem('versionCart');
   const versionCart = sessionVersion !== 'undefined' ? Number(sessionVersion) : 1;
-  console.log('versionCart ', versionCart);
+  // console.log('versionCart ', versionCart);
 
   const options = {
     version: versionCart,
@@ -77,7 +79,10 @@ export async function getActiveCart() {
   return data;
 }
 
-export async function removeProductCart(versionLineListProductCart, idCart: string) {
+export async function removeProductCart(
+  versionLineListProductCart: VersionLineListProductCartType,
+  idCart: string
+) {
   const authorizationToken: string | null = window.sessionStorage.getItem('authorization-token');
 
   const options = {

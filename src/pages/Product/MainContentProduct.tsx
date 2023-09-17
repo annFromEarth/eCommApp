@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { IPricesProduct, IProduct } from './productType';
 import { ButtonCart } from '../../components/ButtonCart/ButtonCart';
 
-export function MainContentProduct(props: { product: IProduct; id: string }) {
+export function MainContentProduct(props: { product: IProduct; id: string | undefined }) {
   const product = props.product;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', margin: '0 20px', gap: '10px' }}>

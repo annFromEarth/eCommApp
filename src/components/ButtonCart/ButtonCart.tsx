@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import { addProductCart, createNewCart, getActiveCart, removeProductCart } from './ cartRequest';
+import { IActiveCart, ILineItem, VersionLineListProductCartType } from './type';
 
 const BUTTON_CART = {
   add: 'Add to Cart',
@@ -11,11 +12,12 @@ let isNewCart = true;
 
 async function getListItemsId(idProduct: string | undefined) {
   const listProductsCart = await getActiveCart();
-  const versionLineCart = {
+  const versionLineCart: VersionLineListProductCartType = {
     version: listProductsCart.version,
     idLine: '',
   };
-  listProductsCart.lineItems.map((lineProduct) => {
+  // console.log('listProductsCart', listProductsCart);
+  listProductsCart.lineItems.map((lineProduct: ILineItem) => {
     if (lineProduct.productId === idProduct) {
       versionLineCart.idLine = lineProduct.id;
     }
@@ -30,13 +32,12 @@ export function ButtonCart(props: { id: string | undefined }) {
   async function handleButtonCart() {
     let versionCart;
     const idActiveCart = sessionStorage.getItem('CartID');
-    if (idActiveCart === null) throw Error('idActiveCart === null');
 
     if (!clickedButton) {
       setNameButton(BUTTON_CART.remove);
       setClickedButton(true);
       if (isNewCart) {
-        const cart = await createNewCart();
+        const cart: IActiveCart = await createNewCart();
         sessionStorage.setItem('CartID', cart.id);
         const response = await addProductCart(props.id, cart.id);
         versionCart = response.version;
@@ -51,12 +52,12 @@ export function ButtonCart(props: { id: string | undefined }) {
       setNameButton(BUTTON_CART.add);
       setClickedButton(false);
       const versionLineListProductCart = await getListItemsId(props.id);
+      if (idActiveCart === null) throw Error('idActiveCart === null');
       const response = await removeProductCart(versionLineListProductCart, idActiveCart);
       versionCart = response.version;
     }
     sessionStorage.setItem('versionCart', String(versionCart));
-    getActiveCart().then((cart) => {
-     // versionCart = cart.version;
+    getActiveCart().then((cart: IActiveCart) => {
       console.log('I am active cart', cart);
     });
   }
