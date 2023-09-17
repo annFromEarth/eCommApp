@@ -48,7 +48,7 @@ export type Cart = {
   shippingMode: string;
   shipping: [];
   customLineItems: [];
-  discountCodes: [];
+  discountCodes: DiscountCode[];
   directDiscounts: [];
   inventoryMode: string;
   taxMode: string;
@@ -69,6 +69,11 @@ export type CartPagedQueryResponse = {
   results: Cart[];
   statusCode?: string | number; //TODO: fix catching server error
   message?: string; //TODO: fix catching server error
+};
+
+type DiscountCode = {
+  discountCode: { typeId: string; id: string };
+  state: string;
 };
 
 export type LineItem = {
@@ -127,6 +132,7 @@ export type LineItem = {
     id: string;
   };
   quantity: number;
+  discountedPrice?: DiscountedPrice;
   discountedPricePerQuantity: [];
   state: [
     {
@@ -156,4 +162,9 @@ export type LineItem = {
   };
   perMethodTaxRate: [];
   taxedPricePortions: [];
+};
+
+type DiscountedPrice = {
+  value: { type: string; fractionDigits: number; currencyCode: string; centAmount: number };
+  includedDiscounts: [];
 };

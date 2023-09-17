@@ -1,15 +1,20 @@
-import { Box, useTheme, Typography, Button, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PATH } from '../../services/routing/paths';
 import { PAGES_TITLES } from '../../data/titles';
-import { CustomerService } from '../../services/customerService';
 import { Cart } from '../../services/types';
+import { PATH } from '../../services/routing/paths';
+import { CustomerService } from '../../services/customerService';
 import { CartRow } from '../../components/Cart/cartRow';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentVersion } from '../../features/myCartSlice';
+import { Bars } from 'react-loader-spinner';
 
 import {
+  Box,
+  useTheme,
+  Typography,
+  Button,
+  Tooltip,
   Table,
   TableBody,
   TableCell,
@@ -18,14 +23,32 @@ import {
   TableRow,
   Paper,
 } from '@mui/material';
+import PromoCodeForm from '../../components/Cart/promoCodeForm';
 
 export function CartPage() {
   const plantsTheme = useTheme();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const [cartData, setCartData] = useState<Cart | null>(null);
   const [cartErrorUpdate, setCartErrorUpdate] = useState<string>('');
-  const [cartDataAvailable, setCartDataAvailable] = useState<boolean>(true);
+
+  const priceBeforePromo =
+    cartData && cartData.lineItems[0]
+      ? (
+          cartData.lineItems
+            .map((item) => item.price.discounted.value.centAmount * item.quantity)
+            .reduce((item, acc) => item + acc) / Math.pow(10, cartData?.totalPrice.fractionDigits)
+        ).toFixed(2)
+      : '';
+
+  const priceAfterPromo = cartData
+    ? (cartData.totalPrice.centAmount / Math.pow(10, cartData?.totalPrice.fractionDigits)).toFixed(
+        2
+      )
+    : '';
+
+  const discountAmount = (Number(priceAfterPromo) - Number(priceBeforePromo)).toFixed(2);
 
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
@@ -43,16 +66,13 @@ export function CartPage() {
             cartVersion
           );
           if (!clearCart.message) {
-            setCartData(clearCart);
-            dispatch(setCurrentVersion(clearCart.version));
-            setCartDataAvailable(false);
+            setCartData(null);
           } else {
             setCartErrorUpdate(clearCart.message);
           }
         } catch (err) {
           const error = err as Error;
           setCartErrorUpdate(error.message);
-          setCartDataAvailable(false);
         }
       }
     } else return;
@@ -63,22 +83,19 @@ export function CartPage() {
     const fetchCartData = async (token: string) => {
       try {
         const cartQuery = await CustomerService.getActiveCart(token);
-        // const cartQuery = await CustomerService.requestCarts(token);
 
         if (!cartQuery.message) {
           setCartData(cartQuery);
-          setCartDataAvailable(true);
-          // console.log(cartQuery.results[2].lineItems);
-          //   setCartData(cartQuery.results[2]);
           dispatch(setCurrentVersion(cartQuery.version));
+          setLoading(false);
         } else {
           setCartErrorUpdate(cartQuery.message);
-          setCartDataAvailable(false);
+          setLoading(false);
         }
       } catch (err) {
         const error = err as Error;
         setCartErrorUpdate(error.message);
-        setCartDataAvailable(false);
+        setLoading(false);
       }
     };
     if (!authorizationToken) {
@@ -93,7 +110,7 @@ export function CartPage() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          width: '100%',
+          //   width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
           padding: '15px',
@@ -104,7 +121,19 @@ export function CartPage() {
           {PAGES_TITLES.cart}
         </Typography>
 
-        {!cartDataAvailable && (
+        {loading && (
+          <Bars
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        )}
+
+        {!loading && (!cartData || !cartData?.lineItems[0]) && (
           <>
             <Box
               sx={{
@@ -134,10 +163,10 @@ export function CartPage() {
           </>
         )}
 
-        {cartDataAvailable && (
+        {!loading && cartData && cartData?.lineItems[0] && (
           <TableContainer component={Paper}>
             <Table
-              sx={{ minWidth: 320, maxWidth: '98%', margin: '0 auto' }}
+              sx={{ minWidth: 100, maxWidth: '98%', margin: '0 auto' }}
               aria-label="customized table"
             >
               <TableHead>
@@ -161,6 +190,36 @@ export function CartPage() {
                     setCartDataProp={setCartData}
                   />
                 ))}
+
+                <TableRow
+                  key="promo-code-row-12345"
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    background: `#cccc81`,
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    Do you have a promo code?
+                  </TableCell>
+                  <TableCell align="center">
+                    <PromoCodeForm cartProp={cartData} setCartDataProp={setCartData} />
+                  </TableCell>
+                  <TableCell align="center">
+                    {cartData.discountCodes[0] && `Promo code SANTACACTUS applied!`}
+                  </TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}></TableCell>
+                  <TableCell align="center"></TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}>
+                    {' '}
+                    {cartData.discountCodes[0] &&
+                      `${discountAmount} ${cartData?.totalPrice.currencyCode}`}
+                  </TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}>
+                    {' '}
+                    {cartData.discountCodes[0] && 'Your discount'}
+                  </TableCell>
+                </TableRow>
+
                 <TableRow
                   key="total-sum-row-130923"
                   sx={{
@@ -176,12 +235,17 @@ export function CartPage() {
                   <TableCell align="center"></TableCell>
                   <TableCell align="center"> </TableCell>
                   <TableCell align="center">
-                    {cartData &&
-                      (
-                        cartData?.totalPrice.centAmount /
-                        Math.pow(10, cartData?.totalPrice.fractionDigits)
-                      ).toFixed(2)}{' '}
-                    {cartData?.totalPrice.currencyCode}
+                    {cartData.discountCodes[0] && (
+                      <Box sx={{ textDecoration: 'line-through' }}>
+                        {' '}
+                        {priceBeforePromo} {cartData?.totalPrice.currencyCode}
+                      </Box>
+                    )}
+                    {cartData && (
+                      <Box>
+                        {priceAfterPromo} {cartData?.totalPrice.currencyCode}
+                      </Box>
+                    )}
                   </TableCell>
                   <TableCell align="center">
                     <Tooltip title="Remove all items">
