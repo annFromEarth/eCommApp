@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react';
 import getCategories from './catalogNavigationRequests';
 import { ListItem, ListItemButton, ListItemText, List, Box } from '@mui/material';
 import { ICategoryNavigation } from './catalogNavigation.types';
-import { getFilteredProducts, getProducts } from '../Catalog/catalogRequest';
-import { addProducts } from '../../features/productsSlice';
-import { useAppDispatch } from '../../hooks';
+import { getFilteredProducts } from '../Catalog/catalogRequest';
+import { addProducts, setOffset, setTotal } from '../../features/productsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
 import { generateToken } from '../../utils/token';
 
 export default function GetCatalogNavigation() {
   const [categories, setCategories] = useState<ICategoryNavigation>();
+  const priceFrom = useAppSelector((state) => state.products.priceFromFilter);
+  const priceTo = useAppSelector((state) => state.products.priceToFilter);
+  const size = useAppSelector((state) => state.products.sizeFilter);
+  const sort = useAppSelector((state) => state.products.sorting);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,18 +32,22 @@ export default function GetCatalogNavigation() {
   }, [dispatch]);
 
   const handleCategory = (categoryId: string, categoryName: string) => {
-    getFilteredProducts(categoryId).then((response) => {
+    dispatch(setOffset(0));
+    dispatch(setCurrentCategoryId(categoryId));
+    dispatch(setCurrentCategory(categoryName));
+    getFilteredProducts(categoryId, priceFrom, priceTo, size, sort, 0).then((response) => {
       dispatch(addProducts(response.results));
-      dispatch(setCurrentCategory(categoryName));
-      dispatch(setCurrentCategoryId(categoryId));
+      dispatch(setTotal(response.total));
     });
   };
 
   const handleAllCategory = () => {
-    getProducts().then((response) => {
+    dispatch(setOffset(0));
+    dispatch(setCurrentCategory('All Plants'));
+    dispatch(setCurrentCategoryId(''));
+    getFilteredProducts('', priceFrom, priceTo, size, sort, 0).then((response) => {
       dispatch(addProducts(response.results));
-      dispatch(setCurrentCategory('All Plants'));
-      dispatch(setCurrentCategoryId(''));
+      dispatch(setTotal(response.total));
     });
   };
 

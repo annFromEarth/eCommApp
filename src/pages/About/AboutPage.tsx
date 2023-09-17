@@ -45,7 +45,7 @@ export default function About() {
       >
         <Typography variant="h6" component="h2" sx={{ marginBottom: '80px' }}>
           Hello plant lovers! If you are on this page, probably you want to learn more about our
-          cool team! Let's go! Our team consists of three front-end developers, and we are all
+          cool team! Let&apos;s go! Our team consists of three front-end developers, and we are all
           girls. Below you can find out a little more information about each of us.
         </Typography>
         <Box
@@ -153,7 +153,7 @@ export default function About() {
             <Typography>
               Julia was born in Minsk and graduated from the Faculty of Biology of BSU in 2021.
               During her studies, Julia faced the need to write code in Python, which she liked, but
-              this knowledge wasn't useful in her diploma. After a year of working as a
+              this knowledge wasn&apos;t useful in her diploma. After a year of working as a
               microbiologist, she decided to try something new for her direction in programming. Now
               she is a young front-end developer, who wants to complete the RSSchool courses, find a
               job in the field of web development and continue to implement cool projects.
@@ -176,8 +176,8 @@ export default function About() {
           }}
         >
           In the implementation of this project, we used all our strength and tried to make this
-          application accessible and user-friendly. So, let's talk about the contribution to the
-          development of this project. Yulia is responsible for such parts of the project as
+          application accessible and user-friendly. So, let&apos;s talk about the contribution to
+          the development of this project. Yulia is responsible for such parts of the project as
           routing, a detailed product page with a slider, product search, layout of part of the site
           and tests for our application. Our team lead Anna, worked on setting up the GitHub,
           implementing the registration page, profile page, layout of our website and adding
