@@ -2,10 +2,14 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface IMyCartState {
   currentVersion: number;
+  promoMessage: string;
+  priceBeforePromo: string;
 }
 // Define the initial state using that type
 const initialState: IMyCartState = {
-  currentVersion: 1,
+  currentVersion: 0,
+  promoMessage: '',
+  priceBeforePromo: '',
 };
 
 export const myCartSlice = createSlice({
