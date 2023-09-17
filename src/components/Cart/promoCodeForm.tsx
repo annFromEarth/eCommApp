@@ -60,16 +60,6 @@ export default function PromoCodeForm({
         } else {
           setCartDataProp(result);
           dispatch(setCurrentVersion(result.version));
-          localStorage.setItem(
-            'promo',
-            JSON.stringify({
-              priceBeforePromo: `${(
-                cartProp?.totalPrice.centAmount / Math.pow(10, cartProp?.totalPrice.fractionDigits)
-              ).toFixed(2)}`,
-              promoMessage: `Promo code ${data.promoCode} applied!`,
-            })
-          );
-          //   console.log(result);
         }
       } catch (err) {
         const error = err as Error;
@@ -93,10 +83,7 @@ export default function PromoCodeForm({
           background: 'white',
           borderRadius: '5px',
         }}
-        {...register('promoCode', {
-          required: 'This field is required',
-          //   pattern: numbersOnly,
-        })}
+        {...register('promoCode')}
         error={!!errors.promoCode}
       />
 

@@ -52,7 +52,6 @@ export function CartPage() {
 
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
-  //   console.log(cartData);
 
   const funcClearCart = async () => {
     if (
@@ -67,8 +66,7 @@ export function CartPage() {
             cartVersion
           );
           if (!clearCart.message) {
-            setCartData(clearCart);
-            dispatch(setCurrentVersion(clearCart.version));
+            setCartData(null);
           } else {
             setCartErrorUpdate(clearCart.message);
           }
