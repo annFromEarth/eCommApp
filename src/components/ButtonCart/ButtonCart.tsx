@@ -2,6 +2,8 @@ import { Button } from '@mui/material';
 import { useState } from 'react';
 import { addProductCart, createNewCart, getActiveCart, removeProductCart } from './ cartRequest';
 import { IActiveCart, ILineItem, VersionLineListProductCartType } from './type';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 const BUTTON_CART = {
   add: 'Add to Cart',
@@ -28,6 +30,7 @@ async function getListItemsId(idProduct: string | undefined) {
 export function ButtonCart(props: { id: string | undefined }) {
   const [nameButton, setNameButton] = useState<string>(BUTTON_CART.add);
   const [clickedButton, setClickedButton] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   async function handleButtonCart() {
     let versionCart;
@@ -58,7 +61,7 @@ export function ButtonCart(props: { id: string | undefined }) {
     }
     sessionStorage.setItem('versionCart', String(versionCart));
     getActiveCart().then((cart: IActiveCart) => {
-      console.log('I am active cart', cart);
+      dispatch(setCurrentVersion(cart.version));
     });
   }
 

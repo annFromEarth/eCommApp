@@ -37,7 +37,7 @@ export async function getFilteredProducts(
     }
 
     if (!!priceFrom || !!priceTo) {
-      console.log(!!priceFrom, !!priceTo);
+      //   console.log(!!priceFrom, !!priceTo);
       if (priceTo === '0' || priceTo === '') {
         priceToFinal = '*';
       }
