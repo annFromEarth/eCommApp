@@ -8,6 +8,7 @@ import { CartRow } from '../../components/Cart/cartRow';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentVersion } from '../../features/myCartSlice';
 import { Bars } from 'react-loader-spinner';
+import { CartRowSmallScreen } from '../../components/Cart/cartRowSmall';
 
 import {
   Box,
@@ -22,6 +23,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  useMediaQuery,
 } from '@mui/material';
 import PromoCodeForm from '../../components/Cart/promoCodeForm';
 
@@ -29,6 +31,7 @@ export function CartPage() {
   const plantsTheme = useTheme();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const matchesScreen = useMediaQuery('(min-width:800px)');
 
   const [cartData, setCartData] = useState<Cart | null>(null);
   const [cartErrorUpdate, setCartErrorUpdate] = useState<string>('');
@@ -163,7 +166,7 @@ export function CartPage() {
           </>
         )}
 
-        {!loading && cartData && cartData?.lineItems[0] && (
+        {!loading && matchesScreen && cartData && cartData?.lineItems[0] && (
           <TableContainer component={Paper}>
             <Table
               sx={{ minWidth: 100, maxWidth: '98%', margin: '0 auto' }}
@@ -204,10 +207,10 @@ export function CartPage() {
                   <TableCell align="center">
                     <PromoCodeForm cartProp={cartData} setCartDataProp={setCartData} />
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center"></TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}>
                     {cartData.discountCodes[0] && `Promo code SANTACACTUS applied!`}
                   </TableCell>
-                  <TableCell align="center" sx={{ color: '#36662a' }}></TableCell>
                   <TableCell align="center"></TableCell>
                   <TableCell align="center" sx={{ color: '#36662a' }}>
                     {' '}
@@ -253,6 +256,105 @@ export function CartPage() {
                         Clear all
                       </Button>
                     </Tooltip>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+
+        {!loading && !matchesScreen && cartData && cartData?.lineItems[0] && (
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 100, maxWidth: '98%', margin: '0 auto' }}
+              aria-label="customized table"
+            >
+              <TableHead>
+                <TableRow sx={{ background: `#ccff90` }}>
+                  <TableCell>#</TableCell>
+                  <TableCell align="left">Image</TableCell>
+                  <TableCell align="center">Info</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cartData?.lineItems.map((item, index) => (
+                  <CartRowSmallScreen
+                    key={item.id}
+                    itemProp={item}
+                    indexProp={index}
+                    cartProp={cartData}
+                    setCartDataProp={setCartData}
+                  />
+                ))}
+
+                <TableRow
+                  key="promo-code-question-row-12345"
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    background: `#cccc81`,
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    <PromoCodeForm cartProp={cartData} setCartDataProp={setCartData} />
+                  </TableCell>
+                  <TableCell component="th" scope="row"></TableCell>
+                  <TableCell align="center">Do you have a promo code?</TableCell>
+                </TableRow>
+
+                <TableRow
+                  key="promo-code-info-row-12345"
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    background: `#cccc81`,
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {' '}
+                  </TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}>
+                    {cartData.discountCodes[0] && `Promo code SANTACACTUS applied!`}
+                  </TableCell>
+                  <TableCell align="center" sx={{ color: '#36662a' }}>
+                    {' '}
+                    {cartData.discountCodes[0] &&
+                      `Your discount: ${discountAmount} ${cartData?.totalPrice.currencyCode}`}
+                  </TableCell>
+                </TableRow>
+
+                <TableRow
+                  key="total-sum-small-row-130923"
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    background: `#ccff90`,
+                  }}
+                >
+                  <TableCell component="th" scope="row"></TableCell>
+                  <TableCell component="th" scope="row"></TableCell>
+                  <TableCell align="center">
+                    <Box>Total Sum:</Box>
+                    {cartData.discountCodes[0] && (
+                      <Box sx={{ textDecoration: 'line-through' }}>
+                        {' '}
+                        {priceBeforePromo} {cartData?.totalPrice.currencyCode}
+                      </Box>
+                    )}
+                    {cartData && (
+                      <Box>
+                        {priceAfterPromo} {cartData?.totalPrice.currencyCode}
+                      </Box>
+                    )}
+                    <Box>
+                      <Tooltip title="Remove all items">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          color="error"
+                          onClick={funcClearCart}
+                        >
+                          Clear all
+                        </Button>
+                      </Tooltip>
+                    </Box>
                   </TableCell>
                 </TableRow>
               </TableBody>
