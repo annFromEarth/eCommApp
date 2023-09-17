@@ -4,6 +4,9 @@ import { TableCell, TableRow, Button, Tooltip } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useState } from 'react';
 import QuantityForm from './quantityForm';
+import { CustomerService } from '../../services/customerService';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 export function CartRow({
   itemProp,
@@ -19,6 +22,35 @@ export function CartRow({
   const [editQuantity, setEditQuantity] = useState<boolean>(false);
   const funcEditQuantityClick = () => {
     setEditQuantity((editQuantity) => !editQuantity);
+  };
+
+  const [ErrorUpdate, setErrorUpdate] = useState<string>('');
+  const authorizationToken = sessionStorage?.getItem('authorization-token');
+
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
+
+  const funcRemoveItem = async () => {
+    if (authorizationToken) {
+      try {
+        const result = await CustomerService.updateMyCart(
+          authorizationToken,
+          cartProp.id,
+          cartVersion,
+          [
+            {
+              action: 'removeLineItem',
+              lineItemId: itemProp.id,
+            },
+          ]
+        );
+        setCartDataProp(result);
+        dispatch(setCurrentVersion(result.version));
+      } catch (err) {
+        const error = err as Error;
+        setErrorUpdate(error.message);
+      }
+    }
   };
 
   return (
@@ -69,15 +101,11 @@ export function CartRow({
       </TableCell>
       <TableCell align="center">
         <Tooltip title="Remove item from cart">
-          <Button
-            size="small"
-            onClick={() => {
-              alert('clicked');
-            }}
-          >
+          <Button size="small" onClick={funcRemoveItem}>
             ❌
           </Button>
         </Tooltip>
+        {ErrorUpdate}
       </TableCell>
     </TableRow>
   );

@@ -5,6 +5,8 @@ import { Button, Box, Input } from '@mui/material';
 import { numbersOnly } from '../../utils/regexToValidate';
 import { CustomerService } from '../../services/customerService';
 import { Cart, LineItem } from '../../services/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 interface IQuantityInput {
   quantity: number;
@@ -37,6 +39,9 @@ export default function QuantityForm({
     reset,
   } = form;
 
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
+
   const authorizationToken = sessionStorage?.getItem('authorization-token');
 
   const onSubmit: SubmitHandler<IQuantityInput> = async (data) => {
@@ -46,7 +51,7 @@ export default function QuantityForm({
         const result = await CustomerService.updateMyCart(
           authorizationToken,
           cartProp.id,
-          cartProp.version,
+          cartVersion,
           [
             {
               action: 'changeLineItemQuantity',
@@ -56,6 +61,7 @@ export default function QuantityForm({
           ]
         );
         setCartDataProp(result);
+        dispatch(setCurrentVersion(result.version));
       } catch (err) {
         const error = err as Error;
         setErrorUpdate(error.message);

@@ -25,6 +25,7 @@ import { Bars } from 'react-loader-spinner';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
 import { generateToken } from '../../utils/token';
 import CatalogPagination from '../CatalogPagination/catalogPagination';
+import { ButtonCart } from '../ButtonCart/ButtonCart';
 
 export default function GetCatalog() {
   const query = useQuery();
@@ -80,8 +81,12 @@ export default function GetCatalog() {
 
   const navigate = useNavigate();
 
-  const openDetailPage = (id: string) => {
-    navigate(PATH.product + '/:' + id);
+  const openDetailPage = (element: EventTarget, id: string) => {
+    if (element instanceof HTMLElement) {
+      if (!element.className.includes('button-cart')) {
+        navigate(PATH.product + '/:' + id);
+      }
+    }
   };
 
   return (
@@ -120,7 +125,7 @@ export default function GetCatalog() {
           {products.map((plant, index) => (
             <Card
               key={index}
-              onClick={() => openDetailPage(plant.id)}
+              onClick={(e) => openDetailPage(e.target, plant.id)}
               sx={{
                 maxWidth: 345,
                 minHeight: 493,
@@ -199,6 +204,9 @@ export default function GetCatalog() {
                   </Typography>
                 </Box>
               </CardContent>
+              <CardActions>
+                <ButtonCart id={plant.id} />
+              </CardActions>
               <CardActions sx={{ justifyContent: 'center' }}>
                 <Button variant="contained" size="small" fullWidth>
                   Learn More
