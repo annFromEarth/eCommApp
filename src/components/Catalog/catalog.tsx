@@ -23,7 +23,7 @@ import {
 } from '../../features/productsSlice';
 import { Bars } from 'react-loader-spinner';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
-import { generateToken } from '../../utils/token';
+import { generateAnonymousToken, generateToken } from '../../utils/token';
 import CatalogPagination from '../CatalogPagination/catalogPagination';
 import { ButtonCart } from '../ButtonCart/ButtonCart';
 
@@ -42,6 +42,10 @@ export default function GetCatalog() {
     dispatch(setSorting(''));
     dispatch(setSizeFilter(''));
     if (!window.sessionStorage.getItem('token')) {
+      generateAnonymousToken().then((response) =>
+        sessionStorage.setItem('anonymousToken', response.access_token)
+      );
+
       generateToken().then((response) => {
         window.sessionStorage.setItem('token', response.access_token);
         if (query.get('category') && query.get('category') !== null) {

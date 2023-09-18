@@ -131,4 +131,19 @@ export class CustomerService {
     const cart: Cart = await response.json();
     return cart;
   }
+
+  static async createAnonymousCart(authorizationToken: string): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+      body: JSON.stringify({
+        currency: 'GBP',
+        country: 'UK',
+      }),
+    });
+    const cart: Cart = await response.json();
+    return cart;
+  }
 }
