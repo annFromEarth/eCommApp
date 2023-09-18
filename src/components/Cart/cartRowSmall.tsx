@@ -8,7 +8,7 @@ import { CustomerService } from '../../services/customerService';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentVersion } from '../../features/myCartSlice';
 
-export function CartRow({
+export function CartRowSmallScreen({
   itemProp,
   indexProp,
   cartProp,
@@ -58,56 +58,58 @@ export function CartRow({
       <TableCell component="th" scope="row">
         {indexProp + 1}
       </TableCell>
-      <TableCell align="left" sx={{ fontWeight: '700' }}>
-        {itemProp.name['en-GB']}
-      </TableCell>
-      <TableCell align="center" sx={{ display: 'flex', justifyContent: 'center' }}>
+      <TableCell align="center">
         <Box
           className="itemImage"
           sx={{
             background: `url(${itemProp.variant.images[0].url})`,
-            width: '60px',
-            height: '60px',
+            width: '40px',
+            height: '40px',
             backgroundSize: 'cover',
           }}
         ></Box>
       </TableCell>
-      <TableCell align="center">
-        {(itemProp.price.discounted.value.centAmount / Math.pow(10, 2)).toFixed(2)}{' '}
-        {itemProp.price.value.currencyCode}
-      </TableCell>
       <TableCell align="left">
-        {' '}
-        {!editQuantity && (
-          <>
-            {itemProp.quantity}{' '}
-            <Button size="small" onClick={funcEditQuantityClick}>
-              <EditOutlinedIcon />
+        <Box>{itemProp.name['en-GB']}</Box>
+        <Box sx={{ fontWeight: '700' }}>Price per Item:</Box>
+        <Box>
+          {(itemProp.price.discounted.value.centAmount / Math.pow(10, 2)).toFixed(2)}{' '}
+          {itemProp.price.value.currencyCode}
+        </Box>
+        <Box sx={{ fontWeight: '700' }}>Quantity:</Box>
+        <Box>
+          {!editQuantity && (
+            <>
+              {itemProp.quantity}{' '}
+              <Button size="small" onClick={funcEditQuantityClick}>
+                <EditOutlinedIcon />
+              </Button>
+            </>
+          )}
+          {editQuantity && (
+            <>
+              <QuantityForm
+                itemProp={itemProp}
+                cartProp={cartProp}
+                funcEditQuantityClick={funcEditQuantityClick}
+                setCartDataProp={setCartDataProp}
+              />
+            </>
+          )}
+        </Box>
+        <Box sx={{ fontWeight: '700' }}>Total:</Box>
+        <Box>
+          {(itemProp.totalPrice.centAmount / Math.pow(10, 2)).toFixed(2)}{' '}
+          {itemProp.price.value.currencyCode}
+        </Box>
+        <Box>
+          <Tooltip title="Remove item from cart">
+            <Button size="small" onClick={funcRemoveItem}>
+              ❌
             </Button>
-          </>
-        )}
-        {editQuantity && (
-          <>
-            <QuantityForm
-              itemProp={itemProp}
-              cartProp={cartProp}
-              funcEditQuantityClick={funcEditQuantityClick}
-              setCartDataProp={setCartDataProp}
-            />
-          </>
-        )}{' '}
-      </TableCell>
-      <TableCell align="center">
-        {(itemProp.totalPrice.centAmount / Math.pow(10, 2)).toFixed(2)}{' '}
-        {itemProp.price.value.currencyCode}
-      </TableCell>
-      <TableCell align="center">
-        <Tooltip title="Remove item from cart">
-          <Button size="small" onClick={funcRemoveItem}>
-            ❌
-          </Button>
-        </Tooltip>
-        {ErrorUpdate}
+          </Tooltip>
+          {ErrorUpdate}
+        </Box>
       </TableCell>
     </TableRow>
   );
