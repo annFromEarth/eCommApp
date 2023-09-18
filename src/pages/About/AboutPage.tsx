@@ -74,17 +74,18 @@ export default function About() {
                 background: '#AAD398',
               }}
               alt="Yulia Sivacova"
-              src="/img/about-us/girl1.png"
+              src="/img/about-us/Yulia.jpg"
             />
             <Typography variant="h5">Yulia Sivacova</Typography>
             <Typography>Frontend developer</Typography>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
+              Yulia is a junior frontend developer and she was born in Minsk. She graduated from the
+              Law College of BSU and Faculty of Law BSU. She has worked as a lawyer for several
+              public and private companies. After, Yulia realized that she needed to find a work for
+              life, a work that she would love and be passionate about. At the end of 2022, she went
+              to the JS/FE PreSchool 2022Q4 course and successfully completed it. Her future plan is
+              to realize herself. Yulia want to finish studies and find a job as a frontend
+              developer.
             </Typography>
             <Typography>
               GitHub:{' '}
