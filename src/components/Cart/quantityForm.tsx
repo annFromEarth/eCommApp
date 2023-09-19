@@ -42,24 +42,24 @@ export default function QuantityForm({
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
 
-  const authorizationToken = sessionStorage?.getItem('authorization-token');
+  let token: string;
+  if (sessionStorage.getItem('authorization-token')) {
+    token = sessionStorage.getItem('authorization-token')!;
+  } else {
+    token = sessionStorage.getItem('anonymousToken')!;
+  }
 
   const onSubmit: SubmitHandler<IQuantityInput> = async (data) => {
     funcEditQuantityClick();
-    if (authorizationToken) {
+    if (token) {
       try {
-        const result = await CustomerService.updateMyCart(
-          authorizationToken,
-          cartProp.id,
-          cartVersion,
-          [
-            {
-              action: 'changeLineItemQuantity',
-              lineItemId: itemProp.id,
-              quantity: Number(data.quantity),
-            },
-          ]
-        );
+        const result = await CustomerService.updateMyCart(token, cartProp.id, cartVersion, [
+          {
+            action: 'changeLineItemQuantity',
+            lineItemId: itemProp.id,
+            quantity: Number(data.quantity),
+          },
+        ]);
         setCartDataProp(result);
         dispatch(setCurrentVersion(result.version));
       } catch (err) {

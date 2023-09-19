@@ -133,7 +133,7 @@ export class CustomerService {
     return cart;
   }
 
-  static async createAnonymousCart(authorizationToken: string): Promise<Cart> {
+  static async createCart(authorizationToken: string): Promise<Cart> {
     const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
       method: 'POST',
       headers: {

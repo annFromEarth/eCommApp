@@ -25,27 +25,32 @@ export function CartRowSmallScreen({
   };
 
   const [ErrorUpdate, setErrorUpdate] = useState<string>('');
-  const authorizationToken = sessionStorage?.getItem('authorization-token');
+  let token;
 
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
 
   const funcRemoveItem = async () => {
-    if (authorizationToken) {
+    if (sessionStorage.getItem('authorization-token')) {
+      token = sessionStorage.getItem('authorization-token');
+    } else {
+      token = sessionStorage.getItem('anonymousToken');
+    }
+    if (token) {
       try {
-        const result = await CustomerService.updateMyCart(
-          authorizationToken,
-          cartProp.id,
-          cartVersion,
-          [
-            {
-              action: 'removeLineItem',
-              lineItemId: itemProp.id,
-            },
-          ]
-        );
+        const result = await CustomerService.updateMyCart(token, cartProp.id, cartVersion, [
+          {
+            action: 'removeLineItem',
+            lineItemId: itemProp.id,
+          },
+        ]);
         setCartDataProp(result);
         dispatch(setCurrentVersion(result.version));
+        if (sessionStorage.getItem('authorization-token')) {
+          sessionStorage.setItem('cartVersion', result.version.toString());
+        } else {
+          sessionStorage.setItem('anonymCartVersion', result.version.toString());
+        }
       } catch (err) {
         const error = err as Error;
         setErrorUpdate(error.message);

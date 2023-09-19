@@ -11,7 +11,7 @@ import { Bars } from 'react-loader-spinner';
 import { BasicBreadcrumbs } from '../../components/CatalogBreadcrumbs/catalogBreadcrumbs';
 import { setCurrentProduct } from '../../features/productsSlice';
 import { useAppDispatch } from '../../hooks';
-import { generateToken } from '../../utils/token';
+import { generateAnonymousToken } from '../../utils/token';
 
 export function ProductPage() {
   const plantsTheme = useTheme();
@@ -21,9 +21,9 @@ export function ProductPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!window.sessionStorage.getItem('token')) {
-      generateToken().then((response) => {
-        window.sessionStorage.setItem('token', response.access_token);
+    if (!window.sessionStorage.getItem('anonymousToken')) {
+      generateAnonymousToken().then((response) => {
+        window.sessionStorage.setItem('anonymousToken', response.access_token);
         if (id) {
           getProduct(id.slice(1)).then((data: IProduct) => {
             setLoading(false);

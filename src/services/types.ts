@@ -19,8 +19,10 @@ export type Action = {
 };
 
 export type CartAction = {
-  action: 'changeLineItemQuantity' | 'removeLineItem' | 'addDiscountCode';
+  action: 'changeLineItemQuantity' | 'removeLineItem' | 'addDiscountCode' | 'addLineItem';
   lineItemId?: string;
+  productId?: string;
+  variantId?: number;
   quantity?: number;
   code?: string;
 };
