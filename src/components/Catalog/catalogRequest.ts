@@ -10,7 +10,7 @@ export async function getFilteredProducts(
   offset?: number
 ) {
   if (window.sessionStorage.getItem('token')) {
-    const authorizationToken: string = window.sessionStorage.getItem('anonymousToken')!;
+    const authorizationToken: string = window.sessionStorage.getItem('token')!;
     const newCart = await CustomerService.createAnonymousCart(authorizationToken); //create anonymous cart
     window.sessionStorage.setItem('anonymCartId', newCart.id); //remember cart id
     window.sessionStorage.setItem('anonymCartVersion', String(newCart.version)); //remember cart version

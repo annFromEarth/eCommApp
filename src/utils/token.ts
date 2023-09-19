@@ -19,7 +19,7 @@ export async function generateAnonymousToken() {
     const response = await fetch(
       `${import.meta.env.VITE_CLIENT_CTP_AUTH_URL}/oauth/${PROJECT_KEY}/anonymous/token`,
       {
-        body: `grant_type=client_credentials&scope=view_published_products:${PROJECT_KEY} view_categories:${PROJECT_KEY} manage_my_orders:${PROJECT_KEY} manage_my_profile:${PROJECT_KEY}`,
+        body: `grant_type=client_credentials&scope=view_published_products:${PROJECT_KEY} view_categories:${PROJECT_KEY} manage_my_orders:${PROJECT_KEY} manage_my_profile:${PROJECT_KEY} manage_my_quotes:${PROJECT_KEY} manage_my_quote_requests:${PROJECT_KEY}`,
         headers: {
           Authorization:
             'Basic N29zbFJYLVN3dUVPWWsycERSeHdTSS1wOmRXX0Q1eGNRU004WC1lbHRxUXFyMHp1bVRQUGo4QVlt',
