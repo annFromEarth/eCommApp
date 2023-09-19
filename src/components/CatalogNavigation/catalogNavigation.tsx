@@ -6,7 +6,7 @@ import { getFilteredProducts } from '../Catalog/catalogRequest';
 import { addProducts, setOffset, setTotal } from '../../features/productsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
-import { generateToken } from '../../utils/token';
+import { generateAnonymousToken } from '../../utils/token';
 
 export default function GetCatalogNavigation() {
   const [categories, setCategories] = useState<ICategoryNavigation>();
@@ -17,9 +17,9 @@ export default function GetCatalogNavigation() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!window.sessionStorage.getItem('token')) {
-      generateToken().then((response) => {
-        window.sessionStorage.setItem('token', response.access_token);
+    if (!window.sessionStorage.getItem('anonymousToken')) {
+      generateAnonymousToken().then((response) => {
+        window.sessionStorage.setItem('anonymousToken', response.access_token);
         getCategories().then((response) => {
           setCategories(response);
         });

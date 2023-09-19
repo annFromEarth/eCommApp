@@ -4,8 +4,7 @@ import { ButtonCart } from '../../components/ButtonCart/ButtonCart';
 
 export function MainContentProduct(props: { product: IProduct; id: string | undefined }) {
   const product = props.product;
-  //   const id = props.id;
-  //   console.log(id);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', margin: '0 20px', gap: '10px' }}>
       <TitleProduct name={product.name['en-GB']} />
@@ -15,7 +14,7 @@ export function MainContentProduct(props: { product: IProduct; id: string | unde
       >
         <PriceProduct prices={product.masterVariant.prices} />
         <Box sx={{ maxWidth: '250px' }}>
-          <ButtonCart id={props.id} />
+          <ButtonCart id={props.id?.slice(1)} />
         </Box>
       </Box>
       <DescriptionProduct description={product.description['en-GB']} />

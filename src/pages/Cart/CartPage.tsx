@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/titles';
 import { Cart } from '../../services/types';
 import { PATH } from '../../services/routing/paths';
@@ -60,16 +60,24 @@ export function CartPage() {
     if (
       confirm('Irreversible action! Please confirm, if you want to clear all the goods from cart.')
     ) {
-      const authorizationToken = sessionStorage.getItem('authorization-token');
-      if (authorizationToken && cartData) {
+      let token;
+      if (sessionStorage.getItem('authorization-token')) {
+        token = sessionStorage.getItem('authorization-token');
+      } else {
+        token = sessionStorage.getItem('anonymousToken');
+      }
+      if (token && cartData) {
         try {
-          const clearCart = await CustomerService.clearCartById(
-            authorizationToken,
-            cartData?.id,
-            cartVersion
-          );
+          const clearCart = await CustomerService.clearCartById(token, cartData?.id, cartVersion);
           if (!clearCart.message) {
             setCartData(null);
+            if (sessionStorage.getItem('authorization-token')) {
+              sessionStorage.removeItem('cartVersion');
+              sessionStorage.removeItem('cartId');
+            } else {
+              sessionStorage.removeItem('anonymCartVersion');
+              sessionStorage.removeItem('anonymCartId');
+            }
           } else {
             setCartErrorUpdate(clearCart.message);
           }
@@ -82,10 +90,15 @@ export function CartPage() {
   };
 
   useEffect(() => {
-    const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
-    const fetchCartData = async (token: string) => {
+    let token: string | null;
+    if (sessionStorage.getItem('authorization-token')) {
+      token = sessionStorage.getItem('authorization-token');
+    } else {
+      token = sessionStorage.getItem('anonymousToken');
+    }
+    const fetchCartData = async () => {
       try {
-        const cartQuery = await CustomerService.getActiveCart(token);
+        const cartQuery = await CustomerService.getActiveCart(token!);
 
         if (!cartQuery.message) {
           setCartData(cartQuery);
@@ -101,10 +114,10 @@ export function CartPage() {
         setLoading(false);
       }
     };
-    if (!authorizationToken) {
-      navigate(PATH.login);
-    }
-    if (authorizationToken) fetchCartData(authorizationToken);
+    // if (!authorizationToken) {
+    //   navigate(PATH.login);
+    // }
+    if (token) fetchCartData();
   }, [navigate, dispatch]);
 
   return (
@@ -159,10 +172,11 @@ export function CartPage() {
                 backgroundRepeat: 'no-repeat',
               }}
             />
-            <Button variant="contained" href={PATH.plants} sx={{ margin: '20px' }}>
-              {' '}
-              browse plants{' '}
-            </Button>
+            <Link to={PATH.plants}>
+              <Button variant="contained" sx={{ margin: '20px' }}>
+                browse plants
+              </Button>
+            </Link>
           </>
         )}
 

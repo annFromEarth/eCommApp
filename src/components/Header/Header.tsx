@@ -44,32 +44,33 @@ export default function Header() {
 
 function HeaderTitle() {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Typography
-        noWrap
-        component="a"
-        href={PATH.main}
-        sx={{
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontWeight: 700,
-          letterSpacing: '.3rem',
-          color: plantsTheme.palette.background.paper,
-          textDecoration: 'none',
-        }}
-      >
-        {HEADER_TITLES.main}
-      </Typography>
+    <Link to={PATH.main}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography
+          noWrap
+          component="a"
+          sx={{
+            mr: 2,
+            display: { xs: 'none', md: 'flex' },
+            fontWeight: 700,
+            letterSpacing: '.3rem',
+            color: plantsTheme.palette.background.paper,
+            textDecoration: 'none',
+          }}
+        >
+          {HEADER_TITLES.main}
+        </Typography>
 
-      <Box
-        sx={{
-          width: '100px',
-          height: '40px',
-          background: 'url(leaf.svg)',
-          backgroundSize: 'contain',
-        }}
-      ></Box>
-    </Box>
+        <Box
+          sx={{
+            width: '100px',
+            height: '40px',
+            background: 'url(leaf.svg)',
+            backgroundSize: 'contain',
+          }}
+        ></Box>
+      </Box>
+    </Link>
   );
 }
 

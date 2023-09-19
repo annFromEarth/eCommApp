@@ -35,22 +35,22 @@ export default function PromoCodeForm({
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector((state) => state.myCart.currentVersion);
 
-  const authorizationToken = sessionStorage?.getItem('authorization-token');
+  let token;
 
   const onSubmit: SubmitHandler<IPromoCodeInput> = async (data) => {
-    if (authorizationToken) {
+    if (sessionStorage.getItem('authorization-token')) {
+      token = sessionStorage.getItem('authorization-token');
+    } else {
+      token = sessionStorage.getItem('anonymousToken');
+    }
+    if (token) {
       try {
-        const result = await CustomerService.updateMyCart(
-          authorizationToken,
-          cartProp.id,
-          cartVersion,
-          [
-            {
-              action: 'addDiscountCode',
-              code: data.promoCode,
-            },
-          ]
-        );
+        const result = await CustomerService.updateMyCart(token, cartProp.id, cartVersion, [
+          {
+            action: 'addDiscountCode',
+            code: data.promoCode,
+          },
+        ]);
 
         if (result.message) {
           return result.message;

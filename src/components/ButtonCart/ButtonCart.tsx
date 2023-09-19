@@ -1,23 +1,23 @@
 import { Button } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { addProductCart, createNewCart, getActiveCart, removeProductCart } from './ cartRequest';
-import { IActiveCart, ILineItem, VersionLineListProductCartType } from './type';
+import { useState } from 'react';
+import { ILineItem, VersionLineListProductCartType } from './type';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentVersion } from '../../features/myCartSlice';
-import { useNavigate } from 'react-router-dom';
-import { PATH } from '../../services/routing/paths';
 import { CustomerService } from '../../services/customerService';
-import { Cart } from '../../services/types';
+import { setCurrentVersion } from '../../features/myCartSlice';
 
 const BUTTON_CART = {
   add: 'Add to Cart',
   remove: 'Remove from Cart',
 };
 
-let isNewCart = true;
-
 async function getListItemsId(idProduct: string | undefined) {
-  const listProductsCart = await getActiveCart();
+  let token;
+  if (sessionStorage.getItem('authorization-token')) {
+    token = sessionStorage.getItem('authorization-token');
+  } else {
+    token = sessionStorage.getItem('anonymousToken');
+  }
+  const listProductsCart = await CustomerService.getActiveCart(token!);
   const versionLineCart: VersionLineListProductCartType = {
     version: listProductsCart.version,
     idLine: '',
@@ -32,59 +32,93 @@ async function getListItemsId(idProduct: string | undefined) {
 }
 
 export function ButtonCart(props: { id: string | undefined }) {
-  const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
   const [nameButton, setNameButton] = useState<string>(BUTTON_CART.add);
   const [clickedButton, setClickedButton] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   async function handleButtonCart() {
-    let versionCart;
-    const idActiveCart = sessionStorage.getItem('CartID');
+    let token;
+    let cartVersion;
+    let cartId;
+    let isAnonymous;
+    if (sessionStorage.getItem('authorization-token')) {
+      token = sessionStorage.getItem('authorization-token');
+      cartVersion = sessionStorage.getItem('cartVersion');
+      cartId = sessionStorage.getItem('cartId');
+      isAnonymous = false;
+    } else {
+      token = sessionStorage.getItem('anonymousToken');
+      cartVersion = sessionStorage.getItem('anonymCartVersion');
+      cartId = sessionStorage.getItem('anonymCartId');
+      isAnonymous = true;
+    }
 
     if (!clickedButton) {
       setNameButton(BUTTON_CART.remove);
       setClickedButton(true);
-      if (isNewCart) {
-        const cart: IActiveCart = await createNewCart();
-        sessionStorage.setItem('CartID', cart.id);
-        const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
-        // console.log(cartMy);
-        sessionStorage.setItem('versionCart', String(cartMy.version));
-        const response = await addProductCart(props.id, cart.id);
-        versionCart = response.version;
-        isNewCart = false;
+      //if (isNewCart) {
+      //const cart: IActiveCart = await createNewCart();
+      //sessionStorage.setItem('cartId', cart.id);
+      //const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
+      // console.log(cartMy);
+      //sessionStorage.setItem('cartVersion', String(cartMy.version));
+      const result = await CustomerService.updateMyCart(token!, cartId!, Number(cartVersion), [
+        {
+          action: 'addLineItem',
+          productId: props.id,
+          variantId: 1,
+          quantity: 1,
+        },
+      ]);
+      if (isAnonymous) {
+        sessionStorage.setItem('anonymCartVersion', result.version.toString());
       } else {
-        if (idActiveCart) {
-          const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
-          // console.log(cartMy);
-          sessionStorage.setItem('versionCart', String(cartMy.version));
-          const response = await addProductCart(props.id, idActiveCart);
-          versionCart = response.version;
-        }
+        sessionStorage.setItem('cartVersion', result.version.toString());
       }
+      //const cartMy: Cart = await CustomerService.updateMyCart(authorizationToken, props.id, cart.id);
+      //versionCart = response.version;
+      //isNewCart = false;
+      //   } else {
+      //     if (idActiveCart) {
+      //       const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
+      //       // console.log(cartMy);
+      //       sessionStorage.setItem('cartVersion', String(cartMy.version));
+      //       const response = await addProductCart(props.id, idActiveCart);
+      //       versionCart = response.version;
+      //     }
+      //   }
     } else {
       setNameButton(BUTTON_CART.add);
       setClickedButton(false);
       const versionLineListProductCart = await getListItemsId(props.id);
-      if (idActiveCart === null) throw Error('idActiveCart === null');
-      const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
-      //   console.log(cartMy);
-      versionCart = cartMy.version;
-      const response = await removeProductCart(versionLineListProductCart, idActiveCart);
-      versionCart = response.version;
+      const result = await CustomerService.updateMyCart(token!, cartId!, Number(cartVersion), [
+        {
+          action: 'removeLineItem',
+          lineItemId: versionLineListProductCart.idLine,
+          variantId: 1,
+          quantity: 1,
+        },
+      ]);
+      if (isAnonymous) {
+        sessionStorage.setItem('anonymCartVersion', result.version.toString());
+      } else {
+        sessionStorage.setItem('cartVersion', result.version.toString());
+      }
+      dispatch(setCurrentVersion(result.version));
+      //versionCart = response.version;
     }
-    sessionStorage.setItem('versionCart', String(versionCart));
-    getActiveCart().then((cart: IActiveCart) => {
-      dispatch(setCurrentVersion(cart.version));
-    });
+    // sessionStorage.setItem('cartVersion', String(versionCart));
+    // getActiveCart().then((cart: IActiveCart) => {
+    //   dispatch(setCurrentVersion(cart.version));
+    // });
   }
 
-  useEffect(() => {
-    if (!authorizationToken) {
-      navigate(PATH.login);
-    }
-  }, [navigate, authorizationToken]);
+  //   useEffect(() => {
+  //     if (!authorizationToken) {
+  //       navigate(PATH.login);
+  //     }
+  //   }, [navigate, authorizationToken]);
 
   return (
     <Button

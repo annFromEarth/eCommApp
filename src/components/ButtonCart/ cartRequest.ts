@@ -27,7 +27,7 @@ export async function createNewCart() {
 export async function addProductCart(idProduct: string | undefined, idCart: string) {
   const authorizationToken: string | null = window.sessionStorage.getItem('authorization-token');
 
-  const sessionVersion = sessionStorage.getItem('versionCart');
+  const sessionVersion = sessionStorage.getItem('cartVersion');
   const versionCart = sessionVersion !== 'undefined' ? Number(sessionVersion) : 1;
   // console.log('versionCart ', versionCart);
 

@@ -23,9 +23,10 @@ import {
 } from '../../features/productsSlice';
 import { Bars } from 'react-loader-spinner';
 import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
-import { generateAnonymousToken, generateToken } from '../../utils/token';
+import { generateAnonymousToken } from '../../utils/token';
 import CatalogPagination from '../CatalogPagination/catalogPagination';
 import { ButtonCart } from '../ButtonCart/ButtonCart';
+import { CustomerService } from '../../services/customerService';
 
 export default function GetCatalog() {
   const query = useQuery();
@@ -41,13 +42,9 @@ export default function GetCatalog() {
     dispatch(setPriceToFilter(''));
     dispatch(setSorting(''));
     dispatch(setSizeFilter(''));
-    if (!window.sessionStorage.getItem('token')) {
-      generateAnonymousToken().then((response) =>
-        sessionStorage.setItem('anonymousToken', response.access_token)
-      );
-
-      generateToken().then((response) => {
-        window.sessionStorage.setItem('token', response.access_token);
+    if (!window.sessionStorage.getItem('anonymousToken')) {
+      generateAnonymousToken().then((response) => {
+        sessionStorage.setItem('anonymousToken', response.access_token);
         if (query.get('category') && query.get('category') !== null) {
           dispatch(setCurrentCategoryId(query.get('category')));
           getFilteredProducts(query.get('category'), '', '', '', '', 0).then((response) => {
@@ -63,6 +60,7 @@ export default function GetCatalog() {
             setLoading(false);
           });
         }
+        handleCart();
       });
     } else {
       if (query.get('category') && query.get('category') !== null) {
@@ -80,6 +78,7 @@ export default function GetCatalog() {
           setLoading(false);
         });
       }
+      handleCart();
     }
   }, [dispatch, query]);
 
@@ -92,6 +91,29 @@ export default function GetCatalog() {
       }
     }
   };
+
+  async function handleCart() {
+    const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
+    const anonymousToken: string = sessionStorage.getItem('anonymousToken')!;
+
+    if (
+      authorizationToken &&
+      !window.sessionStorage.getItem('cartId') &&
+      !window.sessionStorage.getItem('cartVersion')
+    ) {
+      const newCart = await CustomerService.createCart(authorizationToken);
+      sessionStorage.setItem('cartId', newCart.id);
+      sessionStorage.setItem('cartVersion', String(newCart.version));
+    } else if (
+      anonymousToken &&
+      !window.sessionStorage.getItem('anonymCartId') &&
+      !window.sessionStorage.getItem('anonymCartVersion')
+    ) {
+      const newCart = await CustomerService.createCart(anonymousToken); //create anonymous cart
+      window.sessionStorage.setItem('anonymCartId', newCart.id); //remember cart id
+      window.sessionStorage.setItem('anonymCartVersion', String(newCart.version)); //remember cart version
+    }
+  }
 
   return (
     <Box
