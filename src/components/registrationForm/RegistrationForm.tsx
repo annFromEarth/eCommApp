@@ -253,7 +253,7 @@ export default function RegistrationForm() {
               onChange={handleCountryPrimaryChange}
             >
               <MenuItem value={'UK'}>UK</MenuItem>
-              <MenuItem value={'FR'}>France</MenuItem>
+              {/* <MenuItem value={'FR'}>France</MenuItem> */}
             </Select>
           </FormControl>
 
