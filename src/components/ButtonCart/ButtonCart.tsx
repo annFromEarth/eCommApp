@@ -1,9 +1,13 @@
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addProductCart, createNewCart, getActiveCart, removeProductCart } from './ cartRequest';
 import { IActiveCart, ILineItem, VersionLineListProductCartType } from './type';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentVersion } from '../../features/myCartSlice';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../services/routing/paths';
+import { CustomerService } from '../../services/customerService';
+import { Cart } from '../../services/types';
 
 const BUTTON_CART = {
   add: 'Add to Cart',
@@ -28,9 +32,11 @@ async function getListItemsId(idProduct: string | undefined) {
 }
 
 export function ButtonCart(props: { id: string | undefined }) {
+  const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
   const [nameButton, setNameButton] = useState<string>(BUTTON_CART.add);
   const [clickedButton, setClickedButton] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   async function handleButtonCart() {
     let versionCart;
@@ -42,11 +48,17 @@ export function ButtonCart(props: { id: string | undefined }) {
       if (isNewCart) {
         const cart: IActiveCart = await createNewCart();
         sessionStorage.setItem('CartID', cart.id);
+        const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
+        // console.log(cartMy);
+        sessionStorage.setItem('versionCart', String(cartMy.version));
         const response = await addProductCart(props.id, cart.id);
         versionCart = response.version;
         isNewCart = false;
       } else {
         if (idActiveCart) {
+          const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
+          // console.log(cartMy);
+          sessionStorage.setItem('versionCart', String(cartMy.version));
           const response = await addProductCart(props.id, idActiveCart);
           versionCart = response.version;
         }
@@ -56,6 +68,9 @@ export function ButtonCart(props: { id: string | undefined }) {
       setClickedButton(false);
       const versionLineListProductCart = await getListItemsId(props.id);
       if (idActiveCart === null) throw Error('idActiveCart === null');
+      const cartMy: Cart = await CustomerService.getActiveCart(authorizationToken); //
+      //   console.log(cartMy);
+      versionCart = cartMy.version;
       const response = await removeProductCart(versionLineListProductCart, idActiveCart);
       versionCart = response.version;
     }
@@ -64,6 +79,12 @@ export function ButtonCart(props: { id: string | undefined }) {
       dispatch(setCurrentVersion(cart.version));
     });
   }
+
+  useEffect(() => {
+    if (!authorizationToken) {
+      navigate(PATH.login);
+    }
+  }, [navigate, authorizationToken]);
 
   return (
     <Button
