@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PAGES_TITLES } from '../../data/titles';
 import { Cart } from '../../services/types';
 import { PATH } from '../../services/routing/paths';
@@ -159,10 +159,11 @@ export function CartPage() {
                 backgroundRepeat: 'no-repeat',
               }}
             />
-            <Button variant="contained" href={PATH.plants} sx={{ margin: '20px' }}>
-              {' '}
-              browse plants{' '}
-            </Button>
+            <Link to={PATH.plants}>
+              <Button variant="contained" sx={{ margin: '20px' }}>
+                browse plants
+              </Button>
+            </Link>
           </>
         )}
 

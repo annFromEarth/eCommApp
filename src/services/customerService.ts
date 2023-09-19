@@ -70,6 +70,7 @@ export class CustomerService {
 
   static async requestCarts(authorizationToken: string) {
     const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
+      method: 'GET',
       headers: {
         Authorization: 'Bearer ' + authorizationToken,
       },

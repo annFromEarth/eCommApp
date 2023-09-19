@@ -4,6 +4,7 @@ import PromoComponent from '../../components/Promo/PromoComponent';
 import { themeOptions } from '../../assets/theme';
 import { PAGES_TITLES } from '../../data/titles';
 import { PATH } from '../../services/routing/paths';
+import { Link } from 'react-router-dom';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -43,10 +44,9 @@ export default function Main() {
             </Typography>
             <PromoComponent />
           </Box>
-          <Button variant="contained" href={PATH.plants}>
-            {' '}
-            browse plants{' '}
-          </Button>
+          <Link to={PATH.plants}>
+            <Button variant="contained">browse plants</Button>
+          </Link>
           <Typography variant="h6" sx={{ pt: '40px' }}>
             <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn
           </Typography>
