@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts, getProductsByCategory } from './catalogRequest';
+import { getFilteredProducts } from './catalogRequest';
 
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../services/routing/paths';
@@ -12,10 +12,21 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Stack, Box } from '@mui/material';
 import { useAppDispatch, useAppSelector, useQuery } from '../../hooks';
-import { addProducts } from '../../features/productsSlice';
+import {
+  addProducts,
+  setOffset,
+  setPriceFromFilter,
+  setPriceToFilter,
+  setSizeFilter,
+  setSorting,
+  setTotal,
+} from '../../features/productsSlice';
 import { Bars } from 'react-loader-spinner';
-import { setCurrentCategory } from '../../features/categoriesSlice';
-import { generateToken } from '../../utils/token';
+import { setCurrentCategory, setCurrentCategoryId } from '../../features/categoriesSlice';
+import { generateAnonymousToken } from '../../utils/token';
+import CatalogPagination from '../CatalogPagination/catalogPagination';
+import { ButtonCart } from '../ButtonCart/ButtonCart';
+import { CustomerService } from '../../services/customerService';
 
 export default function GetCatalog() {
   const query = useQuery();
@@ -24,52 +35,96 @@ export default function GetCatalog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!window.sessionStorage.getItem('token')) {
-      generateToken().then((response) => {
-        window.sessionStorage.setItem('token', response.access_token);
+    dispatch(setOffset(0));
+    dispatch(setCurrentCategoryId(''));
+    dispatch(setCurrentCategory('All Plants'));
+    dispatch(setPriceFromFilter(''));
+    dispatch(setPriceToFilter(''));
+    dispatch(setSorting(''));
+    dispatch(setSizeFilter(''));
+    if (!window.sessionStorage.getItem('anonymousToken')) {
+      generateAnonymousToken().then((response) => {
+        sessionStorage.setItem('anonymousToken', response.access_token);
         if (query.get('category') && query.get('category') !== null) {
-          getProductsByCategory(query.get('category')).then((response) => {
+          dispatch(setCurrentCategoryId(query.get('category')));
+          getFilteredProducts(query.get('category'), '', '', '', '', 0).then((response) => {
             dispatch(addProducts(response.results));
+            dispatch(setTotal(response.total));
             setLoading(false);
           });
         } else {
-          getProducts().then((response) => {
+          getFilteredProducts('', '', '', '', '', 0).then((response) => {
             dispatch(addProducts(response.results));
+            dispatch(setTotal(response.total));
             dispatch(setCurrentCategory('All Plants'));
             setLoading(false);
           });
         }
+        handleCart();
       });
     } else {
       if (query.get('category') && query.get('category') !== null) {
-        getProductsByCategory(query.get('category')).then((response) => {
+        dispatch(setCurrentCategoryId(query.get('category')));
+        getFilteredProducts(query.get('category'), '', '', '', '', 0).then((response) => {
           dispatch(addProducts(response.results));
+          dispatch(setTotal(response.total));
           setLoading(false);
         });
       } else {
-        getProducts().then((response) => {
+        getFilteredProducts('', '', '', '', '', 0).then((response) => {
           dispatch(addProducts(response.results));
+          dispatch(setTotal(response.total));
           dispatch(setCurrentCategory('All Plants'));
           setLoading(false);
         });
       }
+      handleCart();
     }
   }, [dispatch, query]);
 
   const navigate = useNavigate();
 
-  const openDetailPage = (id: string) => {
-    navigate(PATH.product + '/:' + id);
+  const openDetailPage = (element: EventTarget, id: string) => {
+    if (element instanceof HTMLElement) {
+      if (!element.className.includes('button-cart')) {
+        navigate(PATH.product + '/:' + id);
+      }
+    }
   };
+
+  async function handleCart() {
+    const authorizationToken: string = sessionStorage.getItem('authorization-token')!;
+    const anonymousToken: string = sessionStorage.getItem('anonymousToken')!;
+
+    if (
+      authorizationToken &&
+      !window.sessionStorage.getItem('cartId') &&
+      !window.sessionStorage.getItem('cartVersion')
+    ) {
+      const newCart = await CustomerService.createCart(authorizationToken);
+      sessionStorage.setItem('cartId', newCart.id);
+      sessionStorage.setItem('cartVersion', String(newCart.version));
+    } else if (
+      anonymousToken &&
+      !window.sessionStorage.getItem('anonymCartId') &&
+      !window.sessionStorage.getItem('anonymCartVersion')
+    ) {
+      const newCart = await CustomerService.createCart(anonymousToken); //create anonymous cart
+      window.sessionStorage.setItem('anonymCartId', newCart.id); //remember cart id
+      window.sessionStorage.setItem('anonymCartVersion', String(newCart.version)); //remember cart version
+    }
+  }
 
   return (
     <Box
       sx={{
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'stretch',
+        alignItems: 'center',
         width: '100%',
         margin: 'auto',
+        paddingBottom: '30px',
       }}
     >
       {loading && (
@@ -96,7 +151,7 @@ export default function GetCatalog() {
           {products.map((plant, index) => (
             <Card
               key={index}
-              onClick={() => openDetailPage(plant.id)}
+              onClick={(e) => openDetailPage(e.target, plant.id)}
               sx={{
                 maxWidth: 345,
                 minHeight: 493,
@@ -175,6 +230,9 @@ export default function GetCatalog() {
                   </Typography>
                 </Box>
               </CardContent>
+              <CardActions>
+                <ButtonCart id={plant.id} />
+              </CardActions>
               <CardActions sx={{ justifyContent: 'center' }}>
                 <Button variant="contained" size="small" fullWidth>
                   Learn More
@@ -184,6 +242,11 @@ export default function GetCatalog() {
           ))}
         </Stack>
       )}
+      {products && products.length === 0 && !loading && (
+        <Typography sx={{ fontSize: '24px' }}>No plants found.</Typography>
+      )}
+
+      {products && products.length > 0 && !loading && <CatalogPagination />}
     </Box>
   );
 }

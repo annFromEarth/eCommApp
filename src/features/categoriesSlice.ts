@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface CategoriesState {
   currentCategory: string;
-  currentCategoryId: string;
+  currentCategoryId: string | null;
 }
 // Define the initial state using that type
 const initialState: CategoriesState = {
@@ -17,7 +17,7 @@ export const categoriesSlice = createSlice({
     setCurrentCategory: (state, action: PayloadAction<string>) => {
       state.currentCategory = action.payload;
     },
-    setCurrentCategoryId: (state, action: PayloadAction<string>) => {
+    setCurrentCategoryId: (state, action: PayloadAction<string | null>) => {
       state.currentCategoryId = action.payload;
     },
   },

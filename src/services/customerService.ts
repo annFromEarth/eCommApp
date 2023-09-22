@@ -2,7 +2,7 @@ import { Customer } from '../pages/Profile/types';
 import { API_URL, PROJECT_KEY } from '../constants';
 import { getAdminBearerToken } from './getAdminBearerToken';
 import { submitCustomer } from '../components/registrationForm/types';
-import { Action } from './types';
+import { Action, Cart, CartAction, CartPagedQueryResponse } from './types';
 
 export class CustomerService {
   static async getMe(authorizationToken: string): Promise<Customer> {
@@ -26,7 +26,7 @@ export class CustomerService {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    return result; //TODO add types
+    return result;
   }
 
   static async updateMe(
@@ -66,5 +66,85 @@ export class CustomerService {
     });
     const customer: Customer = await response.json();
     return customer;
+  }
+
+  static async requestCarts(authorizationToken: string) {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+    });
+    const carts: CartPagedQueryResponse = await response.json();
+    return carts;
+  }
+
+  static async getMyCart(authorizationToken: string, id: string) {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts/${id}`, {
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+    });
+    const cart: Cart = await response.json();
+    return cart;
+  }
+
+  static async getActiveCart(authorizationToken: string) {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/active-cart`, {
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+    });
+
+    const cart: Cart = await response.json();
+    return cart;
+  }
+
+  static async updateMyCart(
+    authorizationToken: string,
+    id: string,
+    version: number,
+    actions: CartAction[]
+  ): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts/${id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ version: version, actions: actions }),
+    });
+    const cart: Cart = await response.json();
+    return cart;
+  }
+
+  static async clearCartById(
+    authorizationToken: string,
+    id: string,
+    version: number
+  ): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts/${id}?version=${version}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+    });
+    const cart: Cart = await response.json();
+    return cart;
+  }
+
+  static async createCart(authorizationToken: string): Promise<Cart> {
+    const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + authorizationToken,
+      },
+      body: JSON.stringify({
+        currency: 'GBP',
+        country: 'UK',
+      }),
+    });
+    const cart: Cart = await response.json();
+    return cart;
   }
 }

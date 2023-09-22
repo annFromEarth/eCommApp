@@ -2,31 +2,51 @@ import { Box, TextField, Stack, Typography, Button, RadioGroup } from '@mui/mate
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { useState } from 'react';
-import { getFilteredProducts, getProducts, getProductsByCategory } from '../Catalog/catalogRequest';
+import { getFilteredProducts } from '../Catalog/catalogRequest';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addProducts } from '../../features/productsSlice';
+import {
+  addProducts,
+  setOffset,
+  setPriceFromFilter,
+  setPriceToFilter,
+  setSizeFilter,
+  setTotal,
+} from '../../features/productsSlice';
 
 export default function CatalogFilter() {
   const [priceFrom, setPriceFrom] = useState<string>('');
   const [priceTo, setPriceTo] = useState<string>('');
   const [size, setSize] = useState<string>('');
   const dispatch = useAppDispatch();
-  const currentCategoryId = useAppSelector((state) => state.categories.currentCategoryId);
+  const currentCategory = useAppSelector((state) => state.categories.currentCategoryId);
+  const sort = useAppSelector((state) => state.products.sorting);
 
   const filterProducts = () => {
-    getFilteredProducts({ priceFrom, priceTo, size, currentCategoryId }).then((response) => {
+    if (priceFrom !== '') {
+      dispatch(setPriceFromFilter(priceFrom));
+    }
+    if (priceTo !== '') {
+      dispatch(setPriceToFilter(priceTo));
+    }
+    if (size !== '') {
+      dispatch(setSizeFilter(size));
+    }
+    dispatch(setOffset(0));
+    getFilteredProducts(currentCategory, priceFrom, priceTo, size, sort, 0).then((response) => {
       dispatch(addProducts(response.results));
+      dispatch(setTotal(response.total));
     });
   };
 
   const resetFilters = () => {
-    if (currentCategoryId && currentCategoryId !== '') {
-      getProductsByCategory(currentCategoryId).then((response) => {
+    dispatch(setPriceFromFilter(''));
+    dispatch(setPriceToFilter(''));
+    dispatch(setSizeFilter(''));
+    dispatch(setOffset(0));
+    if (currentCategory && currentCategory !== '') {
+      getFilteredProducts(currentCategory, '', '', '', sort, 0).then((response) => {
         dispatch(addProducts(response.results));
-      });
-    } else {
-      getProducts().then((response) => {
-        dispatch(addProducts(response.results));
+        dispatch(setTotal(response.total));
       });
     }
     setPriceFrom('');

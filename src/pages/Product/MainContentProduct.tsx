@@ -1,8 +1,10 @@
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { IPricesProduct, IProduct } from './productType';
+import { ButtonCart } from '../../components/ButtonCart/ButtonCart';
 
-export function MainContentProduct(props: { product: IProduct }) {
+export function MainContentProduct(props: { product: IProduct; id: string | undefined }) {
   const product = props.product;
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', margin: '0 20px', gap: '10px' }}>
       <TitleProduct name={product.name['en-GB']} />
@@ -11,7 +13,9 @@ export function MainContentProduct(props: { product: IProduct }) {
         sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <PriceProduct prices={product.masterVariant.prices} />
-        <ButtonAddCart />
+        <Box sx={{ maxWidth: '250px' }}>
+          <ButtonCart id={props.id?.slice(1)} />
+        </Box>
       </Box>
       <DescriptionProduct description={product.description['en-GB']} />
     </Box>
@@ -62,15 +66,6 @@ function PriceProduct(props: { prices: Array<IPricesProduct> }) {
       </>
     );
   }
-}
-
-function ButtonAddCart() {
-  const NAME_BUTTON = 'Add to Cart';
-  return (
-    <Button variant="contained">
-      {NAME_BUTTON} <span style={{ marginLeft: '15px' }}>&#128722;</span>
-    </Button>
-  );
 }
 
 function DescriptionProduct(props: { description: string }) {

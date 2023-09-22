@@ -21,4 +21,9 @@ export const themeOptions: ThemeOptions = {
       default: '#ccff90',
     },
   },
+  typography: {
+    allVariants: {
+      fontFamily: "'Nunito Variable', sans-serif",
+    },
+  },
 };

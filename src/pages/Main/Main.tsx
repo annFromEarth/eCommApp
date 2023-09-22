@@ -1,9 +1,10 @@
-import { Typography, Box, createTheme, alpha } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Typography, Box, createTheme, alpha, Button } from '@mui/material';
+import PromoComponent from '../../components/Promo/PromoComponent';
 
 import { themeOptions } from '../../assets/theme';
 import { PAGES_TITLES } from '../../data/titles';
 import { PATH } from '../../services/routing/paths';
+import { Link } from 'react-router-dom';
 
 const plantsTheme = createTheme(themeOptions);
 
@@ -36,13 +37,16 @@ export default function Main() {
           <Typography variant="h2" component="h1" gutterBottom>
             {PAGES_TITLES.main}
           </Typography>
-          <Typography sx={{ marginBottom: '40px' }} variant="h5" component="h2" gutterBottom>
-            {'Hot deals to celebrate ☀the summer☀'}
-          </Typography>
-          <Button variant="contained" href={PATH.plants}>
+          <Box sx={{ marginBottom: '40px', textAlign: 'center' }}>
             {' '}
-            browse plants{' '}
-          </Button>
+            <Typography variant="h5" component="h2" gutterBottom>
+              {'Hot deals to celebrate ☀the autumn☀'}
+            </Typography>
+            <PromoComponent />
+          </Box>
+          <Link to={PATH.plants}>
+            <Button variant="contained">browse plants</Button>
+          </Link>
           <Typography variant="h6" sx={{ pt: '40px' }}>
             <q>To plant a garden is to believe in tomorrow.</q> – Audrey Hepburn
           </Typography>

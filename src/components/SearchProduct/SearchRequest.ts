@@ -1,5 +1,5 @@
 export async function getSearchProducts(valueSearch: string) {
-  const authorizationToken: string = window.sessionStorage.getItem('token')!;
+  const authorizationToken: string = window.sessionStorage.getItem('anonymousToken')!;
 
   const response = await fetch(
     `${import.meta.env.VITE_CLIENT_CTP_API_URL}/${
