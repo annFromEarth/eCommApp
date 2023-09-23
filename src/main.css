@@ -1,0 +1,23 @@
+body {
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s linear;
+}
+
+.link:hover {
+  color: #fbde00d0;
+}
+
+.strong-text {
+  font-weight: bold;
+}
+
+.options-product {
+  padding: 5px 0;
+  border-top: 1px solid rgba(78, 8, 8, 0.7);
+  border-bottom: 1px solid rgba(78, 8, 8, 0.7);
+}

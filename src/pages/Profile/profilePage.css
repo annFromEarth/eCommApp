@@ -1,0 +1,29 @@
+p {
+  margin: 10px;
+}
+
+.outerContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container {
+  background: #ccff90;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px;
+  min-width: 350px;
+}
+
+.addressItem {
+  margin: 20px;
+  border: 1px solid #51973f;
+}
+
+.addressItem > * {
+  margin: 15px;
+}
+
+.margined > * {
+  margin: 15px;
+}
