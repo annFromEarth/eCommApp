@@ -6,26 +6,27 @@ import { PATH } from '../../services/routing/paths';
 import { CustomerService } from '../../services/customerService';
 import { CartRow } from '../../components/Cart/cartRow';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentVersion } from '../../features/myCartSlice';
+import { selectMyCartData, setCurrentVersion } from '../../features/myCartSlice';
 import { Bars } from 'react-loader-spinner';
 import { CartRowSmallScreen } from '../../components/Cart/cartRowSmall';
 
 import {
   Box,
-  useTheme,
-  Typography,
   Button,
-  Tooltip,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Tooltip,
+  Typography,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import PromoCodeForm from '../../components/Cart/promoCodeForm';
+import { selectSessionToken } from '../../features/appSlice.ts';
 
 export function CartPage() {
   const plantsTheme = useTheme();
@@ -89,6 +90,9 @@ export function CartPage() {
     } else return;
   };
 
+  const sessionToken = useAppSelector(selectSessionToken);
+  const myCartData = useAppSelector(selectMyCartData);
+
   useEffect(() => {
     let token: string | null;
     if (sessionStorage.getItem('authorization-token')) {
@@ -98,7 +102,7 @@ export function CartPage() {
     }
     const fetchCartData = async () => {
       try {
-        const cartQuery = await CustomerService.getActiveCart(token!);
+        const cartQuery = await CustomerService.getMyCart(sessionToken.access_token, myCartData.id);
 
         if (!cartQuery.message) {
           setCartData(cartQuery);
@@ -117,7 +121,7 @@ export function CartPage() {
     // if (!authorizationToken) {
     //   navigate(PATH.login);
     // }
-    if (token) fetchCartData();
+    fetchCartData();
   }, [navigate, dispatch]);
 
   return (

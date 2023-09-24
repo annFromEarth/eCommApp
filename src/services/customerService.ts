@@ -3,6 +3,7 @@ import { API_URL, PROJECT_KEY } from '../constants';
 import { getAdminBearerToken } from './getAdminBearerToken';
 import { submitCustomer } from '../components/registrationForm/types';
 import { Action, Cart, CartAction, CartPagedQueryResponse } from './types';
+import { IErrorObject, ISessionToken } from '../types/types.ts';
 
 export class CustomerService {
   static async getMe(authorizationToken: string): Promise<Customer> {
@@ -133,18 +134,38 @@ export class CustomerService {
     return cart;
   }
 
-  static async createCart(authorizationToken: string): Promise<Cart> {
+  static async createAnonymousSession(uniqId: string): Promise<ISessionToken | IErrorObject> {
+    const response = await fetch(
+      `${import.meta.env.VITE_ADMIN_CTP_AUTH_URL}/oauth/${PROJECT_KEY}/anonymous/token`,
+      {
+        body: `grant_type=client_credentials&anonymous_id=${uniqId}`,
+        headers: {
+          Authorization:
+            'Basic ' +
+            btoa(
+              `${import.meta.env.VITE_ADMIN_CTP_CLIENT_ID}:${
+                import.meta.env.VITE_ADMIN_CTP_CLIENT_SECRET
+              }`
+            ),
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        method: 'POST',
+      }
+    );
+    return await response.json();
+  }
+
+  static async createAnonymousCart(sessionToken: ISessionToken, anonymousId: string) {
     const response = await fetch(`${API_URL}/${PROJECT_KEY}/me/carts`, {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + authorizationToken,
+        Authorization: 'Bearer ' + sessionToken.access_token,
       },
       body: JSON.stringify({
         currency: 'GBP',
-        country: 'UK',
+        anonymousId,
       }),
     });
-    const cart: Cart = await response.json();
-    return cart;
+    return await response.json();
   }
 }
